@@ -1,15 +1,16 @@
 .layout-wrapper {
-  height: 100%;
+  min-height: 100%;
 }
 
 .flex-wrapper {
-  height: 100%;
+  width: 90%;
+  padding: 10px;
 }
 
 .footer {
   background-color: rgb(65, 83, 175);
   color: #fff;
-  width: 100%;
+  width: 90%;
   padding: 10px;
   text-align: center;
   border-radius: 0 0 8px 8px;
