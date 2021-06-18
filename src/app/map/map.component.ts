@@ -33,4 +33,15 @@ export class MapComponent implements OnInit {
     // get a local reference to the map as we need it later
     this.map = map;
   }
+
+  onMapMoveEnd() {
+    let bounds = this.map?.getBounds();
+    let zoomMap = this.map?.getZoom();
+
+    console.log(bounds?.getWest());
+    console.log(bounds?.getSouth());
+    console.log(bounds?.getEast());
+    console.log(bounds?.getNorth());
+    console.log(zoomMap);
+  }
 }
