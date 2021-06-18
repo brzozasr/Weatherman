@@ -8,6 +8,7 @@ import { FlexModule } from "@angular/flex-layout";
 import { MaterialModule } from "./materials/material.module";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MapComponent } from './map/map.component';
+import {LeafletModule} from "@asymmetrik/ngx-leaflet";
 
 
 @NgModule({
@@ -20,8 +21,9 @@ import { MapComponent } from './map/map.component';
     BrowserModule,
     MaterialModule,
     FlexModule,
+    BrowserAnimationsModule,
+    LeafletModule,
     AppRoutingModule,
-    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
