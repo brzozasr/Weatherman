@@ -1,4 +1,4 @@
-.map-container {
+#map {
   min-height: calc(100vh - 40px - 62px);
   min-width: calc(100% - 10px);
 }

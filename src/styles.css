@@ -2,3 +2,30 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.custom-popup .leaflet-popup-content {
+  background: transparent;
+  padding: 0;
+}
+
+.custom-popup .leaflet-popup-content-wrapper {
+  color:#fff;
+  font-size:12px;
+  line-height: 10px;
+  border-radius: 0px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+.custom-popup .leaflet-popup-content-wrapper a {
+  color:rgba(255,255,255,0.5);
+}
+.custom-popup .leaflet-popup-tip-container {
+  width:0;
+  height:0;
+}
+.custom-popup .leaflet-popup-tip {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
