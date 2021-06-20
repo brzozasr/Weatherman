@@ -13,7 +13,7 @@ export class MapComponent implements OnInit {
   private centroid: L.LatLngExpression = [52.231821, 21.020862]; // Warsaw
 
   options = {
-    layers:[L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    layers: [L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       opacity: 1.0,
       minZoom: 3,
       maxZoom: 19,
@@ -24,7 +24,8 @@ export class MapComponent implements OnInit {
     center: this.centroid
   };
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
   }
@@ -33,7 +34,7 @@ export class MapComponent implements OnInit {
     // get a local reference to the map as we need it later
     this.map = map;
 
-    this.setLabels(map, 52.231821, 21.020862, 31.5, 'Warszawa');
+    this.setLabels(map, 52.2298, 21.0118, 31.5, 'Warszawa', '01n');
   }
 
   onMapMoveEnd(): void {
@@ -46,10 +47,10 @@ export class MapComponent implements OnInit {
     console.log(bounds?.getNorth());
     console.log(zoomMap);
 
-    this.setLabels(this.map, 52.231821, 21.020862, 31.5, 'Warszawa');
+    this.setLabels(this.map, 52.2298, 21.0118, 31.5, 'Warszawa', '01n');
   }
 
-  setLabels(map: L.Map | undefined, lat: number, lng: number, temperature: number, city: string): void {
+  setLabels(map: L.Map | undefined, lat: number, lng: number, temperature: number, city: string, img: string): void {
     if (map !== undefined) {
       map.closePopup();
 
@@ -62,7 +63,7 @@ export class MapComponent implements OnInit {
         className: 'custom-popup'
       })
         .setLatLng([lat, lng])
-        .setContent(`<div style="display: flex; flex-flow: row nowrap;"><div style="background-color: #2c3e50; font-weight: bold; padding: 3px;">${temp}</div><div style="background-color: #dcb936; padding: 3px;">${city}</div></div>`)
+        .setContent(`<div style="display: flex; flex-flow: row nowrap;"><div style="padding: 0; background-color: #b3b3b3; border-radius: 4px 0 0 4px;"><img src="http://openweathermap.org/img/wn/${img}@2x.png" alt="" style="height: 20px;"></div><div style="background-color: #233766; padding: 3px;">${temp}</div><div style="background-color: #dcb936; padding: 3px; border-radius: 0 4px 4px 0;">${city}</div></div>`)
         .openOn(map);
     }
   }
