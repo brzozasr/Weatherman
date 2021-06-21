@@ -28,37 +28,55 @@ export class MapComponent implements OnInit {
     center: this.centroid
   };
 
-  $weatherData: Observable<PointsWeather[]>;
+  lonLeft?: number;
+  latBottom?: number;
+  lonRight?: number;
+  latTop?: number;
+  zoom?: number;
+
+  $weatherData?: Observable<PointsWeather[]>;
 
   constructor(private service: PointsWeatherService) {
-    this.$weatherData = this.getWeatherPoints();
   }
 
   ngOnInit(): void {
+    this.getBBox();
   }
 
   onMapReady(map: L.Map) {
     this.map = map;
+    this.getBBox();
+    //this.getWeatherPoints();
 
-    let x = this.getBBox();
+    setTimeout(() => {
+      this.getWeatherPoints();
+    }, 500);
 
-    this.$weatherData = this.service.getWeatherPoints(x.lonLeft, x.latBottom, x.lonRight, x.latTop, x.zoom);
     this.setPointsOnMap();
-    //this.setLabel(map, 52.2298, 21.0118, 31.5, 'Warszawa', '01n');
-    //this.setLabel(map, 53.2398, 21.0318, 31.5, 'Warszawa1', '01d');
-    //this.setLabel(map, 54.2498, 21.0118, 31.5, 'Warszawa2', '01n');
-    //this.setLabel(map, 55.2598, 21.0118, 31.5, 'Warszawa3', '01n');
+
+    console.log(this.lonLeft);
+    console.log(this.latBottom);
+    console.log(this.lonRight);
+    console.log(this.latTop);
   }
 
   onMapMoveEnd(): void {
-    //this.setPointsOnMap();
-    //this.setLabel(this.map, 52.2298, 21.0118, 31.5, 'Warszawa', '01n');
+    this.getBBox();
+    //this.getWeatherPoints();
+    setTimeout(() => {
+      this.getWeatherPoints();
+    }, 500);
+
+    this.setPointsOnMap();
+
+    console.log(this.lonLeft);
+    console.log(this.latBottom);
+    console.log(this.lonRight);
+    console.log(this.latTop);
   }
 
   setLabel(map: L.Map | undefined, lat: number, lng: number, temperature: number, city: string, icon: string): void {
     if (map !== undefined) {
-      //map.closePopup();
-
       let temp = Math.round(temperature);
 
       L.popup({
@@ -73,17 +91,22 @@ export class MapComponent implements OnInit {
     }
   }
 
-  getWeatherPoints(): Observable<PointsWeather[]> {
-    let x = this.getBBox();
-    return this.service.getWeatherPoints(
-      x.lonLeft, x.latBottom, x.lonRight, x.latTop, x.zoom);
+  getWeatherPoints(): void {
+    //let x = this.getBBox();
+    if (this.lonLeft && this.latBottom && this.lonRight && this.latTop && this.zoom) {
+      console.log("INSIDE WWW")
+      this.$weatherData = this.service.getWeatherBBox(
+        this.lonLeft, this.latBottom, this.lonRight, this.latTop, this.zoom);
+    }
   }
 
   setPointsOnMap(): void {
-    this.$weatherData.subscribe((data) => {
-        data.forEach((p) => {
+    //this.getWeatherPoints();
+    this.$weatherData?.subscribe((data) => {
+        data.forEach((p, index) => {
           if (p.lat && p.lon && p.temp && p.cityName && p.icon && p.code === 200) {
-            this.setLabel(this.map, p.lat, p.lon, p.temp, p.cityName, p.icon)
+            this.setLabel(this.map, p.lat, p.lon, p.temp, p.cityName, p.icon);
+            console.log(index);
           } else {
             if (p.code !== undefined) {
               let err = new OpenWeatherError();
@@ -92,11 +115,22 @@ export class MapComponent implements OnInit {
           }
         })
       },
-      error => console.log('HTTP Error', error),
+      error => console.error('HTTP Error', error),
       () => console.log('HTTP request completed.'));
   }
 
-  getBBox(): any {
+  getBBox(): void {
+    let bounds = this.map?.getBounds();
+    let zoomMap = this.map?.getZoom();
+
+    this.lonLeft = bounds?.getWest();
+    this.latBottom = bounds?.getSouth();
+    this.lonRight = bounds?.getEast();
+    this.latTop = bounds?.getNorth();
+    this.zoom = zoomMap;
+  }
+
+  /*getBBox(): any {
     let bounds = this.map?.getBounds();
     let zoomMap = this.map?.getZoom();
 
@@ -107,5 +141,5 @@ export class MapComponent implements OnInit {
       latTop: bounds?.getNorth(),
       zoom: zoomMap,
     }
-  }
+  }*/
 }

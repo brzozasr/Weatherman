@@ -13,7 +13,7 @@ export class PointsWeatherService {
   constructor(private http: HttpClient) {
   }
 
-  getWeatherPoints(lonLeft: number, latBottom: number, lonRight: number, latTop: number, zoom: number): Observable<PointsWeather[]> {
+  getWeatherBBox(lonLeft: number, latBottom: number, lonRight: number, latTop: number, zoom: number): Observable<PointsWeather[]> {
     return this.http.get<PointsWeather[]>(`${AppUrl.BASE_URL}Weather/Get/BBox/${lonLeft}/${latBottom}/${lonRight}/${latTop}/${zoom}`)
       .pipe(
         catchError(error => {
