@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import * as L from 'leaflet';
 import {PointsWeatherService} from "./services/points-weather.service";
 import {Observable} from "rxjs";
 import {PointsWeather} from "./models/points-weather";
 import {OpenWeatherError} from "../error/open-weather-error";
+import {take} from "rxjs/operators";
 
 
 @Component({
@@ -34,45 +35,31 @@ export class MapComponent implements OnInit {
   latTop?: number;
   zoom?: number;
 
-  $weatherData?: Observable<PointsWeather[]>;
+  weatherData$?: Observable<PointsWeather[]>;
+  weatherData: PointsWeather[] = [];
+
 
   constructor(private service: PointsWeatherService) {
   }
 
   ngOnInit(): void {
     this.getBBox();
+    this.getWeatherPoints();
   }
 
   onMapReady(map: L.Map) {
     this.map = map;
     this.getBBox();
-    //this.getWeatherPoints();
-
-    setTimeout(() => {
-      this.getWeatherPoints();
-    }, 500);
-
+    this.getWeatherPoints();
+    console.log(this.weatherData.length);
     this.setPointsOnMap();
-
-    console.log(this.lonLeft);
-    console.log(this.latBottom);
-    console.log(this.lonRight);
-    console.log(this.latTop);
   }
 
   onMapMoveEnd(): void {
     this.getBBox();
-    //this.getWeatherPoints();
-    setTimeout(() => {
-      this.getWeatherPoints();
-    }, 500);
-
+    this.getWeatherPoints();
+    console.log(this.weatherData.length);
     this.setPointsOnMap();
-
-    console.log(this.lonLeft);
-    console.log(this.latBottom);
-    console.log(this.lonRight);
-    console.log(this.latTop);
   }
 
   setLabel(map: L.Map | undefined, lat: number, lng: number, temperature: number, city: string, icon: string): void {
@@ -95,14 +82,55 @@ export class MapComponent implements OnInit {
     //let x = this.getBBox();
     if (this.lonLeft && this.latBottom && this.lonRight && this.latTop && this.zoom) {
       console.log("INSIDE WWW")
-      this.$weatherData = this.service.getWeatherBBox(
+      this.weatherData$ = this.service.getWeatherBBox(
         this.lonLeft, this.latBottom, this.lonRight, this.latTop, this.zoom);
+
+      this.subscribePointsOnce();
     }
   }
 
+  subscribePointsOnce(): void {
+    this.weatherData$?.pipe(take(1)).subscribe((data) => {
+        this.weatherData = data;
+      },
+      error => console.error('HTTP Error', error),
+      () => console.log('HTTP request completed.'));
+  }
+
   setPointsOnMap(): void {
+    if (this.weatherData.length > 0) {
+      for (const p of this.weatherData) {
+        if (p.lat && p.lon && p.temp && p.cityName && p.icon && p.code === 200) {
+          this.setLabel(this.map, p.lat, p.lon, p.temp, p.cityName, p.icon);
+        } else {
+          if (p.code !== undefined) {
+            let err = new OpenWeatherError();
+            console.error(err.openWeatherError(p.code));
+          }
+        }
+      }
+    }
+  }
+
+  /*setPointsOnMap(): void {
+    this.weatherData$?.pipe(take(1)).subscribe((data) => {
+        this.weatherData = data;
+      },
+      error => console.error('HTTP Error', error),
+      () => console.log('HTTP request completed.'));
+
+    if (this.weatherData.length > 0) {
+      for (const p of this.weatherData) {
+        if (p.lat && p.lon && p.temp && p.cityName && p.icon && p.code === 200) {
+          this.setLabel(this.map, p.lat, p.lon, p.temp, p.cityName, p.icon);
+        }
+      }
+    }
+  }*/
+
+  /*setPointsOnMap(): void {
     //this.getWeatherPoints();
-    this.$weatherData?.subscribe((data) => {
+    this.weatherData$?.pipe(take(1)).subscribe((data) => {
         data.forEach((p, index) => {
           if (p.lat && p.lon && p.temp && p.cityName && p.icon && p.code === 200) {
             this.setLabel(this.map, p.lat, p.lon, p.temp, p.cityName, p.icon);
@@ -117,7 +145,7 @@ export class MapComponent implements OnInit {
       },
       error => console.error('HTTP Error', error),
       () => console.log('HTTP request completed.'));
-  }
+  }*/
 
   getBBox(): void {
     let bounds = this.map?.getBounds();
