@@ -3,7 +3,7 @@ import * as L from 'leaflet';
 import {PointsWeatherService} from "./services/points-weather.service";
 import {Observable} from "rxjs";
 import {PointsWeather} from "./models/points-weather";
-import {OpenWeatherError} from "../layout/error/open-weather-error";
+import {OpenWeatherError} from "../error/open-weather-error";
 
 
 @Component({
