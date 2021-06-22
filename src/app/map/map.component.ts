@@ -87,19 +87,22 @@ export class MapComponent implements OnInit {
   setPointsOnMap(): void {
     this.removePopups();
     this.weatherData$?.subscribe((data) => {
-        data.forEach((p, index) => {
-          if (p.lat && p.lon && p.temp && p.cityName && p.icon && p.code === 200) {
-            let popup = this.setLabel(this.map, p.lat, p.lon, p.temp, p.cityName, p.icon);
-            if (popup){
-              this.arrayOfLabels.push(popup);
+        if (data) {
+          data.forEach((p, index) => {
+            if (p.lat && p.lon && p.temp && p.cityName && p.icon && p.code === 200) {
+              let popup = this.setLabel(this.map, p.lat, p.lon, p.temp, p.cityName, p.icon);
+              if (popup) {
+                this.arrayOfLabels.push(popup);
+              }
+            } else {
+              if (p.code !== undefined) {
+                let err = new OpenWeatherError();
+                console.error(err.openWeatherError(p.code));
+              }
             }
-          } else {
-            if (p.code !== undefined) {
-              let err = new OpenWeatherError();
-              console.error(err.openWeatherError(p.code));
-            }
-          }
-        })
+
+          })
+        }
       },
       error => console.error('HTTP Error', error),
       () => console.log('HTTP request completed.'));

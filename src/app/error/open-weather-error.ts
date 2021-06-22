@@ -5,7 +5,7 @@ import {Injectable} from '@angular/core';
 })
 
 export class OpenWeatherError {
-  public openWeatherError(error: number): string {
+  public openWeatherError(error: number | null): string {
     switch (error) {
       case 400: {
         return `${error} Bad Request`
@@ -24,6 +24,9 @@ export class OpenWeatherError {
       }
       case 500: {
         return `${error} Internal Server Error`;
+      }
+      case null: {
+        return `There are probably no weather stations in the selected area`;
       }
       default: {
         return `${error} Unknown Server Error`;
