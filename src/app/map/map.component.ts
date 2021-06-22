@@ -4,6 +4,7 @@ import {PointsWeatherService} from "./services/points-weather.service";
 import {Observable} from "rxjs";
 import {PointsWeather} from "./models/points-weather";
 import {OpenWeatherError} from "../error/open-weather-error";
+import {ColorPicker} from "../utilities/color-picker";
 
 
 @Component({
@@ -53,7 +54,7 @@ export class MapComponent implements OnInit {
     }, 450);
   }
 
-  onMapMoveEnd(): void {
+  onMapChangePan(): void {
     this.getBBox();
     setTimeout(() => {
       this.getWeatherPoints();
@@ -63,6 +64,7 @@ export class MapComponent implements OnInit {
 
   setLabel(map: L.Map | undefined, lat: number, lng: number, temperature: number, city: string, icon: string): L.Popup | undefined {
     if (map !== undefined) {
+      let color = ColorPicker.setColor(temperature);
       let temp = Math.round(temperature);
 
       return L.popup({
@@ -71,7 +73,7 @@ export class MapComponent implements OnInit {
         autoClose: false,
         className: 'custom-popup'
       }).setLatLng([lat, lng])
-        .setContent(`<div style="display: flex; flex-flow: row nowrap;"><div style="padding: 0; background-color: #b3b3b3; border-radius: 4px 0 0 4px;"><img src="http://openweathermap.org/img/wn/${icon}@2x.png" alt="" style="height: 20px;"></div><div style="background-color: #233766; padding: 3px;">${temp}</div><div style="background-color: #dcb936; padding: 3px; border-radius: 0 4px 4px 0; white-space: nowrap;">${city}</div></div>`)
+        .setContent(`<div style="display: flex; flex-flow: row nowrap;"><div style="padding: 0; background-color: #b3b3b3; border-radius: 4px 0 0 4px;"><img src="http://openweathermap.org/img/wn/${icon}@2x.png" alt="" style="height: 20px;"></div><div style="background-color: #233766; padding: 3px;">${temp}</div><div style="background-color: ${color}; padding: 3px; border-radius: 0 4px 4px 0; white-space: nowrap;">${city}</div></div>`)
         .openOn(map);
     }
     return undefined;
@@ -87,19 +89,22 @@ export class MapComponent implements OnInit {
   setPointsOnMap(): void {
     this.removePopups();
     this.weatherData$?.subscribe((data) => {
-        data.forEach((p, index) => {
-          if (p.lat && p.lon && p.temp && p.cityName && p.icon && p.code === 200) {
-            let popup = this.setLabel(this.map, p.lat, p.lon, p.temp, p.cityName, p.icon);
-            if (popup){
-              this.arrayOfLabels.push(popup);
+        if (data) {
+          data.forEach((p, index) => {
+            if (p.lat && p.lon && p.temp && p.cityName && p.icon && p.code === 200) {
+              let popup = this.setLabel(this.map, p.lat, p.lon, p.temp, p.cityName, p.icon);
+              if (popup) {
+                this.arrayOfLabels.push(popup);
+              }
+            } else {
+              if (p.code !== undefined) {
+                let err = new OpenWeatherError();
+                console.error(err.openWeatherError(p.code));
+              }
             }
-          } else {
-            if (p.code !== undefined) {
-              let err = new OpenWeatherError();
-              console.error(err.openWeatherError(p.code));
-            }
-          }
-        })
+
+          })
+        }
       },
       error => console.error('HTTP Error', error),
       () => console.log('HTTP request completed.'));
