@@ -46,33 +46,18 @@ export class MapComponent implements OnInit {
   onMapReady(map: L.Map) {
     this.map = map;
     this.getBBox();
-    //this.getWeatherPoints();
-
     setTimeout(() => {
       this.getWeatherPoints();
-    }, 500);
-
-    this.setPointsOnMap();
-
-    console.log(this.lonLeft);
-    console.log(this.latBottom);
-    console.log(this.lonRight);
-    console.log(this.latTop);
+      this.setPointsOnMap();
+    }, 400);
   }
 
   onMapMoveEnd(): void {
     this.getBBox();
-    //this.getWeatherPoints();
     setTimeout(() => {
       this.getWeatherPoints();
-    }, 500);
-
-    this.setPointsOnMap();
-
-    console.log(this.lonLeft);
-    console.log(this.latBottom);
-    console.log(this.lonRight);
-    console.log(this.latTop);
+      this.setPointsOnMap();
+    }, 400);
   }
 
   setLabel(map: L.Map | undefined, lat: number, lng: number, temperature: number, city: string, icon: string): void {
@@ -92,7 +77,6 @@ export class MapComponent implements OnInit {
   }
 
   getWeatherPoints(): void {
-    //let x = this.getBBox();
     if (this.lonLeft && this.latBottom && this.lonRight && this.latTop && this.zoom) {
       console.log("INSIDE WWW")
       this.$weatherData = this.service.getWeatherBBox(
@@ -101,7 +85,7 @@ export class MapComponent implements OnInit {
   }
 
   setPointsOnMap(): void {
-    //this.getWeatherPoints();
+    this.map?.closePopup();
     this.$weatherData?.subscribe((data) => {
         data.forEach((p, index) => {
           if (p.lat && p.lon && p.temp && p.cityName && p.icon && p.code === 200) {
