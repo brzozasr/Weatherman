@@ -34,7 +34,8 @@ export class MapComponent implements OnInit {
   latTop?: number;
   zoom?: number;
 
-  $weatherData?: Observable<PointsWeather[]>;
+  weatherData$?: Observable<PointsWeather[]>;
+  arrayOfLabels: L.Popup[] = [];
 
   constructor(private service: PointsWeatherService) {
   }
@@ -49,7 +50,7 @@ export class MapComponent implements OnInit {
     setTimeout(() => {
       this.getWeatherPoints();
       this.setPointsOnMap();
-    }, 400);
+    }, 450);
   }
 
   onMapMoveEnd(): void {
@@ -57,40 +58,41 @@ export class MapComponent implements OnInit {
     setTimeout(() => {
       this.getWeatherPoints();
       this.setPointsOnMap();
-    }, 400);
+    }, 450);
   }
 
-  setLabel(map: L.Map | undefined, lat: number, lng: number, temperature: number, city: string, icon: string): void {
+  setLabel(map: L.Map | undefined, lat: number, lng: number, temperature: number, city: string, icon: string): L.Popup | undefined {
     if (map !== undefined) {
       let temp = Math.round(temperature);
 
-      L.popup({
+      return L.popup({
         offset: L.point(45, 35),
         closeButton: false,
         autoClose: false,
         className: 'custom-popup'
-      })
-        .setLatLng([lat, lng])
+      }).setLatLng([lat, lng])
         .setContent(`<div style="display: flex; flex-flow: row nowrap;"><div style="padding: 0; background-color: #b3b3b3; border-radius: 4px 0 0 4px;"><img src="http://openweathermap.org/img/wn/${icon}@2x.png" alt="" style="height: 20px;"></div><div style="background-color: #233766; padding: 3px;">${temp}</div><div style="background-color: #dcb936; padding: 3px; border-radius: 0 4px 4px 0; white-space: nowrap;">${city}</div></div>`)
         .openOn(map);
     }
+    return undefined;
   }
 
   getWeatherPoints(): void {
     if (this.lonLeft && this.latBottom && this.lonRight && this.latTop && this.zoom) {
-      console.log("INSIDE WWW")
-      this.$weatherData = this.service.getWeatherBBox(
+      this.weatherData$ = this.service.getWeatherBBox(
         this.lonLeft, this.latBottom, this.lonRight, this.latTop, this.zoom);
     }
   }
 
   setPointsOnMap(): void {
-    this.map?.closePopup();
-    this.$weatherData?.subscribe((data) => {
+    this.removePopups();
+    this.weatherData$?.subscribe((data) => {
         data.forEach((p, index) => {
           if (p.lat && p.lon && p.temp && p.cityName && p.icon && p.code === 200) {
-            this.setLabel(this.map, p.lat, p.lon, p.temp, p.cityName, p.icon);
-            console.log(index);
+            let popup = this.setLabel(this.map, p.lat, p.lon, p.temp, p.cityName, p.icon);
+            if (popup){
+              this.arrayOfLabels.push(popup);
+            }
           } else {
             if (p.code !== undefined) {
               let err = new OpenWeatherError();
@@ -112,6 +114,15 @@ export class MapComponent implements OnInit {
     this.lonRight = bounds?.getEast();
     this.latTop = bounds?.getNorth();
     this.zoom = zoomMap;
+  }
+
+  removePopups(): void {
+    if (this.arrayOfLabels.length > 0) {
+      for (const popup of this.arrayOfLabels) {
+        popup.remove();
+      }
+      this.arrayOfLabels = [];
+    }
   }
 
   /*getBBox(): any {
