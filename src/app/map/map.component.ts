@@ -1,5 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import * as L from 'leaflet';
+import {PointsWeatherService} from "./services/points-weather.service";
+import {Observable} from "rxjs";
+import {PointsWeather} from "./models/points-weather";
+import {OpenWeatherError} from "../error/open-weather-error";
 
 
 @Component({
@@ -18,53 +22,119 @@ export class MapComponent implements OnInit {
       minZoom: 3,
       maxZoom: 19,
       detectRetina: true,
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> | &copy; <a href="https://openweathermap.org">OpenWeather</a>'
     })],
-    zoom: 9,
+    zoom: 8,
     center: this.centroid
   };
 
-  constructor() {
+  lonLeft?: number;
+  latBottom?: number;
+  lonRight?: number;
+  latTop?: number;
+  zoom?: number;
+
+  weatherData$?: Observable<PointsWeather[]>;
+  arrayOfLabels: L.Popup[] = [];
+
+  constructor(private service: PointsWeatherService) {
   }
 
   ngOnInit(): void {
+    this.getBBox();
   }
 
   onMapReady(map: L.Map) {
-    // get a local reference to the map as we need it later
     this.map = map;
-
-    this.setLabels(map, 52.2298, 21.0118, 31.5, 'Warszawa', '01n');
+    this.getBBox();
+    setTimeout(() => {
+      this.getWeatherPoints();
+      this.setPointsOnMap();
+    }, 450);
   }
 
   onMapMoveEnd(): void {
-    let bounds = this.map?.getBounds();
-    let zoomMap = this.map?.getZoom();
-
-    console.log(bounds?.getWest());
-    console.log(bounds?.getSouth());
-    console.log(bounds?.getEast());
-    console.log(bounds?.getNorth());
-    console.log(zoomMap);
-
-    this.setLabels(this.map, 52.2298, 21.0118, 31.5, 'Warszawa', '01n');
+    this.getBBox();
+    setTimeout(() => {
+      this.getWeatherPoints();
+      this.setPointsOnMap();
+    }, 450);
   }
 
-  setLabels(map: L.Map | undefined, lat: number, lng: number, temperature: number, city: string, img: string): void {
+  setLabel(map: L.Map | undefined, lat: number, lng: number, temperature: number, city: string, icon: string): L.Popup | undefined {
     if (map !== undefined) {
-      map.closePopup();
-
       let temp = Math.round(temperature);
 
-      let popup = L.popup({
+      return L.popup({
         offset: L.point(45, 35),
         closeButton: false,
         autoClose: false,
         className: 'custom-popup'
-      })
-        .setLatLng([lat, lng])
-        .setContent(`<div style="display: flex; flex-flow: row nowrap;"><div style="padding: 0; background-color: #b3b3b3; border-radius: 4px 0 0 4px;"><img src="http://openweathermap.org/img/wn/${img}@2x.png" alt="" style="height: 20px;"></div><div style="background-color: #233766; padding: 3px;">${temp}</div><div style="background-color: #dcb936; padding: 3px; border-radius: 0 4px 4px 0;">${city}</div></div>`)
+      }).setLatLng([lat, lng])
+        .setContent(`<div style="display: flex; flex-flow: row nowrap;"><div style="padding: 0; background-color: #b3b3b3; border-radius: 4px 0 0 4px;"><img src="http://openweathermap.org/img/wn/${icon}@2x.png" alt="" style="height: 20px;"></div><div style="background-color: #233766; padding: 3px;">${temp}</div><div style="background-color: #dcb936; padding: 3px; border-radius: 0 4px 4px 0; white-space: nowrap;">${city}</div></div>`)
         .openOn(map);
     }
+    return undefined;
   }
+
+  getWeatherPoints(): void {
+    if (this.lonLeft && this.latBottom && this.lonRight && this.latTop && this.zoom) {
+      this.weatherData$ = this.service.getWeatherBBox(
+        this.lonLeft, this.latBottom, this.lonRight, this.latTop, this.zoom);
+    }
+  }
+
+  setPointsOnMap(): void {
+    this.removePopups();
+    this.weatherData$?.subscribe((data) => {
+        data.forEach((p, index) => {
+          if (p.lat && p.lon && p.temp && p.cityName && p.icon && p.code === 200) {
+            let popup = this.setLabel(this.map, p.lat, p.lon, p.temp, p.cityName, p.icon);
+            if (popup){
+              this.arrayOfLabels.push(popup);
+            }
+          } else {
+            if (p.code !== undefined) {
+              let err = new OpenWeatherError();
+              console.error(err.openWeatherError(p.code));
+            }
+          }
+        })
+      },
+      error => console.error('HTTP Error', error),
+      () => console.log('HTTP request completed.'));
+  }
+
+  getBBox(): void {
+    let bounds = this.map?.getBounds();
+    let zoomMap = this.map?.getZoom();
+
+    this.lonLeft = bounds?.getWest();
+    this.latBottom = bounds?.getSouth();
+    this.lonRight = bounds?.getEast();
+    this.latTop = bounds?.getNorth();
+    this.zoom = zoomMap;
+  }
+
+  removePopups(): void {
+    if (this.arrayOfLabels.length > 0) {
+      for (const popup of this.arrayOfLabels) {
+        popup.remove();
+      }
+      this.arrayOfLabels = [];
+    }
+  }
+
+  /*getBBox(): any {
+    let bounds = this.map?.getBounds();
+    let zoomMap = this.map?.getZoom();
+
+    return{
+      lonLeft: bounds?.getWest(),
+      latBottom: bounds?.getSouth(),
+      lonRight: bounds?.getEast(),
+      latTop: bounds?.getNorth(),
+      zoom: zoomMap,
+    }
+  }*/
 }

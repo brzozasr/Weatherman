@@ -2,7 +2,11 @@
   <div id="map" class="custom-popup"
        leaflet
        [leafletOptions]="options"
-       (leafletMapMoveEnd)="onMapMoveEnd()"
-       (leafletMapReady)="onMapReady($event)">
+       (leafletMapReady)="onMapReady($event)"
+       (leafletMouseUp)="onMapMoveEnd()">
   </div>
 </div>
+
+<!--
+(leafletMapMoveEnd)="onMapMoveEnd()"
+(leafletMouseUp)="onMapMoveEnd()"-->
