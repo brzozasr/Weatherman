@@ -54,7 +54,7 @@ export class MapComponent implements OnInit {
     }, 450);
   }
 
-  onMapMoveEnd(): void {
+  onMapChangePan(): void {
     this.getBBox();
     setTimeout(() => {
       this.getWeatherPoints();
