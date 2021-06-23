@@ -5,6 +5,8 @@ import {Observable} from "rxjs";
 import {PointsWeather} from "./models/points-weather";
 import {OpenWeatherError} from "../error/open-weather-error";
 import {ColorPicker} from "../utilities/color-picker";
+import {MatDialog} from "@angular/material/dialog";
+import {MapErrorDialogComponent} from "../map-error-dialog/map-error-dialog.component";
 
 
 @Component({
@@ -43,7 +45,8 @@ export class MapComponent implements OnInit {
 
   constructor(private service: PointsWeatherService,
               private openWeatherError: OpenWeatherError,
-              private colorPicker: ColorPicker) {
+              private colorPicker: ColorPicker,
+              public errorDialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -103,6 +106,7 @@ export class MapComponent implements OnInit {
               }
               if (this.showWarning) {
                 this.showWarning = false;
+                this.openErrorDialog();
               }
             }
 
@@ -139,6 +143,14 @@ export class MapComponent implements OnInit {
       }
       this.arrayOfLabels = [];
     }
+  }
+
+  openErrorDialog(): void {
+    const dialogRef = this.errorDialog.open(MapErrorDialogComponent, {
+      data: {
+        warning: this.warning
+      }
+    });
   }
 
   /*getBBox(): any {

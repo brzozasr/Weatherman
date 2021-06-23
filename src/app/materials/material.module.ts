@@ -5,6 +5,7 @@ import {MatButtonModule} from '@angular/material/button';
 import { MatTabsModule } from "@angular/material/tabs";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { FormsModule } from "@angular/forms";
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
   declarations: [],
@@ -15,13 +16,15 @@ import { FormsModule } from "@angular/forms";
     FormsModule,
     MatTabsModule,
     BrowserAnimationsModule,
+    MatDialogModule
   ],
   exports: [
     MatIconModule,
     MatButtonModule,
     FormsModule,
     MatTabsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatDialogModule
   ]
 })
 export class MaterialModule {

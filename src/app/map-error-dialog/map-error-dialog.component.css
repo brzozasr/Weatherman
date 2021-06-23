@@ -1,0 +1,14 @@
+.mat-dialog-title {
+  text-align: center;
+  color: red;
+}
+
+.mat-dialog-content {
+  max-width: 300px;
+  text-align: justify;
+  color: red;
+}
+
+.mat-dialog-actions {
+  text-align: center;
+}
