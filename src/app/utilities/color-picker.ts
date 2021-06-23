@@ -9,7 +9,7 @@ export class ColorPicker {
   constructor() {
   }
 
-  public static setColor(temp: number): any {
+  public setColor(temp: number): any {
     switch (true) {
       case (temp > 60 ):
         return '#cc0000';

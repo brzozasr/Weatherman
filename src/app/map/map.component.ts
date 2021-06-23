@@ -38,7 +38,12 @@ export class MapComponent implements OnInit {
   weatherData$?: Observable<PointsWeather[]>;
   arrayOfLabels: L.Popup[] = [];
 
-  constructor(private service: PointsWeatherService) {
+  warning: string = '';
+  showWarning: boolean = true;
+
+  constructor(private service: PointsWeatherService,
+              private openWeatherError: OpenWeatherError,
+              private colorPicker: ColorPicker) {
   }
 
   ngOnInit(): void {
@@ -47,24 +52,16 @@ export class MapComponent implements OnInit {
 
   onMapReady(map: L.Map) {
     this.map = map;
-    this.getBBox();
-    setTimeout(() => {
-      this.getWeatherPoints();
-      this.setPointsOnMap();
-    }, 450);
+    this.addPointsToMap();
   }
 
   onMapChangePan(): void {
-    this.getBBox();
-    setTimeout(() => {
-      this.getWeatherPoints();
-      this.setPointsOnMap();
-    }, 450);
+    this.addPointsToMap();
   }
 
   setLabel(map: L.Map | undefined, lat: number, lng: number, temperature: number, city: string, icon: string): L.Popup | undefined {
     if (map !== undefined) {
-      let color = ColorPicker.setColor(temperature);
+      let color = this.colorPicker.setColor(temperature);
       let temp = Math.round(temperature);
 
       return L.popup({
@@ -93,13 +90,19 @@ export class MapComponent implements OnInit {
           data.forEach((p, index) => {
             if (p.lat && p.lon && p.temp && p.cityName && p.icon && p.code === 200) {
               let popup = this.setLabel(this.map, p.lat, p.lon, p.temp, p.cityName, p.icon);
+              this.warning = '';
               if (popup) {
                 this.arrayOfLabels.push(popup);
               }
+              if (!this.showWarning) {
+                this.showWarning = true;
+              }
             } else {
               if (p.code !== undefined) {
-                let err = new OpenWeatherError();
-                console.error(err.openWeatherError(p.code));
+                console.error(this.warning = this.openWeatherError.catchWeatherError(p.code));
+              }
+              if (this.showWarning) {
+                this.showWarning = false;
               }
             }
 
@@ -108,6 +111,14 @@ export class MapComponent implements OnInit {
       },
       error => console.error('HTTP Error', error),
       () => console.log('HTTP request completed.'));
+  }
+
+  addPointsToMap(): void {
+    this.getBBox();
+    setTimeout(() => {
+      this.getWeatherPoints();
+      this.setPointsOnMap();
+    }, 450);
   }
 
   getBBox(): void {
