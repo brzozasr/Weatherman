@@ -22,7 +22,9 @@ export class MapSearchComponent implements OnInit {
         </svg>`;
 
       const icon = `<div id="search-icon" style="display: block">${searchSvg}</div>
-                    <div id="search-text-field" style="display: none;"><input type="text"></div>`;
+                    <div id="search-text-field" style="display: none;"><input type="text"></div>
+                    <div id="result-div" style="display: none; position: absolute; left: 40px; top: 31px; background-color: #fff; min-width: 151px; max-height: 300px; padding: 1px; overflow-y: scroll;">
+                    test test test c test v test test test<br>test1<br>test2<br>test1<br>test2<br>test1<br>test2<br>test1<br>test2<br>test1<br>test2<br>test1<br>test2<br>test1<br>test2<br>test1<br>test2<br>test1<br>test2<br>test1<br>test2<br>test1<br>test2<br>test1<br>test2<br>test1<br>test2<br>test1<br>test2<br>test1<br>test2<br>test1<br>test2<br>test1<br>test2</div>`;
 
       const container = L.DomUtil.create('div');
 
@@ -41,21 +43,39 @@ export class MapSearchComponent implements OnInit {
 
       container.insertAdjacentHTML('beforeend', icon);
 
+      let textField = document.getElementById('search-text-field');
+      let resultDiv = document.getElementById('result-div');
+
       container.onmouseover = function () {
         container.style.width = '200px';
         container.style.height = '40px';
-        let textField = document.getElementById('search-text-field');
+        textField = document.getElementById('search-text-field');
         if (textField !== null) {
           textField.style.display = 'block';
+          resultDiv = document.getElementById('result-div');
+          if (resultDiv !== null) {
+            resultDiv.style.display = 'block';
+          }
         }
       }
       container.onmouseout = function () {
         container.style.backgroundColor = 'white';
         container.style.width = '30px';
         container.style.height = '30px';
-        let textField = document.getElementById('search-text-field');
+        textField = document.getElementById('search-text-field');
         if (textField !== null) {
           textField.style.display = 'none';
+          resultDiv = document.getElementById('result-div');
+          if (resultDiv !== null) {
+            resultDiv.style.display = 'none';
+          }
+        }
+      }
+
+      container.onkeydown = () => {
+        textField = document.getElementById('search-text-field');
+        if (textField !== null) {
+
         }
       }
 
