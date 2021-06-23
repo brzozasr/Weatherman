@@ -3,7 +3,8 @@
        leaflet
        [leafletOptions]="options"
        (leafletMapReady)="onMapReady($event)"
-       (leafletMouseUp)="onMapMoveEnd()">
+       (leafletMouseUp)="onMapChangePan()"
+       (leafletMapZoom)="onMapChangePan()">
   </div>
 </div>
 
