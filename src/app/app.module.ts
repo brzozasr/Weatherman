@@ -11,6 +11,7 @@ import { MapComponent } from './map/map.component';
 import {LeafletModule} from "@asymmetrik/ngx-leaflet";
 import {HttpClientModule} from "@angular/common/http";
 import { MapErrorDialogComponent } from './map-error-dialog/map-error-dialog.component';
+import { MapSearchComponent } from './map-search/map-search.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { MapErrorDialogComponent } from './map-error-dialog/map-error-dialog.com
     AppComponent,
     LayoutComponent,
     MapComponent,
-    MapErrorDialogComponent
+    MapErrorDialogComponent,
+    MapSearchComponent
   ],
   imports: [
     BrowserModule,
