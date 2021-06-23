@@ -5,10 +5,10 @@ import {Injectable} from '@angular/core';
 })
 
 export class OpenWeatherError {
-  public openWeatherError(error: number | null): string {
+  public catchWeatherError(error: number | null): string {
     switch (error) {
       case 400: {
-        return `${error} Bad Request`
+        return `${error} Bad Request: Requested area is larger than allowed for your account type (25.00 square degrees)`
       }
       case 401: {
         return `${error} Unauthorized: Did not specify your API key in API request or have free subscription and try to get access to our paid services`

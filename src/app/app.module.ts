@@ -10,13 +10,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MapComponent } from './map/map.component';
 import {LeafletModule} from "@asymmetrik/ngx-leaflet";
 import {HttpClientModule} from "@angular/common/http";
+import { MapErrorDialogComponent } from './map-error-dialog/map-error-dialog.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LayoutComponent,
-    MapComponent
+    MapComponent,
+    MapErrorDialogComponent
   ],
   imports: [
     BrowserModule,
