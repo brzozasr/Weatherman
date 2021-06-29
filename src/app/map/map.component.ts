@@ -55,6 +55,7 @@ export class MapComponent implements OnInit {
 
   onMapReady(map: L.Map) {
     this.map = map;
+    L.control.scale().addTo(map);
     this.addPointsToMap();
   }
 

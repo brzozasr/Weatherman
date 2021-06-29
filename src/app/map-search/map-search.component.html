@@ -5,14 +5,14 @@
     </svg>
   </div>
   <div id="search-div-field">
-    <input id="search-field" type="text" #fieldValue autocomplete="off" (keyup)="onSearchKeyUp(fieldValue.value)">
+    <input id="search-field" type="text" [value]="cityValue" #fieldValue autocomplete="off" (keyup)="onSearchKeyUp(fieldValue.value)">
   </div>
   <div id="result-div">
     <div>
       <div class="div-city-item"
            *ngFor="let city of searchCity"
            id="{{city.id}}"
-           (click)="onResultDivClick(city?.coordLon, city?.coordLat)">
+           (click)="onResultDivClick(city?.coordLon, city?.coordLat, city?.name, city?.country); fieldValue.select()">
         {{city.name}}, {{city.country}}
       </div>
     </div>
