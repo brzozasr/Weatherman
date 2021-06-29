@@ -1,16 +1,23 @@
-import {AfterContentChecked, Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import * as L from 'leaflet';
+import {SearchCity} from "../map/models/search-city";
+import {CitiesService} from "./service/cities.service";
+import {CityNotFound} from "../map/models/city-not-found";
 
 @Component({
   selector: 'app-map-search',
   templateUrl: './map-search.component.html',
   styleUrls: ['./map-search.component.css']
 })
-export class MapSearchComponent implements OnInit, AfterContentChecked {
+export class MapSearchComponent implements OnInit {
 
   @Input() passedMap: L.Map | undefined;
+  searchContainer: L.Control | undefined;
+  cityNotFound: CityNotFound | undefined;
+  searchCity: SearchCity[] | undefined;
+  //cities$: Observable<SearchCity[] | CityNotFound>;
 
-  searchControl = L.Control.extend({
+  /*searchControl = L.Control.extend({
     options: {
       position: 'topleft'
     },
@@ -134,33 +141,93 @@ export class MapSearchComponent implements OnInit, AfterContentChecked {
   });
 
   objSearchControl = new this.searchControl;
-
-  constructor() {
+*/
+  constructor(private service: CitiesService) {
+    this.getCities('');
   }
 
   ngOnInit(): void {
-    this.addSearchControl();
+    if (this.passedMap) {
+      let Custom = L.Control.extend({
+        onAdd(map: L.Map) {
+          let container = L.DomUtil.get('search-container');
+
+          if (container !== null) {
+            container.onmouseover = function () {
+              if (container !== null) {
+                container.style.width = '200px';
+                container.style.height = '40px';
+              }
+              let searchDivField = document.getElementById('search-div-field');
+              if (searchDivField !== null) {
+                searchDivField.style.display = 'block';
+
+                let searchField = document.getElementById('search-field');
+                if (searchField !== null) {
+                  searchField.focus();
+                }
+
+                let resultDiv = document.getElementById('result-div');
+                if (resultDiv !== null) {
+                  resultDiv.style.display = 'block';
+                }
+              }
+            }
+
+            container.onmouseout = function () {
+              if (container !== null) {
+                container.style.backgroundColor = 'white';
+                container.style.width = '30px';
+                container.style.height = '30px';
+              }
+
+              let searchDivField = document.getElementById('search-div-field');
+              if (searchDivField !== null) {
+                searchDivField.style.display = 'none';
+                let resultDiv = document.getElementById('result-div');
+                if (resultDiv !== null) {
+                  resultDiv.style.display = 'none';
+                }
+              }
+            }
+          }
+
+          return container;
+        },
+        onRemove(map: L.Map) {
+        }
+      });
+
+      this.searchContainer = new Custom({
+        position: 'topleft'
+      }).addTo(this.passedMap);
+    }
   }
 
-  ngAfterContentChecked() {
-    this.displayTextField();
-    let test = document.getElementById('search-container');
-    console.log(test);
+  getCities(city: string): void {
+    this.service.getCitiesService(city)
+      .subscribe((data) => {
+          if ('detail' in data) {
+            this.cityNotFound = data;
+          } else {
+            this.searchCity = data;
+          }
+        }
+      );
   }
 
-  addSearchControl(): void {
-    this.passedMap?.addControl(this.objSearchControl);
+  onSearchKeyUp(txt: string): void {
+    this.getCities(txt);
   }
 
-  displayTextField(): void {
-    //var cont = this.passedMap?.getContainer();
-    console.log(this.objSearchControl.searchCity());
+  onResultDivClick(lon?: number, lat?: number): void {
+    if (lon !== undefined && lat !== undefined && this.passedMap !== undefined) {
+      console.log(`${lon}, ${lat}`);
+      let zoom = this.passedMap.getZoom();
+      zoom = zoom >= 8 ? zoom : 8;
+      this.passedMap.setView(new L.LatLng(lat, lon), zoom);
+    }
   }
-
-  test(): void {
-    console.log('RRRRRRRR');
-  }
-
 }
 
 /*
