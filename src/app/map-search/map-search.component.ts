@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {AfterContentChecked, Component, Input, OnInit} from '@angular/core';
 import * as L from 'leaflet';
 
 @Component({
@@ -6,12 +6,11 @@ import * as L from 'leaflet';
   templateUrl: './map-search.component.html',
   styleUrls: ['./map-search.component.css']
 })
-export class MapSearchComponent implements OnInit {
+export class MapSearchComponent implements OnInit, AfterContentChecked {
 
   @Input() passedMap: L.Map | undefined;
 
   searchControl = L.Control.extend({
-
     options: {
       position: 'topleft'
     },
@@ -93,12 +92,14 @@ export class MapSearchComponent implements OnInit {
       container.onkeydown = function () {
         searchDivField = document.getElementById('search-field');
         if (searchDivField !== null) {
-          console.log(searchDivField);
+          //console.log(searchDivField);
         }
       }
 
+      let coords: string = ``;
+
       container.onclick = function () {
-        console.log('buttonClicked');
+        //console.log('buttonClicked');
         resultDiv = document.getElementById('result-div');
         let searchText = document.querySelector('input');
         if (resultDiv !== null) {
@@ -108,14 +109,14 @@ export class MapSearchComponent implements OnInit {
             let txt = e.target.innerText;
             if (searchText !== null && elemStr.startsWith('<div data-coords="')) {
               searchText.value = txt;
-              console.log(element.dataset.coords);
-
+              //console.log(element.dataset.coords);
+              coords = element.dataset.coords;
               searchDivField = document.getElementById('search-div-field');
               if (searchDivField !== null) {
                 searchDivField.style.display = 'none';
                 if (resultDiv !== null) {
                   resultDiv.style.display = 'none';
-                  searchText.value = '';
+                  //searchText.value = '';
                 }
               }
             }
@@ -127,7 +128,8 @@ export class MapSearchComponent implements OnInit {
     },
 
     searchCity: () => {
-      console.log('TEST !!!')
+      //console.log(document.querySelector('input')?.value);
+      return document.querySelector('input')?.value;
     }
   });
 
@@ -140,18 +142,23 @@ export class MapSearchComponent implements OnInit {
     this.addSearchControl();
   }
 
+  ngAfterContentChecked() {
+    this.displayTextField();
+    let test = document.getElementById('search-container');
+    console.log(test);
+  }
+
   addSearchControl(): void {
     this.passedMap?.addControl(this.objSearchControl);
   }
 
   displayTextField(): void {
     //var cont = this.passedMap?.getContainer();
-    console.log('RRVVRR');
-
+    console.log(this.objSearchControl.searchCity());
   }
 
-  add(): string {
-    return 'test';
+  test(): void {
+    console.log('RRRRRRRR');
   }
 
 }
