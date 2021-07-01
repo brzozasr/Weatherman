@@ -189,6 +189,11 @@ export class MapSearchComponent implements OnInit {
                   resultDiv.style.display = 'none';
                 }
               }
+
+              let focusedDiv = document.querySelector('.div-city-item-focus');
+              if (focusedDiv !== null) {
+                focusedDiv.className = 'div-city-item';
+              }
             }
           }
 
@@ -250,12 +255,10 @@ export class MapSearchComponent implements OnInit {
           }
         }
       }, 300);
-
     }
   }
 
   onKeyArrowDown(): void {
-    let searchInput = document.getElementById('search-field');
     let searchDivField = document.getElementById('search-div-field');
     if (searchDivField !== null) {
       document.onkeydown = (event) => {
@@ -264,49 +267,59 @@ export class MapSearchComponent implements OnInit {
           switch (event.key) {
             case 'ArrowUp':
               this.moveFocusUp(focusedDiv);
+              event.preventDefault();
               break;
             case 'ArrowDown':
               this.moveFocusDown(focusedDiv);
+              event.preventDefault();
               break;
           }
         } else {
-          let allDivs = document.querySelectorAll('.div-city-item');
-          if (allDivs !== null && allDivs.length > 0) {
-            searchInput?.blur();
-            let firstDivForFocus = document.getElementById(allDivs[0].id);
-            if (firstDivForFocus !== null) {
-              firstDivForFocus.className = 'div-city-item-focus';
-              firstDivForFocus.focus();
-            }
+          if (event.key === 'ArrowDown') {
+            this.focusFirstElement();
+            event.preventDefault();
           }
         }
       }
     }
   }
 
+  focusFirstElement(): void {
+    let searchInput = document.getElementById('search-field');
+    let allDivs = document.querySelectorAll('.div-city-item');
+    if (allDivs !== null && allDivs.length > 0) {
+      //searchInput?.blur();
+      let firstDivForFocus = document.getElementById(allDivs[0].id);
+      if (firstDivForFocus !== null) {
+        firstDivForFocus.className = 'div-city-item-focus';
+        firstDivForFocus.focus();
+      }
+    }
+  }
+
   moveFocusUp(element: Element): void {
-    let currentElement = document.getElementById(element.id);
-    currentElement?.blur();
+    //let currentElement = document.getElementById(element.id);
+    //currentElement?.blur();
     let previousDiv = element.previousElementSibling;
     if (previousDiv !== null) {
       element.className = 'div-city-item';
       previousDiv.className = 'div-city-item-focus';
-      previousDiv.scrollIntoView(false);
+      //previousDiv.scrollIntoView(false);
       let previousElement = document.getElementById(previousDiv.id);
       previousElement?.focus();
     }
   }
 
   moveFocusDown(element: Element): void {
-    let currentElement = document.getElementById(element.id);
-    currentElement?.blur();
+    //let currentElement = document.getElementById(element.id);
+    //currentElement?.blur();
     let nextDiv = element.nextElementSibling;
     if (nextDiv !== null) {
       element.className = 'div-city-item';
       nextDiv.className = 'div-city-item-focus';
-      nextDiv.scrollIntoView(false);
-      let previousElement = document.getElementById(nextDiv.id);
-      previousElement?.focus();
+      //nextDiv.scrollIntoView(false);
+      let nextElement = document.getElementById(nextDiv.id);
+      nextElement?.focus();
     }
   }
 

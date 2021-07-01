@@ -44,8 +44,9 @@
   background-color: #d9d9d9;
 }
 
-.div-city-item:focus {
-  background-color: #d9d9d9;
+*[tabindex="-1"]:focus {
+  outline-width: 0px;
+  outline-style: none;
 }
 
 .div-city-item-focus {
