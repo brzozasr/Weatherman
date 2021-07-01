@@ -254,6 +254,62 @@ export class MapSearchComponent implements OnInit {
     }
   }
 
+  onKeyArrowDown(): void {
+    let searchInput = document.getElementById('search-field');
+    let searchDivField = document.getElementById('search-div-field');
+    if (searchDivField !== null) {
+      document.onkeydown = (event) => {
+        let focusedDiv = document.querySelector('.div-city-item-focus');
+        if (focusedDiv !== null) {
+          switch (event.key) {
+            case 'ArrowUp':
+              this.moveFocusUp(focusedDiv);
+              break;
+            case 'ArrowDown':
+              this.moveFocusDown(focusedDiv);
+              break;
+          }
+        } else {
+          let allDivs = document.querySelectorAll('.div-city-item');
+          if (allDivs !== null && allDivs.length > 0) {
+            searchInput?.blur();
+            let firstDivForFocus = document.getElementById(allDivs[0].id);
+            if (firstDivForFocus !== null) {
+              firstDivForFocus.className = 'div-city-item-focus';
+              firstDivForFocus.focus();
+            }
+          }
+        }
+      }
+    }
+  }
+
+  moveFocusUp(element: Element): void {
+    let currentElement = document.getElementById(element.id);
+    currentElement?.blur();
+    let previousDiv = element.previousElementSibling;
+    if (previousDiv !== null) {
+      element.className = 'div-city-item';
+      previousDiv.className = 'div-city-item-focus';
+      previousDiv.scrollIntoView(false);
+      let previousElement = document.getElementById(previousDiv.id);
+      previousElement?.focus();
+    }
+  }
+
+  moveFocusDown(element: Element): void {
+    let currentElement = document.getElementById(element.id);
+    currentElement?.blur();
+    let nextDiv = element.nextElementSibling;
+    if (nextDiv !== null) {
+      element.className = 'div-city-item';
+      nextDiv.className = 'div-city-item-focus';
+      nextDiv.scrollIntoView(false);
+      let previousElement = document.getElementById(nextDiv.id);
+      previousElement?.focus();
+    }
+  }
+
   setZoom(zoom: number): any {
     switch (zoom) {
       case 3:
