@@ -16,7 +16,7 @@ import {MapErrorDialogComponent} from "../map-error-dialog/map-error-dialog.comp
 })
 export class MapComponent implements OnInit {
 
-  private map: L.Map | undefined;
+  public map: L.Map | undefined;
   private centroid: L.LatLngExpression = [52.231821, 21.020862]; // Warsaw
 
   options = {
@@ -25,7 +25,7 @@ export class MapComponent implements OnInit {
       minZoom: 3,
       maxZoom: 19,
       detectRetina: true,
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> | &copy; <a href="https://openweathermap.org">OpenWeather</a>'
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | &copy; <a href="https://openweathermap.org">OpenWeather</a>'
     })],
     zoom: 8,
     center: this.centroid
@@ -55,6 +55,7 @@ export class MapComponent implements OnInit {
 
   onMapReady(map: L.Map) {
     this.map = map;
+    L.control.scale().addTo(map);
     this.addPointsToMap();
   }
 
@@ -64,8 +65,8 @@ export class MapComponent implements OnInit {
 
   setLabel(map: L.Map | undefined, lat: number, lng: number, temperature: number, city: string, icon: string): L.Popup | undefined {
     if (map !== undefined) {
-      let color = this.colorPicker.setColor(temperature);
       let temp = Math.round(temperature);
+      let color = this.colorPicker.setColor(temp);
 
       return L.popup({
         offset: L.point(45, 35),
