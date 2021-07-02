@@ -12,6 +12,7 @@ import {LeafletModule} from "@asymmetrik/ngx-leaflet";
 import {HttpClientModule} from "@angular/common/http";
 import { MapErrorDialogComponent } from './map-error-dialog/map-error-dialog.component';
 import { MapSearchComponent } from './map-search/map-search.component';
+import {NgxEchartsModule} from "ngx-echarts";
 
 
 @NgModule({
@@ -30,6 +31,9 @@ import { MapSearchComponent } from './map-search/map-search.component';
     LeafletModule,
     HttpClientModule,
     AppRoutingModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts')
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]
