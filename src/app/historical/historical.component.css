@@ -1,0 +1,7 @@
+#historical-container {
+  height: calc(100vh - 40px - 80px);
+  width: calc(100% - 20px);
+  padding: 10px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
