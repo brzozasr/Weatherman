@@ -28,7 +28,7 @@ export class MapComponent implements OnInit {
       detectRetina: true,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | &copy; <a href="https://openweathermap.org">OpenWeather</a>'
     })],
-    zoom: 8,
+    zoom: 9,
     center: this.centroid
   };
 
