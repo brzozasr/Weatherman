@@ -108,11 +108,13 @@ export class MapSearchComponent implements OnInit {
       let zoom = this.passedMap.getZoom();
       let zoomSetter = this.setZoom(zoom);
 
-      if (zoom >= 3 && zoom <= 7) {
+      if (zoom >= 3 && zoom <= 8) {
         this.passedMap.setView(new L.LatLng(lat, lon), zoomSetter.after);
       } else {
         this.passedMap.setView(new L.LatLng(lat, lon), zoomSetter.after);
-        this.passedMap.setZoom(zoomSetter.before);
+        setTimeout(() => {
+          this.passedMap?.setZoom(zoomSetter.before);
+        }, 300);
       }
 
       setTimeout(() => {
@@ -205,13 +207,9 @@ export class MapSearchComponent implements OnInit {
       case 5:
       case 6:
       case 7:
-        return {
-          before: 0,
-          after: 8
-        };
       case 8:
         return {
-          before: 8,
+          before: zoom,
           after: 9
         };
       case 9:
@@ -262,17 +260,12 @@ export class MapSearchComponent implements OnInit {
       case 18:
         return {
           before: 18,
-          after: 19
-        };
-      case 19:
-        return {
-          before: 19,
-          after: 18
+          after: 17
         };
       default:
         return {
-          before: 0,
-          after: 8
+          before: zoom,
+          after: 9
         };
     }
   }
