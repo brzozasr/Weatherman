@@ -5,3 +5,57 @@
   overflow-x: hidden;
   overflow-y: auto;
 }
+
+#flex-container-wf {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+  border: 0px solid red;
+}
+
+#current-wf {
+  margin: 10px;
+  padding: 20px;
+  display: inline-block;
+  color: #444;
+  border: 1px solid #ccc;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 5px -1px rgba(0, 0, 0, 0.2);
+  min-width: 350px;
+}
+
+.horizontal {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+}
+
+#weather-description-wf {
+  padding: 5px;
+  text-align: center;
+}
+
+#temp-wf {
+  padding: 10px;
+  text-align: center;
+  color: #000;
+  font-family: system-ui;
+  font-size: 50px;
+  font-weight: lighter;
+}
+
+#temp-feels-wf {
+  padding: 10px;
+  text-align: center;
+  color: #808080;
+}
+
+#minutely-wf {
+  margin: 10px;
+  padding: 20px;
+  border: 1px solid green;
+}
