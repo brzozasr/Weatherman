@@ -5,6 +5,7 @@ import {Daily} from "./daily";
 import {Alerts} from "./alerts";
 
 export interface WeatherForecast {
+  statusCode?: number;
   lat?: number;
   Log?: number;
   timezone?: string;
