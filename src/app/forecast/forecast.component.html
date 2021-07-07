@@ -1,0 +1,45 @@
+<div id="forecast-container">
+  <div id="flex-container-wf">
+    <div id="current-wf">
+      <div id="current-wf-description" class="horizontal">
+        <ng-container *ngIf="weatherPoint?.current?.weathers
+        && weatherPoint?.current?.weathers?.length ?? 0 > 0;
+        else elseIcon">
+          <ng-container *ngFor="let weather of weatherPoint?.current?.weathers">
+            <div>
+              <img src="http://openweathermap.org/img/wn/{{weather.icon}}@2x.png" alt="">
+            </div>
+            <div>
+              <span>{{weather.description}}</span><br>
+              <span style="color: #808080; font-size: 12px">{{weatherPoint?.current?.windBeaufortScale}}</span>
+            </div>
+          </ng-container>
+        </ng-container>
+        <ng-template #elseIcon>
+          <span class="error">The icon of the weather is not available</span>
+        </ng-template>
+      </div>
+      <div id="current-wf-temp">
+        <ng-container *ngIf="weatherPoint?.current?.temp !== null; else elseTemp">
+          {{weatherPoint?.current?.temp | number: '1.0-0'}}&#176;C
+        </ng-container>
+        <ng-template #elseTemp>
+          <span class="error">The temperature value is not available</span>
+        </ng-template>
+      </div>
+      <div id="current-wf-feels">
+        <ng-container *ngIf="weatherPoint?.current?.feelsLike !== null; else elseFeels">
+          Feels like {{weatherPoint?.current?.feelsLike | number: '1.0-0'}}&#176;C
+        </ng-container>
+        <ng-template #elseFeels>
+          <span class="error">The temperature feels like value is not available</span>
+        </ng-template>
+      </div>
+    </div>
+    <div id="current-wf-details">
+      <img class="arrow" src="assets/arrows/ne.png" alt="">
+    </div>
+    <!-- Minutely -->
+    <div id="minutely-wf">test1</div>
+  </div>
+</div>

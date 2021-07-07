@@ -1,22 +1,21 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {Observable, pipe, throwError} from "rxjs";
-import {PointsWeather} from "../models/points-weather";
+import {Observable, throwError} from "rxjs";
 import {AppUrl} from "../../urls/app-url";
-import {catchError, map} from "rxjs/operators";
+import {WeatherForecast} from "../model/weather-forecast";
+import {catchError} from "rxjs/operators";
 import {HandleError} from "../../error/handle-error";
 
 @Injectable({
   providedIn: 'root'
 })
-export class PointsWeatherService {
+export class ForecastService {
 
   constructor(private http: HttpClient,
-              private handle: HandleError) {
-  }
+              private handle: HandleError) { }
 
-  getWeatherBBox(lonLeft: number, latBottom: number, lonRight: number, latTop: number, zoom: number): Observable<PointsWeather[]> {
-    return this.http.get<PointsWeather[]>(`${AppUrl.BASE_URL}Weather/Get/BBox/${lonLeft}/${latBottom}/${lonRight}/${latTop}/${zoom}`)
+  getWeatherForecastService(lat: number, lon: number): Observable<WeatherForecast> {
+    return this.http.get<WeatherForecast>(`${AppUrl.BASE_URL}Weather/Forecast/Get/Point/${lat}/${lon}`)
       .pipe(
         catchError(error => {
           let errorMsg: string;

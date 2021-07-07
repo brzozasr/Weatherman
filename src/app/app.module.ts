@@ -13,6 +13,8 @@ import {HttpClientModule} from "@angular/common/http";
 import { MapErrorDialogComponent } from './map-error-dialog/map-error-dialog.component';
 import { MapSearchComponent } from './map-search/map-search.component';
 import {NgxEchartsModule} from "ngx-echarts";
+import { ForecastComponent } from './forecast/forecast.component';
+import { HistoricalComponent } from './historical/historical.component';
 
 
 @NgModule({
@@ -21,7 +23,9 @@ import {NgxEchartsModule} from "ngx-echarts";
     LayoutComponent,
     MapComponent,
     MapErrorDialogComponent,
-    MapSearchComponent
+    MapSearchComponent,
+    ForecastComponent,
+    HistoricalComponent
   ],
   imports: [
     BrowserModule,
