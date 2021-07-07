@@ -7,6 +7,7 @@ import {OpenWeatherError} from "../error/open-weather-error";
 import {ColorPicker} from "../utilities/color-picker";
 import {MatDialog} from "@angular/material/dialog";
 import {MapErrorDialogComponent} from "../map-error-dialog/map-error-dialog.component";
+import {take} from "rxjs/operators";
 
 
 @Component({
@@ -27,7 +28,7 @@ export class MapComponent implements OnInit {
       detectRetina: true,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | &copy; <a href="https://openweathermap.org">OpenWeather</a>'
     })],
-    zoom: 8,
+    zoom: 9,
     center: this.centroid
   };
 
@@ -89,7 +90,7 @@ export class MapComponent implements OnInit {
 
   setPointsOnMap(): void {
     this.removePopups();
-    this.weatherData$?.subscribe((data) => {
+    this.weatherData$?.pipe(take(1)).subscribe((data) => {
         if (data) {
           data.forEach((p, index) => {
             if (p.lat && p.lon && p.temp && p.cityName && p.icon && p.code === 200) {
@@ -111,7 +112,7 @@ export class MapComponent implements OnInit {
               }
             }
 
-          })
+          });
         }
       },
       error => console.error('HTTP Error', error),
