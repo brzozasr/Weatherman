@@ -15,7 +15,7 @@ export class ForecastService {
               private handle: HandleError) { }
 
   getWeatherForecastService(lat: number, lon: number): Observable<WeatherForecast> {
-    return this.http.get(`${AppUrl.BASE_URL}Weather/Forecast/Get/Point/${lat}/${lon}`)
+    return this.http.get<WeatherForecast>(`${AppUrl.BASE_URL}Weather/Forecast/Get/Point/${lat}/${lon}`)
       .pipe(
         catchError(error => {
           let errorMsg: string;

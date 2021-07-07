@@ -16,9 +16,10 @@ export interface Current {
   uvi?: number;
   clouds?: number;
   visibilityKm?: number;
-  windSpeed?: number
+  windSpeed?: number;
+  windBeaufortScale?: string;
   windDir?: WindDir;
-  windGust?: number
+  windGust?: number;
   weathers?: Weather[];
   rain?: Rain;
   snow?: Snow;

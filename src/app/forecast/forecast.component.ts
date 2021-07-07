@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ForecastService} from "./service/forecast.service";
-import {Observable} from "rxjs";
 import {WeatherForecast} from "./model/weather-forecast";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-forecast',
@@ -10,7 +10,6 @@ import {WeatherForecast} from "./model/weather-forecast";
 })
 export class ForecastComponent implements OnInit {
 
-  weatherPoint$?: Observable<WeatherForecast>;
   weatherPoint?: WeatherForecast;
   lat?: number;
   lon?: number;
