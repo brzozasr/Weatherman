@@ -46,13 +46,19 @@
 #current-wf-details {
   margin: 0 10px 10px 10px;
   padding: 10px;
-  display: inline-block;
   color: #444;
   border: 1px solid #ccc;
   background: #ccc;
   border-radius: 0 0 8px 8px;
   box-shadow: 0 0 5px -1px rgba(0, 0, 0, 0.2);
-  min-width: 350px;
+  width: 350px;
+}
+
+.current-wf-details-item {
+  margin: 1px 3px 1px 3px;
+  flex-basis: 165px;
+  font-size: 13px;
+  font-weight: bold;
 }
 
 #minutely-wf {
@@ -66,6 +72,12 @@
   flex-flow: row nowrap;
   align-items: center;
   justify-content: center;
+}
+
+.horizontal-wrap {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
 }
 
 .arrow {
