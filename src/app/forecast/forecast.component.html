@@ -1,6 +1,6 @@
 <div id="forecast-container">
   <div id="flex-container-wf">
-    <div id="current-wf">
+    <div id="current-wf" *ngIf="weatherPoint?.current !== null">
       <div id="current-wf-description" class="horizontal">
         <ng-container *ngIf="weatherPoint?.current?.weathers
         && weatherPoint?.current?.weathers?.length ?? 0 > 0;
@@ -36,8 +36,20 @@
         </ng-template>
       </div>
     </div>
-    <div id="current-wf-details">
-      <img class="arrow" src="assets/arrows/ne.png" alt="">
+    <div id="current-wf-details" class="horizontal-wrap"
+         *ngIf="weatherPoint?.current !== null">
+      <div *ngIf="weatherPoint?.current?.windSpeedKmPerH !== null && weatherPoint?.current?.windDir !== null"
+        class="current-wf-details-item">Wind: {{weatherPoint?.current?.windSpeedKmPerH | number: '1.1-1'}}km/h {{weatherPoint?.current?.windDir?.dirTxt}} <img class="arrow" src="assets/arrows/{{weatherPoint?.current?.windDir?.dirArrow}}.png" alt=""></div>
+      <div *ngIf="weatherPoint?.current?.humidity !== null"
+        class="current-wf-details-item">Humidity: {{weatherPoint?.current?.humidity | number: '1.0-0'}}%</div>
+      <div *ngIf="weatherPoint?.current?.uvi !== null"
+        class="current-wf-details-item">UV index: {{weatherPoint?.current?.uvi | number: '1.1-1'}}</div>
+      <div *ngIf="weatherPoint?.current?.pressure !== null"
+        class="current-wf-details-item">Pressure: {{weatherPoint?.current?.pressure | number: '1.0-0'}}hPa</div>
+      <div *ngIf="weatherPoint?.current?.visibilityKm !== null"
+        class="current-wf-details-item">Visibility: {{weatherPoint?.current?.visibilityKm | number: '1.1-1'}}km</div>
+      <div *ngIf="weatherPoint?.current?.dewPoint !== null"
+        class="current-wf-details-item">Dew point: {{weatherPoint?.current?.dewPoint | number: '1.0-0'}}&#176;C</div>
     </div>
     <!-- Minutely -->
     <div id="minutely-wf">test1</div>
