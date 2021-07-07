@@ -15,7 +15,11 @@ import { MapSearchComponent } from './map-search/map-search.component';
 import {NgxEchartsModule} from "ngx-echarts";
 import { ForecastComponent } from './forecast/forecast.component';
 import { HistoricalComponent } from './historical/historical.component';
+import {LOCALE_ID} from '@angular/core';
+import {registerLocaleData} from '@angular/common';
+import localePL from '@angular/common/locales/pl';
 
+registerLocaleData(localePL);
 
 @NgModule({
   declarations: [
@@ -39,7 +43,9 @@ import { HistoricalComponent } from './historical/historical.component';
       echarts: () => import('echarts')
     }),
   ],
-  providers: [],
+  providers: [
+    {provide: LOCALE_ID, useValue: 'pl'},
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

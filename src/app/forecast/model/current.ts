@@ -17,6 +17,7 @@ export interface Current {
   clouds?: number;
   visibilityKm?: number;
   windSpeed?: number;
+  windSpeedKmPerH: number;
   windBeaufortScale?: string;
   windDir?: WindDir;
   windGust?: number;
