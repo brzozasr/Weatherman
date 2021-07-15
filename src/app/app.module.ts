@@ -18,6 +18,7 @@ import { HistoricalComponent } from './historical/historical.component';
 import {LOCALE_ID} from '@angular/core';
 import {registerLocaleData} from '@angular/common';
 import localePL from '@angular/common/locales/pl';
+import { CurrentWfComponent } from './current-wf/current-wf.component';
 
 registerLocaleData(localePL);
 
@@ -29,7 +30,8 @@ registerLocaleData(localePL);
     MapErrorDialogComponent,
     MapSearchComponent,
     ForecastComponent,
-    HistoricalComponent
+    HistoricalComponent,
+    CurrentWfComponent
   ],
   imports: [
     BrowserModule,

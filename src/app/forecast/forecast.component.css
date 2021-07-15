@@ -16,77 +16,8 @@
   border: 0px solid red;
 }
 
-#current-wf {
-  margin: 10px 10px 0 10px;
-  padding: 10px;
-  display: inline-block;
-  color: #444;
-  border: 1px solid #ccc;
-  background: #fff;
-  border-radius: 8px 8px 0 0;
-  box-shadow: 0 0 5px -1px rgba(0, 0, 0, 0.2);
-  min-width: 350px;
-}
-
-#current-wf-temp {
-  padding: 10px;
-  text-align: center;
-  color: #000;
-  font-family: system-ui;
-  font-size: 70px;
-  font-weight: lighter;
-}
-
-#current-wf-feels {
-  padding: 10px;
-  text-align: center;
-  color: #808080;
-}
-
-#current-wf-details {
-  margin: 0 10px 10px 10px;
-  padding: 10px;
-  color: #444;
-  border: 1px solid #ccc;
-  background: #ccc;
-  border-radius: 0 0 8px 8px;
-  box-shadow: 0 0 5px -1px rgba(0, 0, 0, 0.2);
-  width: 350px;
-}
-
-.current-wf-details-item {
-  margin: 1px 3px 1px 3px;
-  flex-basis: 165px;
-  font-size: 13px;
-  font-weight: bold;
-}
-
 #minutely-wf {
   margin: 10px;
   padding: 10px;
   border: 1px solid green;
-}
-
-.horizontal {
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
-  justify-content: center;
-}
-
-.horizontal-wrap {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-}
-
-.arrow {
-  width: 14px;
-}
-
-.error {
-  font-family: system-ui;
-  font-size: 10px;
-  font-weight: lighter;
-  color: #f00;
 }

@@ -1,0 +1,58 @@
+<div id="current-wf" *ngIf="weatherPoint?.current !== null">
+  <div id="current-wf-description" class="horizontal">
+    <ng-container *ngIf="weatherPoint?.current?.weathers
+        && weatherPoint?.current?.weathers?.length ?? 0 > 0;
+        else elseIcon">
+      <ng-container *ngFor="let weather of weatherPoint?.current?.weathers; let i = index">
+        <div *ngIf="i == 0">
+          <img src="http://openweathermap.org/img/wn/{{weather.icon}}@2x.png" alt="">
+        </div>
+        <div *ngIf="i == 0">
+          <span>{{weather.description}}</span><br>
+          <span style="color: #808080; font-size: 12px">{{weatherPoint?.current?.windBeaufortScale}}</span>
+        </div>
+      </ng-container>
+    </ng-container>
+    <ng-template #elseIcon>
+      <span class="error">The icon of the weather is not available</span>
+    </ng-template>
+  </div>
+  <div id="current-wf-temp">
+    <ng-container *ngIf="weatherPoint?.current?.temp !== null; else elseTemp">
+      {{weatherPoint?.current?.temp | number: '1.0-0'}}&#176;C
+    </ng-container>
+    <ng-template #elseTemp>
+      <span class="error">The temperature value is not available</span>
+    </ng-template>
+  </div>
+  <div id="current-wf-feels">
+    <ng-container *ngIf="weatherPoint?.current?.feelsLike !== null; else elseFeels">
+      Feels like {{weatherPoint?.current?.feelsLike | number: '1.0-0'}}&#176;C
+    </ng-container>
+    <ng-template #elseFeels>
+      <span class="error">The temperature feels like value is not available</span>
+    </ng-template>
+  </div>
+</div>
+<div id="current-wf-details" class="horizontal-wrap"
+     *ngIf="weatherPoint?.current !== null">
+  <div *ngIf="weatherPoint?.current?.windSpeedKmPerH !== null && weatherPoint?.current?.windDir !== null"
+       class="current-wf-details-item">Wind: {{weatherPoint?.current?.windSpeedKmPerH | number: '1.1-1'}}
+    km/h {{weatherPoint?.current?.windDir?.dirTxt}} <img class="arrow"
+                                                         src="assets/arrows/{{weatherPoint?.current?.windDir?.dirArrow}}.png"
+                                                         alt=""></div>
+  <div *ngIf="weatherPoint?.current?.humidity !== null"
+       class="current-wf-details-item">Humidity: {{weatherPoint?.current?.humidity | number: '1.0-0'}}%
+  </div>
+  <div *ngIf="weatherPoint?.current?.uvi !== null"
+       class="current-wf-details-item">UV index: {{weatherPoint?.current?.uvi | number: '1.1-1'}}</div>
+  <div *ngIf="weatherPoint?.current?.pressure !== null"
+       class="current-wf-details-item">Pressure: {{weatherPoint?.current?.pressure | number: '1.0-0'}}hPa
+  </div>
+  <div *ngIf="weatherPoint?.current?.visibilityKm !== null"
+       class="current-wf-details-item">Visibility: {{weatherPoint?.current?.visibilityKm | number: '1.1-1'}}km
+  </div>
+  <div *ngIf="weatherPoint?.current?.dewPoint !== null"
+       class="current-wf-details-item">Dew point: {{weatherPoint?.current?.dewPoint | number: '1.0-0'}}&#176;C
+  </div>
+</div>
