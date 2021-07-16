@@ -7,12 +7,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LocationComponent implements OnInit {
 
+  isSearchDivVisible: boolean = true;
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
   showInput() {
-    console.log("clicked");
+    this.isSearchDivVisible = false;
+  }
+
+  hideInput() {
+    this.isSearchDivVisible = true;
   }
 }
