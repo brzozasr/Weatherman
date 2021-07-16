@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {CurrentCoords} from "../utilities/current-coords";
 
 @Component({
   selector: 'app-geo-location',
@@ -7,40 +8,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GeoLocationComponent implements OnInit {
 
-  locationStatus: string = '';
   lat?: number;
   lon?: number;
 
-  constructor() { }
+  constructor(private currentCoords: CurrentCoords) { }
 
   ngOnInit(): void {
   }
 
-  locationSuccess(position: GeolocationPosition): void {
-    this.lat = position.coords.latitude;
-    this.lon = position.coords.longitude;
-    this.locationStatus = '';
-    console.log(`${this.lat}, ${this.lon}`);
-  }
-
-  locationError(): void {
-    this.locationStatus = 'Unable to retrieve your location';
-    console.log(this.locationStatus);
-  }
-
   getLocationCoords(): void {
-    if(!navigator.geolocation) {
-      this.locationStatus = 'Geolocation is not supported by your browser';
-      console.log(this.locationStatus);
+    let coordsData = this.currentCoords.getCoords();
+    if (coordsData.coordsArray.length === 2) {
+      this.lat = coordsData.coordsArray[0];
+      this.lon = coordsData.coordsArray[1];
     } else {
-      this.locationStatus = 'Locating…';
-      console.log(this.locationStatus);
-      navigator.geolocation.getCurrentPosition(position => {
-        this.locationSuccess(position);
-      },
-        error => {
-        this.locationError();
-        });
+      this.lat = 52.24;
+      this.lon = 20.99;
     }
   }
+
 }

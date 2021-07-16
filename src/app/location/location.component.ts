@@ -12,4 +12,7 @@ export class LocationComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  showInput() {
+    console.log("clicked");
+  }
 }

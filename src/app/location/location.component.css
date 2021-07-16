@@ -21,6 +21,7 @@
   overflow: hidden;
   padding: 5px;
   width: 290px;
+  cursor: pointer;
 }
 
 .horizontal {
