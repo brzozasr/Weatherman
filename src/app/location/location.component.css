@@ -1,0 +1,32 @@
+#location {
+  margin: 10px 10px 0 10px;
+  padding: 10px;
+  color: #444;
+  border: 1px solid #ccc;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 5px -1px rgba(0, 0, 0, 0.2);
+  width: 400px;
+}
+
+#location-search-icon {
+  padding: 8px 3px 3px 9px;
+}
+
+#location-search-div {
+  font-family: system-ui;
+  font-size: 18px;
+  font-weight: lighter;
+  white-space: nowrap;
+  overflow: hidden;
+  padding: 5px;
+  width: 290px;
+  cursor: pointer;
+}
+
+.horizontal {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+}

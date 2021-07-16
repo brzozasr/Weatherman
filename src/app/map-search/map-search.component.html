@@ -16,8 +16,8 @@
            *ngFor="let city of searchCity"
            [tabIndex]="-1"
            id="{{city.id}}"
-           (click)="onResultDivClick(city?.coordLon, city?.coordLat, city?.name, city?.country)"
-           (keydown.enter)="onResultDivClick(city?.coordLon, city?.coordLat, city?.name, city?.country)">
+           (click)="onResultDivSelect(city?.coordLon, city?.coordLat, city?.name, city?.country)"
+           (keydown.enter)="onResultDivSelect(city?.coordLon, city?.coordLat, city?.name, city?.country)">
         {{city.name}}, {{city.country}}
       </div>
     </ng-container>
