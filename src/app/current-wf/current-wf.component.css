@@ -7,7 +7,7 @@
   background: #fff;
   border-radius: 8px 8px 0 0;
   box-shadow: 0 0 5px -1px rgba(0, 0, 0, 0.2);
-  min-width: 350px;
+  width: 400px;
 }
 
 #current-wf-temp {
@@ -33,14 +33,15 @@
   background: #ccc;
   border-radius: 0 0 8px 8px;
   box-shadow: 0 0 5px -1px rgba(0, 0, 0, 0.2);
-  width: 350px;
+  width: 400px;
 }
 
 .current-wf-details-item {
   margin: 1px 3px 1px 3px;
-  flex-basis: 165px;
+  flex-basis: 188px;
   font-size: 13px;
   font-weight: bold;
+  overflow: hidden;
 }
 
 .horizontal {

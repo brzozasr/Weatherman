@@ -15,11 +15,12 @@ export class ForecastComponent implements OnInit {
   lon?: number;
 
   constructor(private service: ForecastService) {
-    this.lat = 52.24;
-    this.lon = 20.99;
+
   }
 
   ngOnInit(): void {
+    this.lat = 52.24;
+    this.lon = 20.99;
     this.getWeatherPoint();
   }
 
@@ -27,8 +28,11 @@ export class ForecastComponent implements OnInit {
     if (this.lat && this.lon) {
       this.service.getWeatherForecastService(this.lat, this.lon)
         .subscribe((data) => {
-          this.weatherPoint = data;
-        });
+            this.weatherPoint = data;
+          },
+          error => {
+            this.weatherPoint = undefined;
+          });
     }
   }
 

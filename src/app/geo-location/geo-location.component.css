@@ -1,0 +1,11 @@
+.mat-stroked-button {
+  width: 42px !important;
+  min-width: unset !important;
+  padding: 3px;
+}
+
+.custom-icon-size {
+  font-size: 25px;
+  height: 25px ;
+  width: 25px ;
+}

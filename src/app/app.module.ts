@@ -19,6 +19,9 @@ import {LOCALE_ID} from '@angular/core';
 import {registerLocaleData} from '@angular/common';
 import localePL from '@angular/common/locales/pl';
 import { CurrentWfComponent } from './current-wf/current-wf.component';
+import { MinutelyWfComponent } from './minutely-wf/minutely-wf.component';
+import { LocationComponent } from './location/location.component';
+import { GeoLocationComponent } from './geo-location/geo-location.component';
 
 registerLocaleData(localePL);
 
@@ -31,7 +34,10 @@ registerLocaleData(localePL);
     MapSearchComponent,
     ForecastComponent,
     HistoricalComponent,
-    CurrentWfComponent
+    CurrentWfComponent,
+    MinutelyWfComponent,
+    LocationComponent,
+    GeoLocationComponent
   ],
   imports: [
     BrowserModule,
