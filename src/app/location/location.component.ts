@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, HostListener, Input, OnInit} from '@angular/core';
 import {CoordsData} from "../utilities/coords-data";
 import {SearchCity} from "../map/models/search-city";
 import {CityNotFound} from "../map/models/city-not-found";
@@ -16,11 +16,21 @@ export class LocationComponent implements OnInit {
   cityNotFound: CityNotFound | undefined;
   @Input() coordsData?: CoordsData;
 
-  constructor(private service: CitiesService) {
+  constructor(private service: CitiesService,
+              private eRef: ElementRef) {
     this.getCities('');
   }
 
   ngOnInit(): void {
+  }
+
+  @HostListener('document:click', ['$event'])
+  clickOut(event: Event): void {
+    if (this.eRef.nativeElement.contains(event.target)) {
+      this.showInput();
+    } else {
+      this.hideInput();
+    }
   }
 
   getCities(city: string): void {
@@ -53,18 +63,106 @@ export class LocationComponent implements OnInit {
       if (resultDiv) {
         resultDiv.style.display = 'block';
       }
-    }, 100);
+    }, 70);
   }
 
   hideInput() {
     let resultDiv = document.getElementById('location-result-div');
     if (resultDiv) {
-      resultDiv.style.display = 'block';
+      resultDiv.style.display = 'none';
+      this.searchCity = [];
     }
     this.isSearchDivVisible = true;
   }
 
   onCityDivSelect(coordLon: any, coordLat: any, name: any, country: string | undefined) {
 
+  }
+
+  onKeyArrowDown(): void {
+    let searchDivField = document.getElementById('location-search-input');
+    if (searchDivField) {
+      document.onkeydown = (event) => {
+        let focusedDiv = document.querySelector('.location-div-city-item-focus');
+        if (focusedDiv !== null) {
+          switch (event.key) {
+            case 'ArrowUp':
+              this.moveFocusUp(focusedDiv);
+              event.preventDefault();
+              break;
+            case 'ArrowDown':
+              this.moveFocusDown(focusedDiv);
+              event.preventDefault();
+              break;
+          }
+        } else {
+          if (event.key === 'ArrowDown') {
+            this.focusFirstElement();
+            event.preventDefault();
+          }
+        }
+      }
+    }
+  }
+
+  focusFirstElement(): void {
+    let allDivs = document.querySelectorAll('.location-div-city-item');
+    if (allDivs !== null && allDivs.length > 0) {
+      let firstDivForFocus = document.getElementById(allDivs[0].id);
+      if (firstDivForFocus !== null) {
+        firstDivForFocus.className = 'location-div-city-item-focus';
+        firstDivForFocus.focus();
+      }
+    }
+  }
+
+  moveFocusUp(element: Element): void {
+    let previousDiv = element.previousElementSibling;
+    if (previousDiv !== null) {
+      element.className = 'location-div-city-item';
+      previousDiv.className = 'location-div-city-item-focus';
+      let previousElement = document.getElementById(previousDiv.id);
+      previousElement?.focus();
+    } else {
+      let searchInput = document.getElementById('location-input');
+      if (searchInput !== null) {
+        element.className = 'location-div-city-item';
+        searchInput.focus();
+      }
+    }
+  }
+
+  moveFocusDown(element: Element): void {
+    let nextDiv = element.nextElementSibling;
+    if (nextDiv !== null) {
+      element.className = 'location-div-city-item';
+      nextDiv.className = 'location-div-city-item-focus';
+      let nextElement = document.getElementById(nextDiv.id);
+      nextElement?.focus();
+    }
+  }
+
+  focusDivCity($event: MouseEvent): void {
+    let allElements = document.querySelectorAll('.location-div-city-item-focus');
+    if (allElements && allElements.length > 0) {
+      allElements.forEach(div => {
+        div.className = 'location-div-city-item';
+      })
+    }
+    let elementId = ($event.target as Element).id;
+    if (elementId) {
+      let element = document.getElementById(elementId);
+      // @ts-ignore
+      element?.className = 'location-div-city-item-focus';
+    }
+  }
+
+  focusOutDivCity($event: MouseEvent): void {
+    let elementId = ($event.target as Element).id;
+    if (elementId) {
+      let element = document.getElementById(elementId);
+      // @ts-ignore
+      element?.className = 'location-div-city-item';
+    }
   }
 }

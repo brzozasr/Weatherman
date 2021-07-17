@@ -55,6 +55,19 @@
   cursor: default;
 }
 
+*[tabindex="-1"]:focus {
+  outline-width: 0px;
+  outline-style: none;
+}
+
+.location-div-city-item-focus {
+  border-bottom: 1px solid #bfbfbf;
+  overflow: hidden;
+  white-space: nowrap;
+  cursor: default;
+  background-color: #d9d9d9;
+}
+
 .horizontal {
   display: flex;
   flex-flow: row nowrap;

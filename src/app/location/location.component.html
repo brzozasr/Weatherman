@@ -1,4 +1,4 @@
-<div id="location" class="horizontal">
+<div id="location" class="horizontal" (keydown)="onKeyArrowDown()">
   <div id="location-search-icon">
     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-search"
          viewBox="0 0 16 16">
@@ -7,12 +7,12 @@
     </svg>
   </div>
   <ng-container *ngIf="isSearchDivVisible; else elseInput">
-    <div id="location-search-txt" (click)="showInput()">
+    <div id="location-search-txt">
       {{coordsData?.locationName === '' ? 'Warszawa, PL' : coordsData?.locationName}}
     </div>
   </ng-container>
   <ng-template #elseInput>
-    <div id="location-search-input" (focusout)="hideInput()">
+    <div id="location-search-input">
       <form>
         <input type="text" id="location-input" #fieldValue autocomplete="off"
                (keyup)="onKeyUp(fieldValue.value)">
@@ -24,7 +24,9 @@
                [tabIndex]="-1"
                id="{{city.id}}"
                (click)="onCityDivSelect(city?.coordLon, city?.coordLat, city?.name, city?.country)"
-               (keydown.enter)="onCityDivSelect(city?.coordLon, city?.coordLat, city?.name, city?.country)">
+               (keydown.enter)="onCityDivSelect(city?.coordLon, city?.coordLat, city?.name, city?.country)"
+               (mouseenter)="focusDivCity($event)"
+               (mouseout)="focusOutDivCity($event)">
             {{city.name}}, {{city.country}}
           </div>
         </ng-container>
