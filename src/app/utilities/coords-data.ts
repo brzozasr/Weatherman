@@ -6,5 +6,9 @@ import {Injectable} from "@angular/core";
 
 export class CoordsData {
   coordsArray: number[] = new Array<number>(2);
+  locationName: string = '';
   status: string = '';
+
+  constructor() {
+  }
 }

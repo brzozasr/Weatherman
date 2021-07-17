@@ -38,6 +38,23 @@
   width: 288px;
 }
 
+#location-result-div {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  width: 293px;
+  max-height: 300px;
+  padding: 1px;
+  overflow-y: auto;
+}
+
+.location-div-city-item {
+  border-bottom: 1px solid #bfbfbf;
+  overflow: hidden;
+  white-space: nowrap;
+  cursor: default;
+}
+
 .horizontal {
   display: flex;
   flex-flow: row nowrap;

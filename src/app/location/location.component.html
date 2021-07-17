@@ -8,14 +8,27 @@
   </div>
   <ng-container *ngIf="isSearchDivVisible; else elseInput">
     <div id="location-search-txt" (click)="showInput()">
-      Warszawa, PL
+      {{coordsData?.locationName === '' ? 'Warszawa, PL' : coordsData?.locationName}}
     </div>
   </ng-container>
   <ng-template #elseInput>
     <div id="location-search-input" (focusout)="hideInput()">
       <form>
-        <input type="text" id="location-input" autocomplete="off">
+        <input type="text" id="location-input" #fieldValue autocomplete="off"
+               (keyup)="onKeyUp(fieldValue.value)">
       </form>
+      <div id="location-result-div">
+        <ng-container *ngIf="cityNotFound == undefined">
+          <div class="location-div-city-item"
+               *ngFor="let city of searchCity"
+               [tabIndex]="-1"
+               id="{{city.id}}"
+               (click)="onCityDivSelect(city?.coordLon, city?.coordLat, city?.name, city?.country)"
+               (keydown.enter)="onCityDivSelect(city?.coordLon, city?.coordLat, city?.name, city?.country)">
+            {{city.name}}, {{city.country}}
+          </div>
+        </ng-container>
+      </div>
     </div>
   </ng-template>
   <div>
