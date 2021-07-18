@@ -4,8 +4,8 @@
         && weatherPoint?.current?.weathers?.length ?? 0 > 0;
         else elseIcon">
       <ng-container *ngFor="let weather of weatherPoint?.current?.weathers; let i = index">
-        <div *ngIf="i == 0">
-          <img src="https://openweathermap.org/img/wn/{{weather.icon}}@2x.png" alt="">
+        <div *ngIf="i === 0">
+          <img src="https://openweathermap.org/img/wn/{{weather.icon}}@2x.png" alt="{{weather.icon}}">
         </div>
         <div *ngIf="i == 0">
           <span>{{weather.description}}</span><br>

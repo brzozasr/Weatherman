@@ -22,6 +22,7 @@ import { CurrentWfComponent } from './current-wf/current-wf.component';
 import { MinutelyWfComponent } from './minutely-wf/minutely-wf.component';
 import { LocationComponent } from './location/location.component';
 import { GeoLocationComponent } from './geo-location/geo-location.component';
+import { HourlyWfComponent } from './hourly-wf/hourly-wf.component';
 
 registerLocaleData(localePL);
 
@@ -37,7 +38,8 @@ registerLocaleData(localePL);
     CurrentWfComponent,
     MinutelyWfComponent,
     LocationComponent,
-    GeoLocationComponent
+    GeoLocationComponent,
+    HourlyWfComponent
   ],
   imports: [
     BrowserModule,
