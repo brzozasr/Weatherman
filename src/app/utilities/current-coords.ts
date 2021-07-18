@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
 import {CoordsForecastData} from "./coords-forecast-data";
 import {LocationService} from "./service/location.service";
+import {CoordsHistoricalData} from "./coords-historical-data";
+import {DataType} from "./data-type";
 
 @Injectable({
   providedIn: 'root'
@@ -14,55 +16,101 @@ export class CurrentCoords {
   lon?: number;
 
   constructor(private coordsForecastData: CoordsForecastData,
+              private coordsHistoricalData: CoordsHistoricalData,
               private locationService: LocationService) {
   }
 
-  private locationSuccess(position: GeolocationPosition): CoordsForecastData {
+  private locationSuccess(position: GeolocationPosition, dataType: DataType): CoordsForecastData | CoordsHistoricalData {
     this.lat = position.coords.latitude;
     this.lon = position.coords.longitude;
-    this.locationStatus = '';
-    this.coordsForecastData.coordsArray = [this.lat, this.lon];
-    this.getLocationNameFromCoords(this.lat, this.lon);
-    this.coordsForecastData.status = this.locationStatus;
+    this.locationStatus = 'Success';
+
+    if (dataType === DataType.FORECAST) {
+      this.coordsForecastData.coordsArray = [this.lat, this.lon];
+      this.getLocationNameFromCoords(this.lat, this.lon);
+      this.coordsForecastData.status = this.locationStatus;
+    } else {
+      this.coordsHistoricalData.coordsArray = [this.lat, this.lon];
+      this.getLocationNameFromCoords(this.lat, this.lon);
+      this.coordsHistoricalData.status = this.locationStatus;
+    }
 
     setTimeout(() => {
-      this.coordsForecastData.locationName = this.locationName;
+      if (dataType === DataType.FORECAST) {
+        this.coordsForecastData.locationName = this.locationName;
+        console.info(`${this.coordsForecastData.coordsArray}`);
+      } else {
+        this.coordsHistoricalData.locationName = this.locationName;
+        console.info(`${this.coordsHistoricalData.coordsArray}`);
+      }
     }, 1400);
 
-    console.info(`${this.coordsForecastData.coordsArray}`);
-
-    return this.coordsForecastData;
+    if (dataType === DataType.FORECAST) {
+      return this.coordsForecastData;
+    } else {
+      return this.coordsHistoricalData;
+    }
   }
 
-  private locationError(): CoordsForecastData {
+  private locationError(dataType: DataType): CoordsForecastData | CoordsHistoricalData {
     this.locationStatus = 'Unable to retrieve your location';
     console.warn(this.locationStatus);
-    this.coordsForecastData.coordsArray = [];
-    this.coordsForecastData.locationName = '';
-    this.coordsForecastData.status = this.locationStatus;
 
-    return this.coordsForecastData;
-  }
-
-  getCoords(): CoordsForecastData {
-    if (!navigator.geolocation) {
-      this.locationStatus = 'Geolocation is not supported by your browser';
-      console.warn(this.locationStatus);
+    if (dataType === DataType.FORECAST) {
       this.coordsForecastData.coordsArray = [];
-      this.coordsForecastData.locationName = '';
+      this.coordsForecastData.locationName = 'Failure';
       this.coordsForecastData.status = this.locationStatus;
 
       return this.coordsForecastData;
     } else {
-      this.locationStatus = 'Locating…';
-      console.info(this.locationStatus);
+      this.coordsHistoricalData.coordsArray = [];
+      this.coordsHistoricalData.locationName = 'Failure';
+      this.coordsHistoricalData.status = this.locationStatus;
+
+      return this.coordsHistoricalData;
+    }
+  }
+
+  getCoords(dataType: DataType): CoordsForecastData | CoordsHistoricalData {
+    if (!navigator.geolocation) {
+      this.locationStatus = 'Geolocation is not supported by your browser';
+      console.warn(this.locationStatus);
+
+      if (dataType === DataType.FORECAST) {
+        this.coordsForecastData.coordsArray = [];
+        this.coordsForecastData.locationName = '';
+        this.coordsForecastData.status = this.locationStatus;
+
+        return this.coordsForecastData;
+      } else {
+        this.coordsHistoricalData.coordsArray = [];
+        this.coordsHistoricalData.locationName = '';
+        this.coordsHistoricalData.status = this.locationStatus;
+
+        return this.coordsHistoricalData;
+      }
+    } else {
+      console.info('Locating…');
       navigator.geolocation.getCurrentPosition(position => {
-          this.coordsForecastData = this.locationSuccess(position);
+          if (dataType === DataType.FORECAST) {
+            this.coordsForecastData = this.locationSuccess(position, dataType);
+          } else {
+            this.coordsHistoricalData = this.locationSuccess(position, dataType);
+          }
         },
         error => {
-          this.coordsForecastData = this.locationError();
+          if (dataType === DataType.FORECAST) {
+            this.coordsForecastData = this.locationError(dataType);
+          } else {
+            this.coordsHistoricalData = this.locationError(dataType);
+          }
         });
-      return this.coordsForecastData;
+
+      if (dataType === DataType.FORECAST) {
+        return this.coordsForecastData;
+      } else {
+        return this.coordsHistoricalData;
+      }
     }
   }
 
@@ -74,12 +122,16 @@ export class CurrentCoords {
             this.locationName = locName !== '' ? locName : 'There is no such location';
           }
         },
-        error => console.error('HTTP Error', error),
+        error => console.error('HTTP Error', error.message),
         () => console.log('Reverse geocoding HTTP request completed.'));
   }
 
-  getCoordsData(): CoordsForecastData {
-    return this.coordsForecastData;
+  getCoordsData(dataType: DataType): CoordsForecastData | CoordsHistoricalData {
+    if (dataType === DataType.FORECAST) {
+      return this.coordsForecastData;
+    } else {
+      return this.coordsHistoricalData;
+    }
   }
 
   private static setLocalityName(locality: string | undefined,
