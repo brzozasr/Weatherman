@@ -1,0 +1,11 @@
+<div id="hourly-wf" class="horizontal" *ngIf="weatherPoint?.hourly !== null">
+  <div *ngFor="let hourly of weatherPoint?.hourly">
+    <div class="hourly-wf-inside">{{((hourly?.dtLocal | slice: 11:16) | json | slice: 1: 6) == '00:00' ? (hourly?.dtLocal | date: 'dd MMM') : (hourly?.dtLocal | slice: 11:16)}}</div>
+    <ng-container *ngFor="let img of hourly.weathers; let i = index">
+      <div *ngIf="i === 0" class="hourly-wf-inside">
+        <img src="https://openweathermap.org/img/wn/{{img?.icon}}@2x.png" class="img-size" alt="">
+      </div>
+    </ng-container>
+    <div class="hourly-wf-inside">{{hourly?.temp | number: '1.0-0'}}&#176;C</div>
+  </div>
+</div>
