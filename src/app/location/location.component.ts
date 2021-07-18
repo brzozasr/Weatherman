@@ -1,8 +1,10 @@
 import {Component, ElementRef, HostListener, Input, OnInit} from '@angular/core';
-import {CoordsData} from "../utilities/coords-data";
+import {CoordsForecastData} from "../utilities/coords-forecast-data";
 import {SearchCity} from "../map/models/search-city";
 import {CityNotFound} from "../map/models/city-not-found";
 import {CitiesService} from "../map-search/service/cities.service";
+import {CurrentCoordsForecastService} from "../forecast/service/current-coords-forecast.service";
+import {CurrentCoords} from "../utilities/current-coords";
 
 @Component({
   selector: 'app-location',
@@ -14,10 +16,12 @@ export class LocationComponent implements OnInit {
   isSearchDivVisible: boolean = true;
   searchCity: SearchCity[] | undefined;
   cityNotFound: CityNotFound | undefined;
-  @Input() coordsData?: CoordsData;
+  @Input() coordsData?: CoordsForecastData;
 
   constructor(private service: CitiesService,
-              private eRef: ElementRef) {
+              private eRef: ElementRef,
+              private coordsForecastService: CurrentCoordsForecastService,
+              private currentCoords: CurrentCoords,) {
     this.getCities('');
   }
 
@@ -75,8 +79,16 @@ export class LocationComponent implements OnInit {
     this.isSearchDivVisible = true;
   }
 
-  onCityDivSelect(coordLon: any, coordLat: any, name: any, country: string | undefined) {
+  onCityDivSelect(coordLon: number | undefined, coordLat: number | undefined,
+                  name: string | undefined, country: string | undefined) {
+    let data = this.currentCoords.getCoordsData();
+    if (coordLat && coordLon) {
+      data.coordsArray = [coordLat, coordLon];
+    }
 
+    data.locationName = `${name}, ${country}`.trim();
+    data.status = ``;
+    this.coordsForecastService.updateLocationForecastData(data);
   }
 
   onKeyArrowDown(): void {
