@@ -5,6 +5,9 @@ import {CityNotFound} from "../map/models/city-not-found";
 import {CitiesService} from "../map-search/service/cities.service";
 import {CurrentCoordsForecastService} from "../forecast/service/current-coords-forecast.service";
 import {CurrentCoords} from "../utilities/current-coords";
+import {CoordsHistoricalData} from "../utilities/coords-historical-data";
+import {DataType} from "../utilities/data-type";
+import {CurrentCoordsHistoricalService} from "../historical/service/current-coords-historical.service";
 
 @Component({
   selector: 'app-location',
@@ -16,11 +19,12 @@ export class LocationComponent implements OnInit {
   isSearchDivVisible: boolean = true;
   searchCity: SearchCity[] | undefined;
   cityNotFound: CityNotFound | undefined;
-  @Input() coordsData?: CoordsForecastData;
+  @Input() coordsData?: CoordsForecastData | CoordsHistoricalData;
 
   constructor(private service: CitiesService,
               private eRef: ElementRef,
-              private coordsForecastService: CurrentCoordsForecastService,
+              private currentCoordsForecastService: CurrentCoordsForecastService,
+              private currentCoordsHistoricalService: CurrentCoordsHistoricalService,
               private currentCoords: CurrentCoords,) {
     this.getCities('');
   }
@@ -81,14 +85,30 @@ export class LocationComponent implements OnInit {
 
   onCityDivSelect(coordLon: number | undefined, coordLat: number | undefined,
                   name: string | undefined, country: string | undefined) {
-    let data = this.currentCoords.getCoordsData();
-    if (coordLat && coordLon) {
-      data.coordsArray = [coordLat, coordLon];
+    let type: DataType;
+    if (this.coordsData?.dataType !== undefined) {
+      type = this.coordsData.dataType;
+    } else {
+      type = DataType.FORECAST;
     }
 
-    data.locationName = `${name}, ${country}`.trim();
-    data.status = ``;
-    this.coordsForecastService.updateLocationForecastData(data);
+    let data = this.currentCoords.getCoordsData(type);
+    if (coordLat && coordLon) {
+      data.coordsArray = [coordLat, coordLon];
+      data.locationName = `${name}, ${country}`.trim();
+      data.status = `Success`;
+    } else {
+      data.coordsArray = [52.24, 20.99];
+      data.locationName = `Warszawa, PL`;
+      data.status = `Success`;
+    }
+
+    if (type === DataType.FORECAST) {
+      this.currentCoordsForecastService.updateLocationForecastData(data);
+    } else {
+      this.currentCoordsHistoricalService.updateLocationHistoricalData(data);
+    }
+
   }
 
   onKeyArrowDown(): void {

@@ -5,12 +5,9 @@ import {DataType} from "./data-type";
   providedIn: 'root'
 })
 
-export class CoordsForecastData {
+export class CoordsHistoricalData {
   coordsArray: number[] = new Array<number>(2);
   locationName: string = '';
   status: string = '';
-  readonly dataType: DataType = DataType.FORECAST;
-
-  constructor() {
-  }
+  readonly dataType: DataType = DataType.HISTORICAL;
 }
