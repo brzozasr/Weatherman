@@ -1,4 +1,4 @@
-<div id="location" class="horizontal">
+<div id="location" class="horizontal" (keydown)="onKeyArrowDown()">
   <div id="location-search-icon">
     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-search"
          viewBox="0 0 16 16">
@@ -6,9 +6,33 @@
         d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
     </svg>
   </div>
-  <div id="location-search-div" (click)="showInput()">
-    Warszawa, PL
-  </div>
+  <ng-container *ngIf="isSearchDivVisible; else elseInput">
+    <div id="location-search-txt">
+      {{coordsData?.locationName === '' ? 'Warszawa, PL' : coordsData?.locationName}}
+    </div>
+  </ng-container>
+  <ng-template #elseInput>
+    <div id="location-search-input">
+      <form>
+        <input type="text" id="location-input" #fieldValue autocomplete="off"
+               (keyup)="onKeyUp(fieldValue.value)">
+      </form>
+      <div id="location-result-div">
+        <ng-container *ngIf="cityNotFound == undefined">
+          <div class="location-div-city-item"
+               *ngFor="let city of searchCity"
+               [tabIndex]="-1"
+               id="{{city.id}}"
+               (click)="onCityDivSelect(city?.coordLon, city?.coordLat, city?.name, city?.country)"
+               (keydown.enter)="onCityDivSelect(city?.coordLon, city?.coordLat, city?.name, city?.country)"
+               (mouseenter)="focusDivCity($event)"
+               (mouseout)="focusOutDivCity($event)">
+            {{city.name}}, {{city.country}}
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </ng-template>
   <div>
     <app-geo-location></app-geo-location>
   </div>

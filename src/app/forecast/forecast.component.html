@@ -4,7 +4,7 @@
       <mat-spinner class="spinner-margin"></mat-spinner>
     </ng-container>
     <ng-container *ngIf="!isSpinnerVisible">
-      <app-location></app-location>
+      <app-location [coordsData]="coordsData"></app-location>
       <app-current-wf [weatherPoint]="weatherPoint"></app-current-wf>
       <app-minutely-wf></app-minutely-wf>
     </ng-container>

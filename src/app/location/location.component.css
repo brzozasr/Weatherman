@@ -13,7 +13,7 @@
   padding: 8px 3px 3px 9px;
 }
 
-#location-search-div {
+#location-search-txt {
   font-family: system-ui;
   font-size: 18px;
   font-weight: lighter;
@@ -22,6 +22,50 @@
   padding: 5px;
   width: 290px;
   cursor: pointer;
+}
+
+#location-search-input {
+  font-family: system-ui;
+  font-size: 18px;
+  font-weight: lighter;
+  width: 290px;
+}
+
+#location-input {
+  font-family: system-ui;
+  font-size: 18px;
+  font-weight: lighter;
+  width: 288px;
+}
+
+#location-result-div {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  width: 293px;
+  max-height: 300px;
+  padding: 1px;
+  overflow-y: auto;
+}
+
+.location-div-city-item {
+  border-bottom: 1px solid #bfbfbf;
+  overflow: hidden;
+  white-space: nowrap;
+  cursor: default;
+}
+
+*[tabindex="-1"]:focus {
+  outline-width: 0px;
+  outline-style: none;
+}
+
+.location-div-city-item-focus {
+  border-bottom: 1px solid #bfbfbf;
+  overflow: hidden;
+  white-space: nowrap;
+  cursor: default;
+  background-color: #d9d9d9;
 }
 
 .horizontal {

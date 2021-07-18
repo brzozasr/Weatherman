@@ -4,7 +4,11 @@ import {Injectable} from "@angular/core";
   providedIn: 'root'
 })
 
-export class CoordsData {
+export class CoordsForecastData {
   coordsArray: number[] = new Array<number>(2);
+  locationName: string = '';
   status: string = '';
+
+  constructor() {
+  }
 }
