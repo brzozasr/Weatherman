@@ -102,7 +102,7 @@ export class MapSearchComponent implements OnInit {
     this.getCities(txt);
   }
 
-  onResultDivClick(lon?: number, lat?: number, city?: string, country?: string): void {
+  onResultDivSelect(lon?: number, lat?: number, city?: string, country?: string): void {
     if (lon !== undefined && lat !== undefined && this.passedMap !== undefined) {
       this.cityValue = `${city}, ${country}`;
       let zoom = this.passedMap.getZoom();
