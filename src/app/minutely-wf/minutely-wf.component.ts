@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {WeatherForecast} from "../forecast/model/weather-forecast";
+
 
 @Component({
   selector: 'app-minutely-wf',
@@ -7,7 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MinutelyWfComponent implements OnInit {
 
-  constructor() { }
+  @Input() weatherPoint?: WeatherForecast;
+
+  constructor() {
+
+  }
 
   ngOnInit(): void {
   }

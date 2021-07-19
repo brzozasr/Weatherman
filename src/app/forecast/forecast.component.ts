@@ -36,6 +36,7 @@ export class ForecastComponent implements OnInit {
           },
           error => {
             this.weatherPoint = undefined;
+            console.log(error.error.message);
           });
     }
   }

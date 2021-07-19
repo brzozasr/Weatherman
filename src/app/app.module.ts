@@ -12,7 +12,6 @@ import {LeafletModule} from "@asymmetrik/ngx-leaflet";
 import {HttpClientModule} from "@angular/common/http";
 import { MapErrorDialogComponent } from './map-error-dialog/map-error-dialog.component';
 import { MapSearchComponent } from './map-search/map-search.component';
-import {NgxEchartsModule} from "ngx-echarts";
 import { ForecastComponent } from './forecast/forecast.component';
 import { HistoricalComponent } from './historical/historical.component';
 import {LOCALE_ID} from '@angular/core';
@@ -49,9 +48,6 @@ registerLocaleData(localePL);
     LeafletModule,
     HttpClientModule,
     AppRoutingModule,
-    NgxEchartsModule.forRoot({
-      echarts: () => import('echarts')
-    }),
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'pl'},
