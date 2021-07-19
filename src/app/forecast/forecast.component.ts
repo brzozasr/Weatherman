@@ -42,7 +42,7 @@ export class ForecastComponent implements OnInit {
   }
 
   getCoordsSubscribe(): void {
-    this.coordsForecastService.updateLocationForecastData(this.currentCoords.getCoords(DataType.FORECAST))
+    this.coordsForecastService.updateLocationForecastData(this.currentCoords.getCoords(DataType.FORECAST));
     this.coordsForecastService.locationForecastData
       .subscribe((coords) => {
           this.coordsForecastData = coords;
