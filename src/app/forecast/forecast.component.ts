@@ -4,7 +4,6 @@ import {WeatherForecast} from "./model/weather-forecast";
 import {CurrentCoords} from "../utilities/current-coords";
 import {CoordsForecastData} from "../utilities/coords-forecast-data";
 import {CurrentCoordsForecastService} from "./service/current-coords-forecast.service";
-import {CoordsHistoricalData} from "../utilities/coords-historical-data";
 import {DataType} from "../utilities/data-type";
 
 @Component({
@@ -56,7 +55,7 @@ export class ForecastComponent implements OnInit {
               this.coordsForecastData?.locationName = 'Warszawa, PL';
             }
             this.isSpinnerVisible = false;
-          }, 5200);
+          }, 5000);
         },
         error => {
           console.log(error.error.message);
