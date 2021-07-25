@@ -6,6 +6,7 @@
     <ng-container *ngIf="!isSpinnerVisible">
       <app-location [coordsData]="coordsForecastData"></app-location>
       <app-current-wf [weatherPoint]="weatherPoint"></app-current-wf>
+      <app-alerts-wf [weatherPoint]="weatherPoint"></app-alerts-wf>
       <app-minutely-wf [weatherPoint]="weatherPoint"></app-minutely-wf>
       <app-hourly-wf [weatherPoint]="weatherPoint"></app-hourly-wf>
     </ng-container>

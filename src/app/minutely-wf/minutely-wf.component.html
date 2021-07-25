@@ -1,6 +1,6 @@
 <div id="minutely-wf" *ngIf="weatherPoint?.minutely !== null">
   <ng-container  *ngIf="highestPrecipitation > 0; else elseInfo">
-    <h4>Precipitation</h4>
+    <h4>Precipitation (mm)</h4>
     <figure id="bar-min"></figure>
   </ng-container>
   <ng-template #elseInfo>

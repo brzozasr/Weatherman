@@ -30,7 +30,6 @@ export class MinutelyWfComponent implements OnInit {
       this.createSvg();
       if (this.preDate) {
         this.highestPrecipitation = this.getHighestPrecipitation(this.preDate);
-        console.log(this.highestPrecipitation);
         this.drawBars(this.preDate, this.highestPrecipitation);
       }
     }, 900);
