@@ -1,0 +1,45 @@
+.alerts-wf {
+  margin: 0 0 5px 0;
+  padding: 0;
+  color: #444;
+  border: 1px solid #ccc;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 5px -1px rgba(0, 0, 0, 0.2);
+  width: 86.5vw;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.panel-red {
+  background-color: #ff0000;
+}
+
+.panel-orange {
+  background-color: #ffa500;
+}
+
+.panel-yellow {
+  background-color: #ffff00;
+}
+
+.panel-warning {
+  background-color: rgb(139, 201, 191);
+}
+
+.headers-align {}
+
+.headers-align .mat-expansion-panel-header-title,
+.headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+.headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.font-bold {
+  font-weight: bold;
+}
+

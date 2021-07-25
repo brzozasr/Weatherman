@@ -12,16 +12,18 @@ import {LeafletModule} from "@asymmetrik/ngx-leaflet";
 import {HttpClientModule} from "@angular/common/http";
 import { MapErrorDialogComponent } from './map-error-dialog/map-error-dialog.component';
 import { MapSearchComponent } from './map-search/map-search.component';
-import {NgxEchartsModule} from "ngx-echarts";
 import { ForecastComponent } from './forecast/forecast.component';
 import { HistoricalComponent } from './historical/historical.component';
 import {LOCALE_ID} from '@angular/core';
-import {registerLocaleData} from '@angular/common';
+import {CommonModule, registerLocaleData, SlicePipe} from '@angular/common';
 import localePL from '@angular/common/locales/pl';
 import { CurrentWfComponent } from './current-wf/current-wf.component';
 import { MinutelyWfComponent } from './minutely-wf/minutely-wf.component';
 import { LocationComponent } from './location/location.component';
 import { GeoLocationComponent } from './geo-location/geo-location.component';
+import { HourlyWfComponent } from './hourly-wf/hourly-wf.component';
+import { AlertsWfComponent } from './alerts-wf/alerts-wf.component';
+import {NgJoinPipeModule, NgReplacePipeModule} from "angular-pipes";
 
 registerLocaleData(localePL);
 
@@ -37,19 +39,21 @@ registerLocaleData(localePL);
     CurrentWfComponent,
     MinutelyWfComponent,
     LocationComponent,
-    GeoLocationComponent
+    GeoLocationComponent,
+    HourlyWfComponent,
+    AlertsWfComponent,
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     MaterialModule,
+    NgReplacePipeModule,
     FlexModule,
     BrowserAnimationsModule,
     LeafletModule,
     HttpClientModule,
     AppRoutingModule,
-    NgxEchartsModule.forRoot({
-      echarts: () => import('echarts')
-    }),
+    NgJoinPipeModule,
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'pl'},

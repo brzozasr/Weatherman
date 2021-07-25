@@ -1,4 +1,4 @@
-#minutely-wf {
+#hourly-wf {
   margin: 10px 10px 0 10px;
   padding: 10px;
   color: #444;
@@ -11,7 +11,7 @@
   overflow-y: hidden;
 }
 
-#bar-min {
+.hourly-wf-inside {
   text-align: center;
   padding: 0 3px 0 3px;
   font-family: system-ui;
@@ -19,6 +19,17 @@
   font-weight: normal;
   color: #000;
   white-space: nowrap;
+}
+
+.img-size {
+  width: 50px;
+}
+
+.horizontal {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 /* width */
