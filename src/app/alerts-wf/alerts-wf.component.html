@@ -1,0 +1,26 @@
+<div class="alerts-wf" *ngFor="let alert of weatherPoint?.alerts; let i = index;">
+  <mat-accordion class="headers-align">
+    <mat-expansion-panel (opened)="panelOpenState = true"
+                         (closed)="panelOpenState = false">
+      <mat-expansion-panel-header [ngClass]="colors[i]">
+        <mat-panel-title>
+          {{(alert.tags && alert.tags.length > 0) ? (alert.tags | join: ', ') : 'Alert'}}
+        </mat-panel-title>
+        <mat-panel-description>
+          Durations: {{alert.start | replace: ['T'] : ' ' | slice: 0: 16}}
+          - {{alert.end | replace: ['T'] : ' ' | slice: 0: 16}}
+          <mat-icon>warning</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <ng-container *ngIf="alert.event">
+        <p class="font-bold">{{alert.event}}</p>
+      </ng-container>
+      <ng-container *ngIf="alert.senderName">
+        <p><span class="font-bold">Originator:</span> {{alert.senderName}}</p>
+      </ng-container>
+      <ng-container *ngIf="alert.description">
+        <p><span class="font-bold">Description:</span> {{alert.description}}</p>
+      </ng-container>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
