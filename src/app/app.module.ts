@@ -38,7 +38,7 @@ registerLocaleData(localePL);
     MinutelyWfComponent,
     LocationComponent,
     GeoLocationComponent,
-    HourlyWfComponent
+    HourlyWfComponent,
   ],
   imports: [
     BrowserModule,
