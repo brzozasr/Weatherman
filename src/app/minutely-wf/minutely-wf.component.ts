@@ -37,7 +37,7 @@ export class MinutelyWfComponent implements OnInit {
 
   getData(): MinutelyPrecipitation[] {
     let precipitationList: MinutelyPrecipitation[] = [];
-    if (this.weatherPoint?.minutely !== undefined) {
+    if (this.weatherPoint?.minutely) {
       this.weatherPoint.minutely.forEach((value, index) => {
         let mp = new MinutelyPrecipitation(
           value.dtLocal,
