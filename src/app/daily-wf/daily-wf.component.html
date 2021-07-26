@@ -3,16 +3,99 @@
     <mat-expansion-panel *ngFor="let day of weatherPoint?.daily">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          <span class="margin-t">{{day.dtLocal | date: 'EEE, LLL dd' : undefined: 'en-En'}}</span>
+          <span class="margin-t txt-nowrap">{{day.dtLocal | date: 'EEE, LLL dd' : undefined: 'en-En'}}</span>
         </mat-panel-title>
         <mat-panel-description>
           <ng-container *ngFor="let weather of day?.weathers; let i = index">
-            <span *ngIf="i === 0">{{weather?.description}}</span>
-            <span *ngIf="i === 0">{{day.temp?.max | number: '1.0-0'}} / {{day.temp?.min | number: '1.0-0'}}&#176;C <img src="https://openweathermap.org/img/wn/{{weather?.icon}}@2x.png" class="img-size" alt="{{weather?.icon}}"></span>
+            <span class="txt-nowrap" *ngIf="i === 0">{{weather?.description}}</span>
+            <span class="txt-nowrap" *ngIf="i === 0">{{day.temp?.max | number: '1.0-0'}} / {{day.temp?.min | number: '1.0-0'}}&#176;C <img src="https://openweathermap.org/img/wn/{{weather?.icon}}@2x.png" class="img-size" alt="{{weather?.icon}}"></span>
           </ng-container>
         </mat-panel-description>
       </mat-expansion-panel-header>
-      Content
+      <div class="daily-wf-detail">
+        <div class="detail-item">
+          <ng-container *ngFor="let weather of day?.weathers; let i = index">
+            <span class="txt-nowrap font-bolder" *ngIf="i === 0">{{weather?.description}}.</span>
+            <span class="txt-nowrap font-bolder" *ngIf="i === 0">&nbsp;{{day.windBeaufortScale}}.</span>
+          </ng-container>
+          <br><span class="txt-nowrap font-lighter">The high will be {{day.temp?.max ? (day.temp?.max | number: '1.0-0') : '--'}}&#176;C, the low will be {{day.temp?.min ? (day.temp?.min | number: '1.0-0') : '--'}}&#176;C.</span>
+        </div>
+        <div class="detail-item detail-item-flex">
+          <div class="item font-lighter" *ngIf="day.rain">
+            <img class="img-precipitation" src="assets/icons/rain.png" alt="rain"> {{day.rain | number: '1.1-2'}}mm ({{day.pop ? (day.pop * 100 | number: '1.0-0') : 0}}%)
+          </div>
+          <div class="item font-lighter" *ngIf="day.snow">
+            <img class="img-precipitation" src="assets/icons/snow.png" alt="snow"> {{day.snow | number: '1.1-2'}}mm ({{day.pop ? (day.pop * 100 | number: '1.0-0') : 0}}%)
+          </div>
+          <div class="item font-lighter" *ngIf="day.pressure">
+            <img class="img-pressure" src="assets/icons/pressure.png" alt="pressure"> {{day.pressure | number: '1.0-0'}}hPa
+          </div>
+          <div class="item font-lighter" *ngIf="day.windSpeed && day.windDir">
+            <img class="img-arrow"
+                 src="assets/arrows/{{day.windDir?.dirArrow}}.png"
+                 alt="{{day.windDir?.dirArrow}}"> {{day.windSpeed | number: '1.0-1'}}m/s {{day.windDir?.dirTxt}}
+          </div>
+          <div class="item font-lighter" *ngIf="day.clouds">
+            <img class="img-precipitation" src="assets/icons/clouds.png" alt="clouds"> {{day.clouds | number: '1.0-0'}}%
+          </div>
+          <div class="item font-lighter" *ngIf="day.humidity">
+            Humidity: {{day.humidity | number: '1.0-0'}}%
+          </div>
+          <div class="item font-lighter" *ngIf="day.uvi">
+            UV: {{day.uvi | number: '1.0-0'}}
+          </div>
+          <div class="item font-lighter" *ngIf="day.dewPoint">
+            Dew point: {{day.dewPoint | number: '1.0-0'}}&#176;C
+          </div>
+        </div>
+        <div class="detail-item" *ngIf="day.temp && day.feelsLike">
+          <table>
+            <thead>
+            <tr>
+              <th>&nbsp;</th>
+              <th>Morning</th>
+              <th>Afternoon</th>
+              <th>Evening</th>
+              <th>Night</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td class="table-title">TEMPERATURE</td>
+              <td>{{day.temp?.morn | number: '1.0-0'}}&#176;C</td>
+              <td>{{day.temp?.day | number: '1.0-0'}}&#176;C</td>
+              <td>{{day.temp?.eve | number: '1.0-0'}}&#176;C</td>
+              <td>{{day.temp?.night | number: '1.0-0'}}&#176;C</td>
+            </tr>
+            <tr>
+              <td class="table-title">FEELS LIKE</td>
+              <td>{{day.feelsLike?.morn | number: '1.0-0'}}&#176;C</td>
+              <td>{{day.feelsLike?.day | number: '1.0-0'}}&#176;C</td>
+              <td>{{day.feelsLike?.eve | number: '1.0-0'}}&#176;C</td>
+              <td>{{day.feelsLike?.night | number: '1.0-0'}}&#176;C</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="detail-item detail-item-flex-nowrap">
+          <div class="item font-lighter txt-center">
+            <span class="table-title">SUNRISE</span><br>
+            {{day.sunriseLocal ? (day.sunriseLocal | slice: 11 : 16) : '&#45;&#45;:&#45;&#45;'}}
+          </div>
+          <div class="item font-lighter txt-center">
+            <span class="table-title">SUNSET</span><br>
+            {{day.sunsetLocal ? (day.sunsetLocal | slice: 11 : 16) : '&#45;&#45;:&#45;&#45;'}}
+          </div>
+          <div class="item font-lighter txt-center">
+            <span class="table-title">MOONRISE</span><br>
+            {{day.moonriseLocal ? (day.moonriseLocal | slice: 11 : 16) : '&#45;&#45;:&#45;&#45;'}}
+          </div>
+          <div class="item font-lighter txt-center">
+            <span class="table-title">MOONSET</span><br>
+            {{day.moonsetLocal ? (day.moonsetLocal | slice: 11 : 16) : '&#45;&#45;:&#45;&#45;'}}
+          </div>
+        </div>
+      </div>
     </mat-expansion-panel>
   </mat-accordion>
 </div>

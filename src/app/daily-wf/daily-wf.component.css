@@ -31,3 +31,82 @@
 .margin-t {
   margin-top: 18px;
 }
+
+.daily-wf-detail {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.img-arrow {
+  width: 12px;
+  vertical-align: middle;
+}
+
+.img-precipitation {
+  width: 22px;
+  vertical-align: middle;
+}
+
+.img-pressure {
+  width: 18px;
+  vertical-align: middle;
+}
+
+.detail-item {
+  padding: 2px;
+  margin: 2px 2px 15px 2px;
+  width: 350px;
+}
+
+.item {
+  padding: 2px;
+  margin: 0 12px 0 0;
+}
+
+.detail-item-flex {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+}
+
+.detail-item-flex-nowrap {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-content: center;
+}
+
+.txt-nowrap {
+  white-space: nowrap;
+}
+
+.txt-center {
+  text-align: center;
+}
+
+.font-bolder {
+  font-weight: bolder;
+}
+
+.font-lighter {
+  font-weight: lighter;
+}
+
+th, td {
+  font-weight: lighter;
+  text-align: right;
+  padding: 2px 10px 2px 2px;
+}
+
+.table-title {
+  text-align: left;
+  font-size: 10px;
+}

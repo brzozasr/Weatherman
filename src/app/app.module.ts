@@ -23,7 +23,7 @@ import { LocationComponent } from './location/location.component';
 import { GeoLocationComponent } from './geo-location/geo-location.component';
 import { HourlyWfComponent } from './hourly-wf/hourly-wf.component';
 import { AlertsWfComponent } from './alerts-wf/alerts-wf.component';
-import {NgJoinPipeModule, NgReplacePipeModule} from "angular-pipes";
+import {NgJoinPipeModule, NgReplacePipeModule, NgRoundPipeModule} from "angular-pipes";
 import { DailyWfComponent } from './daily-wf/daily-wf.component';
 
 registerLocaleData(localePL);
@@ -56,6 +56,7 @@ registerLocaleData(localePL);
     HttpClientModule,
     AppRoutingModule,
     NgJoinPipeModule,
+    NgRoundPipeModule,
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'pl'},

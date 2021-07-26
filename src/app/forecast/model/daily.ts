@@ -18,12 +18,14 @@ export interface Daily {
   humidity?: number;
   dewPoint?: number;
   windSpeed?: number;
+  windSpeedKmPerH?: number;
+  windBeaufortScale?: string;
   windDir?: WindDir;
   windGust?: number;
   weathers?: Weather[];
   clouds?: number;
   pop?: number;
   uvi?: number;
-  rain?: Rain;
-  snow?: Snow;
+  rain?: number;
+  snow?: number;
 }
