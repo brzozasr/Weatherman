@@ -14,143 +14,85 @@
       </mat-expansion-panel-header>
       <div class="daily-wf-detail">
         <div class="detail-item">
-          <div class="item txt-nowrap bg-title">
-            Sunrise & Moon
+          <ng-container *ngFor="let weather of day?.weathers; let i = index">
+            <span class="txt-nowrap font-bolder" *ngIf="i === 0">{{weather?.description}}.</span>
+            <span class="txt-nowrap font-bolder" *ngIf="i === 0">&nbsp;{{day.windBeaufortScale}}.</span>
+          </ng-container>
+          <br><span class="txt-nowrap font-lighter">The high will be {{day.temp?.max ? (day.temp?.max | number: '1.0-0') : '--'}}&#176;C, the low will be {{day.temp?.min ? (day.temp?.min | number: '1.0-0') : '--'}}&#176;C.</span>
+        </div>
+        <div class="detail-item detail-item-flex">
+          <div class="item font-lighter" *ngIf="day.rain">
+            <img class="img-precipitation" src="assets/icons/rain.png" alt="rain"> {{day.rain | number: '1.1-2'}}mm ({{day.pop ? (day.pop * 100 | number: '1.0-0') : 0}}%)
           </div>
-          <div class="item txt-nowrap bg-item">
-            Sunrise
+          <div class="item font-lighter" *ngIf="day.snow">
+            <img class="img-precipitation" src="assets/icons/snow.png" alt="snow"> {{day.snow | number: '1.1-2'}}mm ({{day.pop ? (day.pop * 100 | number: '1.0-0') : 0}}%)
           </div>
-          <div class="item txt-nowrap bg-item">
-            Sunset
+          <div class="item font-lighter" *ngIf="day.pressure">
+            <img class="img-pressure" src="assets/icons/pressure.png" alt="pressure"> {{day.pressure | number: '1.0-0'}}hPa
           </div>
-          <div class="item txt-nowrap bg-item">
-            Moonrise
+          <div class="item font-lighter" *ngIf="day.windSpeed && day.windDir">
+            <img class="img-arrow"
+                 src="assets/arrows/{{day.windDir?.dirArrow}}.png"
+                 alt="{{day.windDir?.dirArrow}}"> {{day.windSpeed | number: '1.0-1'}}m/s {{day.windDir?.dirTxt}}
           </div>
-          <div class="item txt-nowrap bg-item">
-            Moonset
+          <div class="item font-lighter" *ngIf="day.clouds">
+            <img class="img-precipitation" src="assets/icons/clouds.png" alt="clouds"> {{day.clouds | number: '1.0-0'}}%
           </div>
-          <div class="item txt-nowrap bg-item">
-            Moon phase
+          <div class="item font-lighter" *ngIf="day.humidity">
+            Humidity: {{day.humidity | number: '1.0-0'}}%
+          </div>
+          <div class="item font-lighter" *ngIf="day.uvi">
+            UV: {{day.uvi | number: '1.0-0'}}
+          </div>
+          <div class="item font-lighter" *ngIf="day.dewPoint">
+            Dew point: {{day.dewPoint | number: '1.0-0'}}&#176;C
           </div>
         </div>
-        <div class="detail-item">
-          <div class="item">
-            &nbsp;
-          </div>
-          <div class="item">
-            {{day.sunriseLocal ? (day.sunriseLocal | slice: 11 : 16) : '--:--'}}
-          </div>
-          <div class="item">
-            {{day.sunsetLocal ? (day.sunsetLocal | slice: 11 : 16) : '--:--'}}
-          </div>
-          <div class="item">
-            {{day.moonriseLocal ? (day.moonriseLocal | slice: 11 : 16) : '--:--'}}
-          </div>
-          <div class="item">
-            {{day.moonsetLocal ? (day.moonsetLocal | slice: 11 : 16) : '--:--'}}
-          </div>
-          <div class="item">
-            {{day.moonPhase ? (day.moonPhase * 100 | number: '1.0-1') : '--%'}}%
-          </div>
+        <div class="detail-item" *ngIf="day.temp && day.feelsLike">
+          <table>
+            <thead>
+            <tr>
+              <th>&nbsp;</th>
+              <th>Morning</th>
+              <th>Afternoon</th>
+              <th>Evening</th>
+              <th>Night</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td class="table-title">TEMPERATURE</td>
+              <td>{{day.temp?.morn | number: '1.0-0'}}&#176;C</td>
+              <td>{{day.temp?.day | number: '1.0-0'}}&#176;C</td>
+              <td>{{day.temp?.eve | number: '1.0-0'}}&#176;C</td>
+              <td>{{day.temp?.night | number: '1.0-0'}}&#176;C</td>
+            </tr>
+            <tr>
+              <td class="table-title">FEELS LIKE</td>
+              <td>{{day.feelsLike?.morn | number: '1.0-0'}}&#176;C</td>
+              <td>{{day.feelsLike?.day | number: '1.0-0'}}&#176;C</td>
+              <td>{{day.feelsLike?.eve | number: '1.0-0'}}&#176;C</td>
+              <td>{{day.feelsLike?.night | number: '1.0-0'}}&#176;C</td>
+            </tr>
+            </tbody>
+          </table>
         </div>
-        <div class="detail-item">
-          <div class="item txt-nowrap bg-title">
-            Temperature
+        <div class="detail-item detail-item-flex-nowrap">
+          <div class="item font-lighter txt-center">
+            <span class="table-title">SUNRISE</span><br>
+            {{day.sunriseLocal ? (day.sunriseLocal | slice: 11 : 16) : '&#45;&#45;:&#45;&#45;'}}
           </div>
-          <div class="item txt-nowrap bg-item">
-            Day
+          <div class="item font-lighter txt-center">
+            <span class="table-title">SUNSET</span><br>
+            {{day.sunsetLocal ? (day.sunsetLocal | slice: 11 : 16) : '&#45;&#45;:&#45;&#45;'}}
           </div>
-          <div class="item txt-nowrap bg-item">
-            Min
+          <div class="item font-lighter txt-center">
+            <span class="table-title">MOONRISE</span><br>
+            {{day.moonriseLocal ? (day.moonriseLocal | slice: 11 : 16) : '&#45;&#45;:&#45;&#45;'}}
           </div>
-          <div class="item txt-nowrap bg-item">
-            Max
-          </div>
-          <div class="item txt-nowrap bg-item">
-            Night
-          </div>
-          <div class="item txt-nowrap bg-item">
-            Evening
-          </div>
-          <div class="item txt-nowrap bg-item">
-            Morning
-          </div>
-        </div>
-        <div class="detail-item">
-          <div class="item">
-            &nbsp;
-          </div>
-          <div class="item">
-            {{day.temp?.day ? (day.temp?.day | number: '1.0-0') : '--'}}&#176;C
-          </div>
-          <div class="item">
-            {{day.temp?.min ? (day.temp?.min | number: '1.0-0') : '--'}}&#176;C
-          </div>
-          <div class="item">
-            {{day.temp?.max ? (day.temp?.max | number: '1.0-0') : '--'}}&#176;C
-          </div>
-          <div class="item">
-            {{day.temp?.night ? (day.temp?.night | number: '1.0-0') : '--'}}&#176;C
-          </div>
-          <div class="item">
-            {{day.temp?.eve ? (day.temp?.eve | number: '1.0-0') : '--'}}&#176;C
-          </div>
-          <div class="item">
-            {{day.temp?.morn ? (day.temp?.morn | number: '1.0-0') : '--'}}&#176;C
-          </div>
-        </div>
-        <div class="detail-item">
-          <div class="item txt-nowrap bg-title">
-            Feels like
-          </div>
-          <div class="item txt-nowrap bg-item">
-            Day
-          </div>
-          <div class="item txt-nowrap bg-item">
-            Night
-          </div>
-          <div class="item txt-nowrap bg-item">
-            Evening
-          </div>
-          <div class="item txt-nowrap bg-item">
-            Morning
-          </div>
-        </div>
-        <div class="detail-item">
-          <div class="item">
-            &nbsp;
-          </div>
-          <div class="item">
-            {{day.feelsLike?.day ? (day.feelsLike?.day | number: '1.0-0') : '--'}}&#176;C
-          </div>
-          <div class="item">
-            {{day.feelsLike?.night ? (day.feelsLike?.night | number: '1.0-0') : '--'}}&#176;C
-          </div>
-          <div class="item">
-            {{day.feelsLike?.eve ? (day.feelsLike?.eve | number: '1.0-0') : '--'}}&#176;C
-          </div>
-          <div class="item">
-            {{day.feelsLike?.morn ? (day.feelsLike?.morn | number: '1.0-0') : '--'}}&#176;C
-          </div>
-        </div>
-        <div class="detail-item">
-          <div class="item txt-nowrap bg-title">
-            Other weather conditions
-          </div>
-          <div class="item txt-nowrap bg-item">
-            Pressure
-          </div>
-          <div class="item txt-nowrap bg-item">
-            Humidity
-          </div>
-          <div class="item txt-nowrap bg-item">
-            Dew point
-          </div>
-          <div class="item txt-nowrap bg-item">
-            Wind
-          </div>
-          <div class="item txt-nowrap bg-item">
-            UV index
+          <div class="item font-lighter txt-center">
+            <span class="table-title">MOONSET</span><br>
+            {{day.moonsetLocal ? (day.moonsetLocal | slice: 11 : 16) : '&#45;&#45;:&#45;&#45;'}}
           </div>
         </div>
       </div>
