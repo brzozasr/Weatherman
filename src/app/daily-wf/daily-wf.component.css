@@ -31,3 +31,35 @@
 .margin-t {
   margin-top: 18px;
 }
+
+.daily-wf-detail {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-items: flex-start;
+  align-content: stretch;
+}
+
+.detail-item {
+
+  flex-grow: 1;
+}
+
+.item {
+  padding: 1px;
+  margin: 1px;
+}
+
+.bg-item {
+  background-color: #ccc;
+}
+
+.bg-title {
+  background-color: #000;
+  color: #fff;
+}
+
+.txt-nowrap {
+  white-space: nowrap;
+}
