@@ -1,5 +1,5 @@
 <div class="alerts-wf" *ngFor="let alert of weatherPoint?.alerts; let i = index;">
-  <mat-accordion class="headers-align">
+  <mat-accordion class="alert-headers-align">
     <mat-expansion-panel (opened)="panelOpenState = true"
                          (closed)="panelOpenState = false">
       <mat-expansion-panel-header [ngClass]="colors[i]">
