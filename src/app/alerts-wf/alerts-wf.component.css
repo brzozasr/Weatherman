@@ -27,14 +27,14 @@
   background-color: rgb(139, 201, 191);
 }
 
-.headers-align {}
+.alert-headers-align {}
 
-.headers-align .mat-expansion-panel-header-title,
-.headers-align .mat-expansion-panel-header-description {
+.alert-headers-align .mat-expansion-panel-header-title,
+.alert-headers-align .mat-expansion-panel-header-description {
   flex-basis: 0;
 }
 
-.headers-align .mat-expansion-panel-header-description {
+.alert-headers-align .mat-expansion-panel-header-description {
   justify-content: space-between;
   align-items: center;
 }
