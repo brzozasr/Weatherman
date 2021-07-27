@@ -8,7 +8,10 @@
         <mat-panel-description>
           <ng-container *ngFor="let weather of day?.weathers; let i = index">
             <span class="txt-nowrap" *ngIf="i === 0">{{weather?.description}}</span>
-            <span class="txt-nowrap" *ngIf="i === 0">{{day.temp?.max | number: '1.0-0'}} / {{day.temp?.min | number: '1.0-0'}}&#176;C <img src="https://openweathermap.org/img/wn/{{weather?.icon}}@2x.png" class="img-size" alt="{{weather?.icon}}"></span>
+            <span class="txt-nowrap" *ngIf="i === 0">{{day.temp?.max | number: '1.0-0'}}
+              / {{day.temp?.min | number: '1.0-0'}}&#176;C <img
+                src="https://openweathermap.org/img/wn/{{weather?.icon}}@2x.png" class="img-size"
+                alt="{{weather?.icon}}"></span>
           </ng-container>
         </mat-panel-description>
       </mat-expansion-panel-header>
@@ -18,17 +21,21 @@
             <span class="txt-nowrap font-bolder" *ngIf="i === 0">{{weather?.description}}.</span>
             <span class="txt-nowrap font-bolder" *ngIf="i === 0">&nbsp;{{day.windBeaufortScale}}.</span>
           </ng-container>
-          <br><span class="txt-nowrap font-lighter">The high will be {{day.temp?.max ? (day.temp?.max | number: '1.0-0') : '--'}}&#176;C, the low will be {{day.temp?.min ? (day.temp?.min | number: '1.0-0') : '--'}}&#176;C.</span>
+          <br><span
+          class="txt-nowrap font-lighter">The high will be {{day.temp?.max ? (day.temp?.max | number: '1.0-0') : '--'}}&#176;C, the low will be {{day.temp?.min ? (day.temp?.min | number: '1.0-0') : '--'}}&#176;C.</span>
         </div>
         <div class="detail-item detail-item-flex">
           <div class="item font-lighter" *ngIf="day.rain">
-            <img class="img-precipitation" src="assets/icons/rain.png" alt="rain"> {{day.rain | number: '1.1-2'}}mm ({{day.pop ? (day.pop * 100 | number: '1.0-0') : 0}}%)
+            <img class="img-precipitation" src="assets/icons/rain.png" alt="rain"> {{day.rain | number: '1.1-2'}}mm
+            ({{day.pop ? (day.pop * 100 | number: '1.0-0') : 0}}%)
           </div>
           <div class="item font-lighter" *ngIf="day.snow">
-            <img class="img-precipitation" src="assets/icons/snow.png" alt="snow"> {{day.snow | number: '1.1-2'}}mm ({{day.pop ? (day.pop * 100 | number: '1.0-0') : 0}}%)
+            <img class="img-precipitation" src="assets/icons/snow.png" alt="snow"> {{day.snow | number: '1.1-2'}}mm
+            ({{day.pop ? (day.pop * 100 | number: '1.0-0') : 0}}%)
           </div>
           <div class="item font-lighter" *ngIf="day.pressure">
-            <img class="img-pressure" src="assets/icons/pressure.png" alt="pressure"> {{day.pressure | number: '1.0-0'}}hPa
+            <img class="img-pressure" src="assets/icons/pressure.png" alt="pressure"> {{day.pressure | number: '1.0-0'}}
+            hPa
           </div>
           <div class="item font-lighter" *ngIf="day.windSpeed && day.windDir">
             <img class="img-arrow"
@@ -47,6 +54,9 @@
           <div class="item font-lighter" *ngIf="day.dewPoint">
             Dew point: {{day.dewPoint | number: '1.0-0'}}&#176;C
           </div>
+        </div>
+        <div class="detail-item" *ngIf="day.temp && day.feelsLike">
+          <app-daily-temp-chart [tempData]="[day.temp, day.feelsLike]"></app-daily-temp-chart>
         </div>
         <div class="detail-item" *ngIf="day.temp && day.feelsLike">
           <table>

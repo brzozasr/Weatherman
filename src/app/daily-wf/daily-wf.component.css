@@ -59,6 +59,7 @@
   padding: 2px;
   margin: 2px 2px 15px 2px;
   width: 350px;
+  border: 1px solid red;
 }
 
 .item {
