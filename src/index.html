@@ -13,4 +13,10 @@
 <body class="mat-typography">
   <app-root></app-root>
 </body>
+<script>
+  window.onunload = function () {
+    localStorage.removeItem('lsCoordsForecastData');
+    localStorage.removeItem('lsCoordsHistoricalData');
+  }
+</script>
 </html>
