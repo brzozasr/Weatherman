@@ -17,9 +17,9 @@ export class MinutelyWfComponent implements OnInit {
 
   private preDate?: MinutelyPrecipitation[];
   private svg: any;
-  private margin = 35;
+  private margin = 50;
   private width = 1250 - (this.margin * 2);
-  private height = 200 - (this.margin * 2);
+  private height = 250 - (this.margin * 2);
 
   constructor() {
   }
@@ -32,13 +32,13 @@ export class MinutelyWfComponent implements OnInit {
         this.highestPrecipitation = this.getHighestPrecipitation(this.preDate);
         this.drawBars(this.preDate, this.highestPrecipitation);
       }
-    }, 900);
+    }, 600);
   }
 
   getData(): MinutelyPrecipitation[] {
     let precipitationList: MinutelyPrecipitation[] = [];
     if (this.weatherPoint?.minutely) {
-      this.weatherPoint.minutely.forEach((value, index) => {
+      this.weatherPoint.minutely.forEach((value) => {
         let mp = new MinutelyPrecipitation(
           value.dtLocal,
           value.precipitation
@@ -107,5 +107,14 @@ export class MinutelyWfComponent implements OnInit {
       .attr("width", x.bandwidth())
       .attr("height", (d: { precipitation: d3.NumberValue; }) => this.height - y(d.precipitation))
       .attr("fill", "#26b6b6");
+
+    // Description Y-axis
+    this.svg
+      .append('text')
+      .attr('x', (this.height / 2.9) - (this.margin * 2))
+      .attr('y', -(this.margin / 1.6))
+      .attr('transform', 'rotate(-90)')
+      .attr('text-anchor', 'middle')
+      .text('(mm)')
   }
 }

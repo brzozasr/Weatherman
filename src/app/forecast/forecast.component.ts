@@ -48,14 +48,20 @@ export class ForecastComponent implements OnInit {
           this.isSpinnerVisible = true;
           setTimeout(() => {
             if (coords.coordsArray[0] && coords.coordsArray[1]) {
+              localStorage.setItem('lsCoordsForecastData', JSON.stringify(coords));
               this.getWeatherPoint(coords.coordsArray[0], coords.coordsArray[1]);
             } else {
               this.getWeatherPoint(52.24, 20.99);
               // @ts-ignore
+              this.coordsForecastData?.coordsArray = [52.24, 20.99];
+              // @ts-ignore
               this.coordsForecastData?.locationName = 'Warszawa, PL';
+              // @ts-ignore
+              this.coordsForecastData?.status = 'Forced location set to "Warszawa, PL"';
+              localStorage.setItem('lsCoordsForecastData', JSON.stringify(this.coordsForecastData));
             }
             this.isSpinnerVisible = false;
-          }, 5000);
+          }, 5500);
         },
         error => {
           console.log(error.error.message);
