@@ -104,6 +104,7 @@ export class CurrentCoords {
           } else {
             this.coordsHistoricalData = this.locationError(dataType);
           }
+          console.log(error.message);
         });
 
       if (dataType === DataType.FORECAST) {
