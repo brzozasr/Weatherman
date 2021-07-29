@@ -1,6 +1,6 @@
 <div class="daily-wf" *ngIf="weatherPoint?.daily">
   <mat-accordion class="daily-headers-align">
-    <mat-expansion-panel *ngFor="let day of weatherPoint?.daily; let i = index" (expandedChange)="onOpenPanel($event, i)">
+    <mat-expansion-panel *ngFor="let day of weatherPoint?.daily; let i = index">
       <mat-expansion-panel-header>
         <mat-panel-title>
           <span class="margin-t txt-nowrap">{{day.dtLocal | date: 'EEE, LLL dd' : undefined: 'en-En'}}</span>
@@ -54,9 +54,6 @@
           <div class="item font-lighter" *ngIf="day.dewPoint">
             Dew point: {{day.dewPoint | number: '1.0-0'}}&#176;C
           </div>
-        </div>
-        <div class="detail-item" *ngIf="temps">
-          <app-daily-temp-chart [tempData]="[temps[0][i], temps[1][i]]"></app-daily-temp-chart>
         </div>
         <div class="detail-item" *ngIf="day.temp && day.feelsLike">
           <table>

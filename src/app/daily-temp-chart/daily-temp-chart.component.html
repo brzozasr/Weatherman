@@ -1,8 +1,0 @@
-<ng-container  *ngIf="highestPrecipitation > 0; else elseInfo">
-  <h4 class="font-lighter" style="height: 300px">Temperature</h4>
-  <figure id="daily-temp"></figure>
-  <p>{{tempData ? tempData[0]?.id : 0}}</p>
-</ng-container>
-<ng-template #elseInfo>
-  <h4 style="text-align: center;">No precipitation within an hour</h4>
-</ng-template>

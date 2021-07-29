@@ -25,7 +25,8 @@ import { HourlyWfComponent } from './hourly-wf/hourly-wf.component';
 import { AlertsWfComponent } from './alerts-wf/alerts-wf.component';
 import {NgJoinPipeModule, NgReplacePipeModule, NgRoundPipeModule} from "angular-pipes";
 import { DailyWfComponent } from './daily-wf/daily-wf.component';
-import { DailyTempChartComponent } from './daily-temp-chart/daily-temp-chart.component';
+import { HourlyChartsComponent } from './hourly-charts/hourly-charts.component';
+import { HourlyTempChartComponent } from './hourly-temp-chart/hourly-temp-chart.component';
 
 registerLocaleData(localePL);
 
@@ -45,7 +46,8 @@ registerLocaleData(localePL);
     HourlyWfComponent,
     AlertsWfComponent,
     DailyWfComponent,
-    DailyTempChartComponent,
+    HourlyChartsComponent,
+    HourlyTempChartComponent,
   ],
   imports: [
     BrowserModule,
