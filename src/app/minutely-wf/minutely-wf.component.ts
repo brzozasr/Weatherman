@@ -12,7 +12,6 @@ import {MinutelyPrecipitation} from "./model/minutely-precipitation";
 export class MinutelyWfComponent implements OnInit {
 
   @Input() weatherPoint?: WeatherForecast;
-  precipitationData?: MinutelyPrecipitation[];
   highestPrecipitation: number = 1;
 
   private preDate?: MinutelyPrecipitation[];
@@ -111,8 +110,8 @@ export class MinutelyWfComponent implements OnInit {
     // Description Y-axis
     this.svg
       .append('text')
-      .attr('x', (this.height / 2.9) - (this.margin * 2))
-      .attr('y', -(this.margin / 1.6))
+      .attr('x', (this.height / 3.2) - (this.margin * 2))
+      .attr('y', -(this.margin / 1.4))
       .attr('transform', 'rotate(-90)')
       .attr('text-anchor', 'middle')
       .text('(mm)')

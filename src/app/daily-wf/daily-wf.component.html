@@ -1,14 +1,14 @@
 <div class="daily-wf" *ngIf="weatherPoint?.daily">
   <mat-accordion class="daily-headers-align">
-    <mat-expansion-panel *ngFor="let day of weatherPoint?.daily">
+    <mat-expansion-panel *ngFor="let day of weatherPoint?.daily; let i = index" (expandedChange)="onOpenPanel($event, i)">
       <mat-expansion-panel-header>
         <mat-panel-title>
           <span class="margin-t txt-nowrap">{{day.dtLocal | date: 'EEE, LLL dd' : undefined: 'en-En'}}</span>
         </mat-panel-title>
         <mat-panel-description>
-          <ng-container *ngFor="let weather of day?.weathers; let i = index">
-            <span class="txt-nowrap" *ngIf="i === 0">{{weather?.description}}</span>
-            <span class="txt-nowrap" *ngIf="i === 0">{{day.temp?.max | number: '1.0-0'}}
+          <ng-container *ngFor="let weather of day?.weathers; let j = index">
+            <span class="txt-nowrap" *ngIf="j === 0">{{weather?.description}}</span>
+            <span class="txt-nowrap" *ngIf="j === 0">{{day.temp?.max | number: '1.0-0'}}
               / {{day.temp?.min | number: '1.0-0'}}&#176;C <img
                 src="https://openweathermap.org/img/wn/{{weather?.icon}}@2x.png" class="img-size"
                 alt="{{weather?.icon}}"></span>
@@ -17,9 +17,9 @@
       </mat-expansion-panel-header>
       <div class="daily-wf-detail">
         <div class="detail-item">
-          <ng-container *ngFor="let weather of day?.weathers; let i = index">
-            <span class="txt-nowrap font-bolder" *ngIf="i === 0">{{weather?.description}}.</span>
-            <span class="txt-nowrap font-bolder" *ngIf="i === 0">&nbsp;{{day.windBeaufortScale}}.</span>
+          <ng-container *ngFor="let weather of day?.weathers; let k = index">
+            <span class="txt-nowrap font-bolder" *ngIf="k === 0">{{weather?.description}}.</span>
+            <span class="txt-nowrap font-bolder" *ngIf="k === 0">&nbsp;{{day.windBeaufortScale}}.</span>
           </ng-container>
           <br><span
           class="txt-nowrap font-lighter">The high will be {{day.temp?.max ? (day.temp?.max | number: '1.0-0') : '--'}}&#176;C, the low will be {{day.temp?.min ? (day.temp?.min | number: '1.0-0') : '--'}}&#176;C.</span>
@@ -55,8 +55,8 @@
             Dew point: {{day.dewPoint | number: '1.0-0'}}&#176;C
           </div>
         </div>
-        <div class="detail-item" *ngIf="day.temp && day.feelsLike">
-          <app-daily-temp-chart [tempData]="[day.temp, day.feelsLike]"></app-daily-temp-chart>
+        <div class="detail-item" *ngIf="temps">
+          <app-daily-temp-chart [tempData]="[temps[0][i], temps[1][i]]"></app-daily-temp-chart>
         </div>
         <div class="detail-item" *ngIf="day.temp && day.feelsLike">
           <table>
