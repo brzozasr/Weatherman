@@ -1,7 +1,10 @@
 <div id="minutely-wf" *ngIf="weatherPoint?.minutely !== null">
-  <ng-container  *ngIf="highestPrecipitation > 0; else elseInfo">
+  <ng-container  *ngIf="isPrecipitationInHour; else elseInfo">
     <h4>Precipitation (mm)</h4>
-    <figure id="bar-min"></figure>
+    <div echarts
+         [options]="options"
+         class="min-chart">
+    </div>
   </ng-container>
   <ng-template #elseInfo>
     <h4 style="text-align: center;">No precipitation within an hour</h4>

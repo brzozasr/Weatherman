@@ -15,7 +15,7 @@ import { MapSearchComponent } from './map-search/map-search.component';
 import { ForecastComponent } from './forecast/forecast.component';
 import { HistoricalComponent } from './historical/historical.component';
 import {LOCALE_ID} from '@angular/core';
-import {CommonModule, registerLocaleData, SlicePipe} from '@angular/common';
+import {CommonModule, registerLocaleData} from '@angular/common';
 import localePL from '@angular/common/locales/pl';
 import { CurrentWfComponent } from './current-wf/current-wf.component';
 import { MinutelyWfComponent } from './minutely-wf/minutely-wf.component';
@@ -25,6 +25,9 @@ import { HourlyWfComponent } from './hourly-wf/hourly-wf.component';
 import { AlertsWfComponent } from './alerts-wf/alerts-wf.component';
 import {NgJoinPipeModule, NgReplacePipeModule, NgRoundPipeModule} from "angular-pipes";
 import { DailyWfComponent } from './daily-wf/daily-wf.component';
+import { HourlyChartsComponent } from './hourly-charts/hourly-charts.component';
+import { HourlyTempChartComponent } from './hourly-temp-chart/hourly-temp-chart.component';
+import {NgxEchartsModule} from "ngx-echarts";
 
 registerLocaleData(localePL);
 
@@ -44,6 +47,8 @@ registerLocaleData(localePL);
     HourlyWfComponent,
     AlertsWfComponent,
     DailyWfComponent,
+    HourlyChartsComponent,
+    HourlyTempChartComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,6 +62,9 @@ registerLocaleData(localePL);
     AppRoutingModule,
     NgJoinPipeModule,
     NgRoundPipeModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts')
+    })
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'pl'},

@@ -21,6 +21,8 @@
   white-space: nowrap;
 }
 
+.min-chart {}
+
 /* width */
 ::-webkit-scrollbar {
   height: 5px;

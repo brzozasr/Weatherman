@@ -24,7 +24,6 @@ export class ForecastComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.coordsForecastService.updateLocationForecastData(this.currentCoords.getCoords(DataType.FORECAST));
     this.getCoordsSubscribe();
   }
 

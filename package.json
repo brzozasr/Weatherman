@@ -24,7 +24,9 @@
     "@asymmetrik/ngx-leaflet": "^8.1.0",
     "angular-pipes": "^10.0.0",
     "d3": "^7.0.0",
+    "echarts": "^5.1.2",
     "leaflet": "^1.7.1",
+    "ngx-echarts": "^7.0.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.1.0",
     "zone.js": "~0.11.4"

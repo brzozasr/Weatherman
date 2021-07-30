@@ -1,4 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {
+  Component,
+  ComponentFactoryResolver,
+  Input,
+  OnInit
+} from '@angular/core';
 import {WeatherForecast} from "../forecast/model/weather-forecast";
 
 @Component({
@@ -12,7 +17,7 @@ export class DailyWfComponent implements OnInit {
 
   constructor() { }
 
+
   ngOnInit(): void {
   }
-
 }
