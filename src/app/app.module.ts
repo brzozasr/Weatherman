@@ -28,6 +28,9 @@ import { DailyWfComponent } from './daily-wf/daily-wf.component';
 import { HourlyChartsComponent } from './hourly-charts/hourly-charts.component';
 import { HourlyTempChartComponent } from './hourly-temp-chart/hourly-temp-chart.component';
 import {NgxEchartsModule} from "ngx-echarts";
+import { HourlyPressureChartComponent } from './hourly-pressure-chart/hourly-pressure-chart.component';
+import { HourlyHumidityChartComponent } from './hourly-humidity-chart/hourly-humidity-chart.component';
+import { HourlyDewPointChartComponent } from './hourly-dew-point-chart/hourly-dew-point-chart.component';
 
 registerLocaleData(localePL);
 
@@ -49,6 +52,9 @@ registerLocaleData(localePL);
     DailyWfComponent,
     HourlyChartsComponent,
     HourlyTempChartComponent,
+    HourlyPressureChartComponent,
+    HourlyHumidityChartComponent,
+    HourlyDewPointChartComponent,
   ],
   imports: [
     BrowserModule,
