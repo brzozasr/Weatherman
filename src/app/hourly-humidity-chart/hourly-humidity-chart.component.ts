@@ -12,6 +12,7 @@ export class HourlyHumidityChartComponent implements OnInit, AfterViewInit {
   @Input() weatherForecast?: WeatherForecast;
   options: any;
   colorScheme: any;
+  isDataAvailable: boolean = false;
 
   constructor() { }
 
@@ -25,12 +26,19 @@ export class HourlyHumidityChartComponent implements OnInit, AfterViewInit {
     const yAxis: any[] = [];
     const datePipe: DatePipe = new DatePipe('en-US');
 
-    this.weatherForecast?.hourly?.forEach((x) => {
-      let dateTime = datePipe.transform(x.dtLocal, 'MMM dd, HH:mm');
+      if (this.weatherForecast?.hourly) {
+        this.isDataAvailable = true;
+        this.weatherForecast?.hourly?.forEach((x) => {
+          let dateTime = datePipe.transform(x.dtLocal, 'MMM dd, HH:mm');
 
-      xAxis.push(dateTime);
-      yAxis.push(x.humidity);
-    });
+          xAxis.push(dateTime);
+          yAxis.push(x.humidity);
+        });
+      }
+
+      this.colorScheme = {
+        color: ['#00cc00']
+      };
 
     this.options = {
       tooltip: {},

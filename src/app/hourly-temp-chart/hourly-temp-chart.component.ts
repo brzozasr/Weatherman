@@ -13,6 +13,7 @@ export class HourlyTempChartComponent implements OnInit, AfterViewInit {
 
   options: any;
   colorScheme: any;
+  isDataAvailable: boolean = false;
 
   constructor() {
   }
@@ -29,13 +30,16 @@ export class HourlyTempChartComponent implements OnInit, AfterViewInit {
       const feelsLike: (number | undefined)[] = [];
       const datePipe: DatePipe = new DatePipe('en-US');
 
-      this.weatherForecast?.hourly?.forEach((data) => {
-        let dateTime = datePipe.transform(data.dtLocal, 'MMM dd, HH:mm');
+      if (this.weatherForecast?.hourly) {
+        this.isDataAvailable = true;
+        this.weatherForecast?.hourly?.forEach((data) => {
+          let dateTime = datePipe.transform(data.dtLocal, 'MMM dd, HH:mm');
 
-        xAxisData.push(dateTime);
-        temp.push(data.temp);
-        feelsLike.push(data.feelsLike);
-      });
+          xAxisData.push(dateTime);
+          temp.push(data.temp);
+          feelsLike.push(data.feelsLike);
+        });
+      }
 
       this.colorScheme = {
         color: ['#cc0000', '#0000cc']

@@ -14,6 +14,7 @@ export class HourlyPressureChartComponent implements OnInit, AfterViewInit {
   @Input() weatherForecast?: WeatherForecast;
   colorScheme: any;
   options: any;
+  isDataAvailable: boolean = false;
 
   constructor() { }
 
@@ -28,12 +29,15 @@ export class HourlyPressureChartComponent implements OnInit, AfterViewInit {
       const dataShadow = [];
       const datePipe: DatePipe = new DatePipe('en-US');
 
-      this.weatherForecast?.hourly?.forEach((x) => {
-        let dateTime = datePipe.transform(x.dtLocal, 'MMM dd, HH:mm');
+      if (this.weatherForecast?.hourly) {
+        this.isDataAvailable = true;
+        this.weatherForecast?.hourly?.forEach((x) => {
+          let dateTime = datePipe.transform(x.dtLocal, 'MMM dd, HH:mm');
 
-        dataAxis.push(dateTime);
-        data.push(x.pressure);
-      });
+          dataAxis.push(dateTime);
+          data.push(x.pressure);
+        });
+      }
 
 
       // tslint:disable-next-line: prefer-for-of

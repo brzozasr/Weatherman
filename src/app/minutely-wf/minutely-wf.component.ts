@@ -23,7 +23,7 @@ export class MinutelyWfComponent implements OnInit, AfterViewInit {
 
   isPrecipitation(list: Minutely[] | undefined): boolean {
     let isPrecipitation: boolean = false;
-    if (list !== undefined) {
+    if (list) {
       list.forEach((value => {
         // @ts-ignore
         if (value.precipitation > 0) {
@@ -44,12 +44,14 @@ export class MinutelyWfComponent implements OnInit, AfterViewInit {
       const precipitation: (number | undefined)[] = [];
       const datePipe: DatePipe = new DatePipe('en-US');
 
-      this.weatherPoint?.minutely?.forEach((data) => {
-        let dateTime = datePipe.transform(data.dtLocal, 'HH:mm');
+      if(this.weatherPoint?.minutely) {
+        this.weatherPoint?.minutely?.forEach((data) => {
+          let dateTime = datePipe.transform(data.dtLocal, 'HH:mm');
 
-        xAxisData.push(dateTime);
-        precipitation.push(data.precipitation);
-      });
+          xAxisData.push(dateTime);
+          precipitation.push(data.precipitation);
+        });
+      }
 
       this.options = {
         legend: {
