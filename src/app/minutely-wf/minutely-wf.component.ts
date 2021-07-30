@@ -1,7 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {WeatherForecast} from "../forecast/model/weather-forecast";
-import * as d3 from 'd3';
-import {MinutelyPrecipitation} from "./model/minutely-precipitation";
+import {DatePipe} from "@angular/common";
+import {Minutely} from "../forecast/model/minutely";
 
 
 @Component({
@@ -9,111 +9,74 @@ import {MinutelyPrecipitation} from "./model/minutely-precipitation";
   templateUrl: './minutely-wf.component.html',
   styleUrls: ['./minutely-wf.component.css']
 })
-export class MinutelyWfComponent implements OnInit {
+export class MinutelyWfComponent implements OnInit, AfterViewInit {
 
   @Input() weatherPoint?: WeatherForecast;
-  highestPrecipitation: number = 1;
-
-  private preDate?: MinutelyPrecipitation[];
-  private svg: any;
-  private margin = 50;
-  private width = 1250 - (this.margin * 2);
-  private height = 250 - (this.margin * 2);
+  isPrecipitationInHour: boolean = false;
+  options: any;
 
   constructor() {
   }
 
   ngOnInit(): void {
-    setTimeout(() => {
-      this.preDate = this.getData();
-      this.createSvg();
-      if (this.preDate) {
-        this.highestPrecipitation = this.getHighestPrecipitation(this.preDate);
-        this.drawBars(this.preDate, this.highestPrecipitation);
-      }
-    }, 600);
   }
 
-  getData(): MinutelyPrecipitation[] {
-    let precipitationList: MinutelyPrecipitation[] = [];
-    if (this.weatherPoint?.minutely) {
-      this.weatherPoint.minutely.forEach((value) => {
-        let mp = new MinutelyPrecipitation(
-          value.dtLocal,
-          value.precipitation
-        );
-        precipitationList.push(mp);
-      });
-    }
-
-    return precipitationList;
-  }
-
-  getHighestPrecipitation(list: MinutelyPrecipitation[]): number {
-    let highestPrecipitation: number | undefined = 0;
+  isPrecipitation(list: Minutely[] | undefined): boolean {
+    let isPrecipitation: boolean = false;
     if (list !== undefined) {
       list.forEach((value => {
         // @ts-ignore
-        if (value.precipitation > highestPrecipitation) {
-          highestPrecipitation = value.precipitation;
+        if (value.precipitation > 0) {
+          isPrecipitation = true;
+          return;
         }
       }));
     }
 
-    return highestPrecipitation;
+    return isPrecipitation;
   }
 
-  private createSvg(): void {
-    this.svg = d3.select("figure#bar-min")
-      .append("svg")
-      .attr("width", this.width + (this.margin * 2))
-      .attr("height", this.height + (this.margin * 2))
-      .append("g")
-      .attr("transform", "translate(" + this.margin + "," + this.margin + ")");
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.isPrecipitationInHour = this.isPrecipitation(this.weatherPoint?.minutely);
+
+      const xAxisData: any[] = [];
+      const precipitation: (number | undefined)[] = [];
+      const datePipe: DatePipe = new DatePipe('en-US');
+
+      this.weatherPoint?.minutely?.forEach((data) => {
+        let dateTime = datePipe.transform(data.dtLocal, 'HH:mm');
+
+        xAxisData.push(dateTime);
+        precipitation.push(data.precipitation);
+      });
+
+      this.options = {
+        legend: {
+          data: ['Precipitation'],
+          align: 'left',
+        },
+        tooltip: {},
+        xAxis: {
+          data: xAxisData,
+          silent: false,
+          splitLine: {
+            show: false,
+          },
+        },
+        yAxis: {},
+        series: [
+          {
+            name: 'Precipitation',
+            type: 'bar',
+            data: precipitation,
+            animationDelay: (idx: number) => idx * 10,
+          },
+        ],
+        animationEasing: 'elasticOut',
+        animationDelayUpdate: (idx: number) => idx * 5,
+      };
+    }, 1000);
   }
 
-  private drawBars(data: any[], axisXHeight: number): void {
-    // Create the X-axis band scale
-    const x = d3.scaleBand()
-      .range([0, this.width])
-      .domain(data.map(d => d.time))
-      .padding(0.2);
-
-    // Draw the X-axis on the DOM
-    this.svg.append("g")
-      .attr("transform", "translate(0," + this.height + ")")
-      .call(d3.axisBottom(x))
-      .selectAll("text")
-      .attr("transform", "translate(-10,0)rotate(-45)")
-      .style("text-anchor", "end");
-
-    // Create the Y-axis band scale
-    const y = d3.scaleLinear()
-      .domain([0, axisXHeight])
-      .range([this.height, 0]);
-
-    // Draw the Y-axis on the DOM
-    this.svg.append("g")
-      .call(d3.axisLeft(y));
-
-    // Create and fill the bars
-    this.svg.selectAll("bars")
-      .data(data)
-      .enter()
-      .append("rect")
-      .attr("x", (d: { time: string; }) => x(d.time))
-      .attr("y", (d: { precipitation: d3.NumberValue; }) => y(d.precipitation))
-      .attr("width", x.bandwidth())
-      .attr("height", (d: { precipitation: d3.NumberValue; }) => this.height - y(d.precipitation))
-      .attr("fill", "#26b6b6");
-
-    // Description Y-axis
-    this.svg
-      .append('text')
-      .attr('x', (this.height / 3.2) - (this.margin * 2))
-      .attr('y', -(this.margin / 1.4))
-      .attr('transform', 'rotate(-90)')
-      .attr('text-anchor', 'middle')
-      .text('(mm)')
-  }
 }

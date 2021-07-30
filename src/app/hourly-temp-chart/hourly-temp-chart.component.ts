@@ -29,16 +29,16 @@ export class HourlyTempChartComponent implements OnInit, AfterViewInit {
       const feelsLike: (number | undefined)[] = [];
       const datePipe: DatePipe = new DatePipe('en-US');
 
-      this.weatherForecast?.hourly?.forEach((data, index) => {
-        let date = datePipe.transform(data.dtLocal, 'MMM dd, HH:mm');
+      this.weatherForecast?.hourly?.forEach((data) => {
+        let dateTime = datePipe.transform(data.dtLocal, 'MMM dd, HH:mm');
 
-        xAxisData.push(date);
+        xAxisData.push(dateTime);
         temp.push(data.temp);
         feelsLike.push(data.feelsLike);
       });
 
       this.colorScheme = {
-        domain: ['#ff0000', '#0000ff']
+        color: ['#cc0000', '#0000cc']
       };
 
       this.options = {
