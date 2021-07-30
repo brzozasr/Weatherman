@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {WeatherForecast} from "../forecast/model/weather-forecast";
-import {DatePipe} from "@angular/common";
+import {DatePipe, DecimalPipe} from "@angular/common";
 import LinearGradient from 'zrender/lib/graphic/LinearGradient';
 
 
@@ -23,20 +23,21 @@ export class HourlyPressureChartComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     setTimeout(() => {
       const dataAxis: any[] = [];
-      let data: any[] = [];
-      const xAxisData: any[] = [];
+      const data: any[] = [];
+      const dataLabel: any[] = [];
       const yMax = 1200;
       const dataShadow = [];
       const datePipe: DatePipe = new DatePipe('en-US');
+      const numberPipe: DecimalPipe = new DecimalPipe('pl-PL')
 
-      this.weatherForecast?.hourly?.forEach((data) => {
-        let dateTime = datePipe.transform(data.dtLocal, 'MMM dd, HH:mm');
+      this.weatherForecast?.hourly?.forEach((x) => {
+        let dateTime = datePipe.transform(x.dtLocal, 'MMM dd, HH:mm');
 
-        xAxisData.push(dateTime);
-        dataAxis.push(data.pressure);
+        dataAxis.push(dateTime);
+        data.push(x.pressure);
+        dataLabel.push(`${x.pressure} hPa`)
       });
 
-      data = dataAxis;
 
       // tslint:disable-next-line: prefer-for-of
       for (let i = 0; i < data.length; i++) {
@@ -47,11 +48,6 @@ export class HourlyPressureChartComponent implements OnInit, AfterViewInit {
         tooltip: {},
         xAxis: {
           data: dataAxis,
-          axisLabel: {
-            inside: true,
-            rotate: 90,
-            color: '#fff',
-          },
           axisTick: {
             show: false,
           },
@@ -86,6 +82,7 @@ export class HourlyPressureChartComponent implements OnInit, AfterViewInit {
             animation: false,
           },
           {
+            name: 'Pressure (hPa)',
             type: 'bar',
             itemStyle: {
               color: new LinearGradient(0, 0, 0, 1, [
@@ -103,7 +100,15 @@ export class HourlyPressureChartComponent implements OnInit, AfterViewInit {
                 ]),
               }
             },
-            data,
+            label: {
+              show: true,
+              position: 'inside',
+              rotate: 90,
+              color: '#fff',
+              fontSize: 10,
+              formatter: '{c} hPa',
+            },
+            data: data,
           },
         ],
       };
