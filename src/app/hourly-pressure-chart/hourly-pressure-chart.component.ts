@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {WeatherForecast} from "../forecast/model/weather-forecast";
-import {DatePipe, DecimalPipe} from "@angular/common";
+import {DatePipe} from "@angular/common";
 import LinearGradient from 'zrender/lib/graphic/LinearGradient';
 
 
@@ -24,18 +24,15 @@ export class HourlyPressureChartComponent implements OnInit, AfterViewInit {
     setTimeout(() => {
       const dataAxis: any[] = [];
       const data: any[] = [];
-      const dataLabel: any[] = [];
-      const yMax = 1200;
+      const yMax = 1100;
       const dataShadow = [];
       const datePipe: DatePipe = new DatePipe('en-US');
-      const numberPipe: DecimalPipe = new DecimalPipe('pl-PL')
 
       this.weatherForecast?.hourly?.forEach((x) => {
         let dateTime = datePipe.transform(x.dtLocal, 'MMM dd, HH:mm');
 
         dataAxis.push(dateTime);
         data.push(x.pressure);
-        dataLabel.push(`${x.pressure} hPa`)
       });
 
 
@@ -57,6 +54,7 @@ export class HourlyPressureChartComponent implements OnInit, AfterViewInit {
           z: 10,
         },
         yAxis: {
+          min: 800,
           axisLine: {
             show: false,
           },

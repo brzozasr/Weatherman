@@ -29,6 +29,7 @@ import { HourlyChartsComponent } from './hourly-charts/hourly-charts.component';
 import { HourlyTempChartComponent } from './hourly-temp-chart/hourly-temp-chart.component';
 import {NgxEchartsModule} from "ngx-echarts";
 import { HourlyPressureChartComponent } from './hourly-pressure-chart/hourly-pressure-chart.component';
+import { HourlyHumidityChartComponent } from './hourly-humidity-chart/hourly-humidity-chart.component';
 
 registerLocaleData(localePL);
 
@@ -51,6 +52,7 @@ registerLocaleData(localePL);
     HourlyChartsComponent,
     HourlyTempChartComponent,
     HourlyPressureChartComponent,
+    HourlyHumidityChartComponent,
   ],
   imports: [
     BrowserModule,
