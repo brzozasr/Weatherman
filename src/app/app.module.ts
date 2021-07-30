@@ -27,6 +27,7 @@ import {NgJoinPipeModule, NgReplacePipeModule, NgRoundPipeModule} from "angular-
 import { DailyWfComponent } from './daily-wf/daily-wf.component';
 import { HourlyChartsComponent } from './hourly-charts/hourly-charts.component';
 import { HourlyTempChartComponent } from './hourly-temp-chart/hourly-temp-chart.component';
+import {NgxEchartsModule} from "ngx-echarts";
 
 registerLocaleData(localePL);
 
@@ -61,6 +62,9 @@ registerLocaleData(localePL);
     AppRoutingModule,
     NgJoinPipeModule,
     NgRoundPipeModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts')
+    })
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'pl'},
