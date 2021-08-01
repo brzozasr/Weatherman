@@ -61,7 +61,9 @@ export class HourlyPrecipitationChartComponent implements OnInit, AfterViewInit 
         xAxis: {type: 'category'},
         yAxis: {},
         series: [
-          {type: 'bar',
+          {
+            name: 'Rain (mm)',
+            type: 'bar',
             label: {
               show: true,
               position: 'top',
@@ -69,10 +71,12 @@ export class HourlyPrecipitationChartComponent implements OnInit, AfterViewInit 
               rotate: 90,
               color: '#000',
               fontSize: 8.5,
-              formatter: '{@Pop}%'
+              formatter: '{@pop}%'
             },
           },
-          {type: 'bar',
+          {
+            name: 'Snow (mm)',
+            type: 'bar',
             label: {
               show: true,
               position: 'top',
@@ -80,7 +84,7 @@ export class HourlyPrecipitationChartComponent implements OnInit, AfterViewInit 
               rotate: 90,
               color: '#000',
               fontSize: 8.5,
-              formatter: '{@Pop}%'
+              formatter: '{@pop}%'
             },
           }
         ]
