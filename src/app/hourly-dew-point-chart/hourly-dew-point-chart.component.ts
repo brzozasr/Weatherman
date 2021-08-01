@@ -36,7 +36,7 @@ export class HourlyDewPointChartComponent implements OnInit, AfterViewInit {
       }
 
       this.colorScheme = {
-        color: ['#cc00cc']
+        color: ['#8a81ce']
       };
 
       this.options = {
