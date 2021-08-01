@@ -33,6 +33,7 @@ import { HourlyHumidityChartComponent } from './hourly-humidity-chart/hourly-hum
 import { HourlyDewPointChartComponent } from './hourly-dew-point-chart/hourly-dew-point-chart.component';
 import { HourlyUviChartComponent } from './hourly-uvi-chart/hourly-uvi-chart.component';
 import { HourlyCloudsChartComponent } from './hourly-clouds-chart/hourly-clouds-chart.component';
+import { HourlyWindSpeedChartComponent } from './hourly-wind-speed-chart/hourly-wind-speed-chart.component';
 
 registerLocaleData(localePL);
 
@@ -59,6 +60,7 @@ registerLocaleData(localePL);
     HourlyDewPointChartComponent,
     HourlyUviChartComponent,
     HourlyCloudsChartComponent,
+    HourlyWindSpeedChartComponent,
   ],
   imports: [
     BrowserModule,
