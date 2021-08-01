@@ -118,7 +118,7 @@ export class HourlyWindSpeedChartComponent implements OnInit, AfterViewInit {
             color: '#660000'
           }, {
             gt: 117,
-            color: '#732626'
+            color: '#2f0000'
           }],
           outOfRange: {
             color: '#808080'
