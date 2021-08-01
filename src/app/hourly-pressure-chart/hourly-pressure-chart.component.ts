@@ -66,9 +66,7 @@ export class HourlyPressureChartComponent implements OnInit, AfterViewInit {
             show: false,
           },
           axisLabel: {
-            textStyle: {
-              color: '#999',
-            },
+            color: '#999',
           },
         },
         series: [

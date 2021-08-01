@@ -13,7 +13,7 @@ export class HourlyCloudsChartComponent implements OnInit, AfterViewInit {
   @Input() weatherForecast?: WeatherForecast;
   isDataAvailable: any;
   options: any;
-  colorScheme: any;
+  colorScheme: boolean = false;
 
   constructor() { }
 

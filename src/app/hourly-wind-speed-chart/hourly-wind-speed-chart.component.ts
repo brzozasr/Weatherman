@@ -10,7 +10,7 @@ import {DatePipe} from "@angular/common";
 export class HourlyWindSpeedChartComponent implements OnInit, AfterViewInit {
 
   @Input() weatherForecast?: WeatherForecast;
-  isDataAvailable: any;
+  isDataAvailable: boolean = false;
   options: any;
 
   constructor() { }
