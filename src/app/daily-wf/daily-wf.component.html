@@ -84,6 +84,9 @@
             </tbody>
           </table>
         </div>
+        <div class="detail-item">
+          <app-daily-temp-chart [temps]="[day.temp, day.feelsLike]"></app-daily-temp-chart>
+        </div>
         <div class="detail-item detail-item-flex-nowrap">
           <div class="item font-lighter txt-center">
             <span class="table-title">SUNRISE</span><br>
