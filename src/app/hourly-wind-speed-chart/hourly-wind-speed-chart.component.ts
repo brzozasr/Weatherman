@@ -44,9 +44,7 @@ export class HourlyWindSpeedChartComponent implements OnInit, AfterViewInit {
           bottom: '10%'
         },
         xAxis: {
-          data: xAxis.map(function (item: any) {
-            return item[0];
-          })
+          data: xAxis
         },
         yAxis: {},
         toolbox: {
@@ -60,47 +58,76 @@ export class HourlyWindSpeedChartComponent implements OnInit, AfterViewInit {
           }
         },
         dataZoom: [{
-          startValue: '2014-06-01'
+          type: 'inside',
+          start: 0,
+          end: 100
         }, {
-          type: 'inside'
+          start: 0,
+          end: 10
         }],
         visualMap: {
           top: 50,
           right: 10,
           pieces: [{
             gt: 0,
-            lte: 50,
-            color: '#93CE07'
+            lte: 1,
+            color: '#00ffff'
           }, {
-            gt: 50,
-            lte: 100,
-            color: '#FBDB0F'
+            gt: 1,
+            lte: 5,
+            color: '#00bfff'
           }, {
-            gt: 100,
-            lte: 150,
-            color: '#FC7D02'
+            gt: 5,
+            lte: 11,
+            color: '#0080ff'
           }, {
-            gt: 150,
-            lte: 200,
-            color: '#FD0100'
+            gt: 11,
+            lte: 19,
+            color: '#0040ff'
           }, {
-            gt: 200,
-            lte: 300,
-            color: '#AA069F'
+            gt: 19,
+            lte: 28,
+            color: '#00ff00'
           }, {
-            gt: 300,
-            color: '#AC3B2A'
+            gt: 28,
+            lte: 38,
+            color: '#00ad00'
+          }, {
+            gt: 38,
+            lte: 49,
+            color: '#006600'
+          }, {
+            gt: 49,
+            lte: 61,
+            color: '#e6e600'
+          }, {
+            gt: 61,
+            lte: 74,
+            color: '#dca500'
+          }, {
+            gt: 74,
+            lte: 88,
+            color: '#ff0000'
+          }, {
+            gt: 88,
+            lte: 102,
+            color: '#a90000'
+          }, {
+            gt: 102,
+            lte: 117,
+            color: '#660000'
+          }, {
+            gt: 117,
+            color: '#732626'
           }],
           outOfRange: {
-            color: '#999'
+            color: '#808080'
           }
         },
         series: {
           name: 'Wind speed (km/h)',
           type: 'line',
-          data: yAxis.map(function (item: any) {
-            return item[1];
-          }),
+          data: yAxis,
           markLine: {
             silent: true,
             lineStyle: {
