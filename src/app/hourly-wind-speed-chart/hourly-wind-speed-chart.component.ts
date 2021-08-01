@@ -67,56 +67,69 @@ export class HourlyWindSpeedChartComponent implements OnInit, AfterViewInit {
         }],
         visualMap: {
           top: 50,
-          right: 10,
+          right: 5,
           pieces: [{
+            label: 'Calm',
             gt: 0,
             lte: 1,
             color: '#00ffff'
           }, {
+            label: 'Light air',
             gt: 1,
             lte: 5,
             color: '#00bfff'
           }, {
+            label: 'Light breeze',
             gt: 5,
             lte: 11,
             color: '#0080ff'
           }, {
+            label: 'Gentle breeze',
             gt: 11,
             lte: 19,
             color: '#0040ff'
           }, {
+            label: 'Moderate breeze',
             gt: 19,
             lte: 28,
             color: '#00ff00'
           }, {
+            label: 'Fresh breeze',
             gt: 28,
             lte: 38,
             color: '#00ad00'
           }, {
+            label: 'Strong breeze',
             gt: 38,
             lte: 49,
             color: '#006600'
           }, {
+            label: 'Moderate gale',
             gt: 49,
             lte: 61,
-            color: '#e6e600'
+            color: '#cccc00'
           }, {
+            label: 'Fresh gale',
             gt: 61,
             lte: 74,
             color: '#dca500'
           }, {
+            label: 'Strong gale',
             gt: 74,
             lte: 88,
             color: '#ff0000'
           }, {
+            label: 'Whole gale',
             gt: 88,
             lte: 102,
             color: '#a90000'
           }, {
+            label: 'Storm',
             gt: 102,
             lte: 117,
             color: '#660000'
           }, {
+            label: 'Hurricane',
             gt: 117,
             color: '#2f0000'
           }],
@@ -134,15 +147,29 @@ export class HourlyWindSpeedChartComponent implements OnInit, AfterViewInit {
               color: '#333'
             },
             data: [{
-              yAxis: 50
+              yAxis: 1
+            },{
+              yAxis: 5
             }, {
-              yAxis: 100
+              yAxis: 11
             }, {
-              yAxis: 150
+              yAxis: 19
             }, {
-              yAxis: 200
+              yAxis: 28
             }, {
-              yAxis: 300
+              yAxis: 38
+            }, {
+              yAxis: 49
+            }, {
+              yAxis: 61
+            }, {
+              yAxis: 74
+            }, {
+              yAxis: 88
+            }, {
+              yAxis: 102
+            }, {
+              yAxis: 117
             }]
           }
         }
