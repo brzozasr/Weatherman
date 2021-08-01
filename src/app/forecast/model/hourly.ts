@@ -14,6 +14,7 @@ export interface Hourly {
   clouds?: number;
   visibilityKm?: number;
   windSpeed?: number;
+  windSpeedKm?: number;
   windDir?: WindDir;
   windGust?: number;
   weathers?: Weather[];

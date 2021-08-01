@@ -1,0 +1,12 @@
+<div id="hourly-charts">
+  <mat-tab-group mat-align-tabs="start" animationDuration="500ms">
+    <mat-tab label="Temperature (&#176;C)"><app-hourly-temp-chart [weatherForecast]="weatherPoint"></app-hourly-temp-chart></mat-tab>
+    <mat-tab label="Pressure (hPa)"><app-hourly-pressure-chart [weatherForecast]="weatherPoint"></app-hourly-pressure-chart></mat-tab>
+    <mat-tab label="Humidity (%)"><app-hourly-humidity-chart [weatherForecast]="weatherPoint"></app-hourly-humidity-chart></mat-tab>
+    <mat-tab label="Dew Point (&#176;C)"><app-hourly-dew-point-chart [weatherForecast]="weatherPoint"></app-hourly-dew-point-chart></mat-tab>
+    <mat-tab label="UV index"><app-hourly-uvi-chart [weatherForecast]="weatherPoint"></app-hourly-uvi-chart></mat-tab>
+    <mat-tab label="Clouds (%)"><app-hourly-clouds-chart [weatherForecast]="weatherPoint"></app-hourly-clouds-chart></mat-tab>
+    <mat-tab label="Wind Speed (km/h)"><app-hourly-wind-speed-chart [weatherForecast]="weatherPoint"></app-hourly-wind-speed-chart></mat-tab>
+    <mat-tab label="Precipitation (mm)"><app-hourly-precipitation-chart [weatherForecast]="weatherPoint"></app-hourly-precipitation-chart></mat-tab>
+  </mat-tab-group>
+</div>
