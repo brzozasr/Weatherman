@@ -1,17 +1,18 @@
 import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
-import {DatePipe} from "@angular/common";
 import {WeatherForecast} from "../forecast/model/weather-forecast";
+import {DatePipe} from "@angular/common";
 
 @Component({
-  selector: 'app-hourly-dew-point-chart',
-  templateUrl: './hourly-dew-point-chart.component.html',
-  styleUrls: ['./hourly-dew-point-chart.component.css']
+  selector: 'app-hourly-uvi-chart',
+  templateUrl: './hourly-uvi-chart.component.html',
+  styleUrls: ['./hourly-uvi-chart.component.css']
 })
-export class HourlyDewPointChartComponent implements OnInit, AfterViewInit {
+export class HourlyUviChartComponent implements OnInit, AfterViewInit {
 
   @Input() weatherForecast?: WeatherForecast;
-  colorScheme: any;
+
   options: any;
+  colorScheme: any;
   isDataAvailable: boolean = false;
 
   constructor() { }
@@ -19,7 +20,7 @@ export class HourlyDewPointChartComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
   }
 
-  ngAfterViewInit(): void {
+  ngAfterViewInit() {
     setTimeout(() => {
       const xAxis: any[] = [];
       const yAxis: any[] = [];
@@ -31,31 +32,34 @@ export class HourlyDewPointChartComponent implements OnInit, AfterViewInit {
           let dateTime = datePipe.transform(x.dtLocal, 'MMM dd, HH:mm');
 
           xAxis.push(dateTime);
-          yAxis.push(x.dewPoint);
+          yAxis.push(x.uvi);
         });
       }
 
       this.colorScheme = {
-        color: ['#8a81ce']
+        color: ['#ff8000']
       };
 
       this.options = {
         tooltip: {},
         xAxis: {
-          type: 'category',
-          boundaryGap: false,
-          data: xAxis
+          data: xAxis,
+          silent: false,
+          splitLine: {
+            show: false,
+          },
         },
-        yAxis: {
-          type: 'value'
-        },
-        series: [{
-          name: 'Dew Point (%)',
-          data: yAxis,
-          type: 'line',
-          smooth: true,
-          areaStyle: {}
-        }]
+        yAxis: {},
+        series: [
+          {
+            name: 'UV index',
+            type: 'bar',
+            data: yAxis,
+            animationDelay: (idx: number) => idx * 10,
+          }
+        ],
+        animationEasing: 'elasticOut',
+        animationDelayUpdate: (idx: number) => idx * 5,
       };
     }, 1000);
   }
