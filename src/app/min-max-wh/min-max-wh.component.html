@@ -1,0 +1,191 @@
+<div id="min-max-wh" class="horizontal-wrap" *ngIf="weatherPoint !== null">
+  <div class="min-max-wh-details-description">
+    &nbsp;
+  </div>
+  <div class="min-max-wh-details-item text-center">
+    Min
+  </div>
+  <div class="min-max-wh-details-item text-center">
+    Max
+  </div>
+  <ng-container *ngIf="weatherPoint?.aggTemp !== null">
+    <hr>
+    <div class="min-max-wh-details-description text-right">
+      <span>TEMPERATURE <img class="img-icon" src="assets/icons/temperature.png" alt="temp"></span>
+    </div>
+    <div class="min-max-wh-details-item text-center">
+    <span class="font-10">
+      {{weatherPoint?.aggTemp?.dtMin | date: 'dd MMM': undefined: 'en-En'}}
+    </span><br>
+      {{weatherPoint?.aggTemp?.tempMin}}&#176;C
+    </div>
+    <div class="min-max-wh-details-item text-center">
+    <span class="font-10">
+      {{weatherPoint?.aggTemp?.dtMax | date: 'dd MMM': undefined: 'en-En'}}
+    </span><br>
+      {{weatherPoint?.aggTemp?.tempMax}}&#176;C
+    </div>
+  </ng-container>
+  <ng-container *ngIf="weatherPoint?.aggFeelsLike !== null">
+    <hr>
+    <div class="min-max-wh-details-description text-right">
+      <span>FEELS LIKE <img class="img-icon" src="assets/icons/temperature.png" alt="feels like"></span>
+    </div>
+    <div class="min-max-wh-details-item text-center">
+    <span class="font-10">
+      {{weatherPoint?.aggFeelsLike?.dtMin | date: 'dd MMM': undefined: 'en-En'}}
+    </span><br>
+      {{weatherPoint?.aggFeelsLike?.feelsLikeMin}}&#176;C
+    </div>
+    <div class="min-max-wh-details-item text-center">
+    <span class="font-10">
+      {{weatherPoint?.aggFeelsLike?.dtMax | date: 'dd MMM': undefined: 'en-En'}}
+    </span><br>
+      {{weatherPoint?.aggFeelsLike?.feelsLikeMax}}&#176;C
+    </div>
+  </ng-container>
+  <ng-container *ngIf="weatherPoint?.aggPressure !== null">
+    <hr>
+    <div class="min-max-wh-details-description text-right">
+      <span>PRESSURE <img class="img-icon" src="assets/icons/pressure.png" alt="pressure"></span>
+    </div>
+    <div class="min-max-wh-details-item text-center">
+    <span class="font-10">
+      {{weatherPoint?.aggPressure?.dtMin | date: 'dd MMM': undefined: 'en-En'}}
+    </span><br>
+      {{weatherPoint?.aggPressure?.pressureMin}} hPa
+    </div>
+    <div class="min-max-wh-details-item text-center">
+    <span class="font-10">
+      {{weatherPoint?.aggPressure?.dtMax | date: 'dd MMM': undefined: 'en-En'}}
+    </span><br>
+      {{weatherPoint?.aggPressure?.pressureMax}} hPa
+    </div>
+  </ng-container>
+  <ng-container *ngIf="weatherPoint?.aggHumidity !== null">
+    <hr>
+    <div class="min-max-wh-details-description text-right">
+      <span>HUMIDITY <img class="img-icon" src="assets/icons/humidity.png" alt="humidity"></span>
+    </div>
+    <div class="min-max-wh-details-item text-center">
+    <span class="font-10">
+      {{weatherPoint?.aggHumidity?.dtMin | date: 'dd MMM': undefined: 'en-En'}}
+    </span><br>
+      {{weatherPoint?.aggHumidity?.humidityMin}}%
+    </div>
+    <div class="min-max-wh-details-item text-center">
+    <span class="font-10">
+      {{weatherPoint?.aggHumidity?.dtMax | date: 'dd MMM': undefined: 'en-En'}}
+    </span><br>
+      {{weatherPoint?.aggHumidity?.humidityMax}}%
+    </div>
+  </ng-container>
+  <ng-container *ngIf="weatherPoint?.aggDewPoint !== null">
+    <hr>
+    <div class="min-max-wh-details-description text-right">
+      <span>DEW POINT <img class="img-icon" src="assets/icons/dew-point.png" alt="dew point"></span>
+    </div>
+    <div class="min-max-wh-details-item text-center">
+    <span class="font-10">
+      {{weatherPoint?.aggDewPoint?.dtMin | date: 'dd MMM': undefined: 'en-En'}}
+    </span><br>
+      {{weatherPoint?.aggDewPoint?.dewPointMin}}&#176;C
+    </div>
+    <div class="min-max-wh-details-item text-center">
+    <span class="font-10">
+      {{weatherPoint?.aggDewPoint?.dtMax | date: 'dd MMM': undefined: 'en-En'}}
+    </span><br>
+      {{weatherPoint?.aggDewPoint?.dewPointMax}}&#176;C
+    </div>
+  </ng-container>
+  <ng-container *ngIf="weatherPoint?.aggUvi !== null">
+    <hr>
+    <div class="min-max-wh-details-description text-right">
+      <span>UV INDEX <img class="img-icon" src="assets/icons/uv-index.png" alt="uvi"></span>
+    </div>
+    <div class="min-max-wh-details-item text-center">
+    <span class="font-10">
+      {{weatherPoint?.aggUvi?.dtMin | date: 'dd MMM': undefined: 'en-En'}}
+    </span><br>
+      {{weatherPoint?.aggUvi?.uviMin}}
+    </div>
+    <div class="min-max-wh-details-item text-center">
+    <span class="font-10">
+      {{weatherPoint?.aggUvi?.dtMax | date: 'dd MMM': undefined: 'en-En'}}
+    </span><br>
+      {{weatherPoint?.aggUvi?.uviMax}}
+    </div>
+  </ng-container>
+  <ng-container *ngIf="weatherPoint?.aggVisibility !== null">
+    <hr>
+    <div class="min-max-wh-details-description text-right">
+      <span>VISIBILITY <img class="img-icon" src="assets/icons/visibility.png" alt="visibility"></span>
+    </div>
+    <div class="min-max-wh-details-item text-center">
+    <span class="font-10">
+      {{weatherPoint?.aggVisibility?.dtMin | date: 'dd MMM': undefined: 'en-En'}}
+    </span><br>
+      {{weatherPoint?.aggVisibility?.visibilityKmMin}} km
+    </div>
+    <div class="min-max-wh-details-item text-center">
+    <span class="font-10">
+      {{weatherPoint?.aggVisibility?.dtMax | date: 'dd MMM': undefined: 'en-En'}}
+    </span><br>
+      {{weatherPoint?.aggVisibility?.visibilityKmMax}} km
+    </div>
+  </ng-container>
+  <ng-container *ngIf="weatherPoint?.aggWindSpeed !== null">
+    <hr>
+    <div class="min-max-wh-details-description text-right">
+      <span>WIND SPEED <img class="img-icon" src="assets/icons/wind.png" alt="wind speed"></span>
+    </div>
+    <div class="min-max-wh-details-item text-center">
+    <span class="font-10">
+      {{weatherPoint?.aggWindSpeed?.dtMin | date: 'dd MMM': undefined: 'en-En'}}
+    </span><br>
+      {{weatherPoint?.aggWindSpeed?.windSpeedMin}} m/s
+    </div>
+    <div class="min-max-wh-details-item text-center">
+    <span class="font-10">
+      {{weatherPoint?.aggWindSpeed?.dtMax | date: 'dd MMM': undefined: 'en-En'}}
+    </span><br>
+      {{weatherPoint?.aggWindSpeed?.windSpeedMax}} m/s
+    </div>
+  </ng-container>
+  <ng-container *ngIf="weatherPoint?.aggRain !== null">
+    <hr>
+    <div class="min-max-wh-details-description text-right">
+      <span>RAIN <img class="img-icon" src="assets/icons/rain.png" alt="rain"></span>
+    </div>
+    <div class="min-max-wh-details-item text-center">
+    <span class="font-10">
+      {{weatherPoint?.aggRain?.dtMin | date: 'dd MMM': undefined: 'en-En'}}
+    </span><br>
+      {{weatherPoint?.aggRain?.rainMin}} mm
+    </div>
+    <div class="min-max-wh-details-item text-center">
+    <span class="font-10">
+      {{weatherPoint?.aggRain?.dtMax | date: 'dd MMM': undefined: 'en-En'}}
+    </span><br>
+      {{weatherPoint?.aggRain?.rainMax}} mm
+    </div>
+  </ng-container>
+  <ng-container *ngIf="weatherPoint?.aggSnow !== null">
+    <hr>
+    <div class="min-max-wh-details-description text-right">
+      <span>SNOW <img class="img-icon" src="assets/icons/snow.png" alt="snow"></span>
+    </div>
+    <div class="min-max-wh-details-item text-center">
+    <span class="font-10">
+      {{weatherPoint?.aggSnow?.dtMin | date: 'dd MMM': undefined: 'en-En'}}
+    </span><br>
+      {{weatherPoint?.aggSnow?.snowMin}} mm
+    </div>
+    <div class="min-max-wh-details-item text-center">
+    <span class="font-10">
+      {{weatherPoint?.aggSnow?.dtMax | date: 'dd MMM': undefined: 'en-En'}}
+    </span><br>
+      {{weatherPoint?.aggSnow?.snowMax}} mm
+    </div>
+  </ng-container>
+</div>

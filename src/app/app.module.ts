@@ -36,6 +36,7 @@ import { HourlyCloudsChartComponent } from './hourly-clouds-chart/hourly-clouds-
 import { HourlyWindSpeedChartComponent } from './hourly-wind-speed-chart/hourly-wind-speed-chart.component';
 import { HourlyPrecipitationChartComponent } from './hourly-precipitation-chart/hourly-precipitation-chart.component';
 import { DailyTempChartComponent } from './daily-temp-chart/daily-temp-chart.component';
+import { MinMaxWhComponent } from './min-max-wh/min-max-wh.component';
 
 registerLocaleData(localePL);
 
@@ -65,6 +66,7 @@ registerLocaleData(localePL);
     HourlyWindSpeedChartComponent,
     HourlyPrecipitationChartComponent,
     DailyTempChartComponent,
+    MinMaxWhComponent,
   ],
   imports: [
     BrowserModule,

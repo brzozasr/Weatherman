@@ -21,6 +21,8 @@ export class AppComponent {
   reloadDataCart($event: MatTabChangeEvent): void {
     if ($event.tab.textLabel === "Weather Forecast" && $event.index === 1) {
       this.reloadTabData(DataType.FORECAST);
+    } else if ($event.tab.textLabel === "Historical Weather" && $event.index === 2) {
+      this.reloadTabData(DataType.HISTORICAL);
     }
   }
 
