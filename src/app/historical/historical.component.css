@@ -4,4 +4,17 @@
   padding: 10px;
   overflow-x: hidden;
   overflow-y: auto;
+  font-family: system-ui;
+}
+
+#flex-container-wh {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+}
+
+.spinner-margin {
+  margin-top: 150px;
 }

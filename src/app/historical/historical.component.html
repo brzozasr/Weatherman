@@ -1,4 +1,12 @@
 <div id="historical-container">
-  <p>historical works!</p>
+  <div id="flex-container-wh">
+    <ng-container *ngIf="isSpinnerVisible">
+      <mat-spinner class="spinner-margin"></mat-spinner>
+    </ng-container>
+    <ng-container *ngIf="!isSpinnerVisible">
+      <app-location [coordsData]="coordsHistoricalData"></app-location>
+    </ng-container>
+  </div>
 </div>
+
 

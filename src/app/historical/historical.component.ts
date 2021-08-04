@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {CoordsHistoricalData} from "../utilities/coords-historical-data";
 
 @Component({
   selector: 'app-historical',
@@ -6,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./historical.component.css']
 })
 export class HistoricalComponent implements OnInit {
+
+  isSpinnerVisible: boolean = false;
+  coordsHistoricalData?: CoordsHistoricalData;
 
   constructor() { }
 
