@@ -41,7 +41,9 @@ export class HourlyHumidityChartComponent implements OnInit, AfterViewInit {
       };
 
     this.options = {
-      tooltip: {},
+      tooltip: {
+        trigger: 'axis'
+      },
       xAxis: {
         type: 'category',
         data: xAxis

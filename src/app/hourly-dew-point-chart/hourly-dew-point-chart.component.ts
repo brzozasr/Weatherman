@@ -40,7 +40,9 @@ export class HourlyDewPointChartComponent implements OnInit, AfterViewInit {
       };
 
       this.options = {
-        tooltip: {},
+        tooltip: {
+          trigger: 'axis'
+        },
         xAxis: {
           type: 'category',
           boundaryGap: false,

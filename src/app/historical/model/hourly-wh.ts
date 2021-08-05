@@ -19,8 +19,8 @@ export interface HourlyWh {
   windSpeedKmPerH?: number;
   windGust?: number;
   windDeg?: number;
-  windDirPwh?: WindDirWh;
-  weathers?: WeatherWh;
+  windDir?: WindDirWh;
+  weathers?: WeatherWh[];
   rain?: RainWh;
   snow?: SnowWh;
 }

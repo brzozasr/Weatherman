@@ -37,6 +37,11 @@ import { HourlyWindSpeedChartComponent } from './hourly-wind-speed-chart/hourly-
 import { HourlyPrecipitationChartComponent } from './hourly-precipitation-chart/hourly-precipitation-chart.component';
 import { DailyTempChartComponent } from './daily-temp-chart/daily-temp-chart.component';
 import { MinMaxWhComponent } from './min-max-wh/min-max-wh.component';
+import { BarImgWhComponent } from './bar-img-wh/bar-img-wh.component';
+import { HistoricalChartsComponent } from './historical-charts/historical-charts.component';
+import { WhTempChartComponent } from './wh-temperature/wh-temp-chart.component';
+import { WhPressureChartComponent } from './wh-pressure-chart/wh-pressure-chart.component';
+import { WhHumidityChartComponent } from './wh-humidity-chart/wh-humidity-chart.component';
 
 registerLocaleData(localePL);
 
@@ -67,6 +72,11 @@ registerLocaleData(localePL);
     HourlyPrecipitationChartComponent,
     DailyTempChartComponent,
     MinMaxWhComponent,
+    BarImgWhComponent,
+    HistoricalChartsComponent,
+    WhTempChartComponent,
+    WhPressureChartComponent,
+    WhHumidityChartComponent,
   ],
   imports: [
     BrowserModule,
