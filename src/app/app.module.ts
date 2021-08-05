@@ -40,6 +40,7 @@ import { MinMaxWhComponent } from './min-max-wh/min-max-wh.component';
 import { BarImgWhComponent } from './bar-img-wh/bar-img-wh.component';
 import { HistoricalChartsComponent } from './historical-charts/historical-charts.component';
 import { WhTempChartComponent } from './wh-temperature/wh-temp-chart.component';
+import { WhPressureChartComponent } from './wh-pressure-chart/wh-pressure-chart.component';
 
 registerLocaleData(localePL);
 
@@ -73,6 +74,7 @@ registerLocaleData(localePL);
     BarImgWhComponent,
     HistoricalChartsComponent,
     WhTempChartComponent,
+    WhPressureChartComponent,
   ],
   imports: [
     BrowserModule,

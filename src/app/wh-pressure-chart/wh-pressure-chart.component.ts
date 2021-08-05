@@ -1,16 +1,15 @@
 import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
-import {DatePipe} from "@angular/common";
 import {WeatherHistorical} from "../historical/model/weather-historical";
+import {DatePipe} from "@angular/common";
 
 @Component({
-  selector: 'app-wh-temp-chart',
-  templateUrl: './wh-temp-chart.component.html',
-  styleUrls: ['./wh-temp-chart.component.css']
+  selector: 'app-wh-pressure-chart',
+  templateUrl: './wh-pressure-chart.component.html',
+  styleUrls: ['./wh-pressure-chart.component.css']
 })
-export class WhTempChartComponent implements OnInit, AfterViewInit {
+export class WhPressureChartComponent implements OnInit, AfterViewInit {
 
   @Input() weatherHistorical?: WeatherHistorical;
-
   isDataAvailable: boolean = false;
   options: any;
   colorScheme: any;
@@ -22,10 +21,8 @@ export class WhTempChartComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     setTimeout(() => {
-
       const xAxisData: any[] = [];
-      const temp: (number | undefined)[] = [];
-      const feelsLike: (number | undefined)[] = [];
+      const pressure: (number | undefined)[] = [];
       const datePipe: DatePipe = new DatePipe('en-US');
 
       if (this.weatherHistorical?.hourly) {
@@ -34,22 +31,17 @@ export class WhTempChartComponent implements OnInit, AfterViewInit {
           let dateTime = datePipe.transform(data.dtLocal, 'MMM dd, HH:mm');
 
           xAxisData.push(dateTime);
-          temp.push(data.temp);
-          feelsLike.push(data.feelsLike);
+          pressure.push(data.pressure);
         });
       }
 
       this.colorScheme = {
-        color: ['#cc0000', '#0000cc']
+        color: ['#00bfff']
       };
 
       this.options = {
-        legend: {
-          data: ['Temperature (°C)', 'Feels Like (°C)'],
-          itemGap: 10
-        },
         tooltip: {
-          trigger: 'axis',
+          trigger: 'axis'
         },
         toolbox: {
           feature: {
@@ -67,6 +59,8 @@ export class WhTempChartComponent implements OnInit, AfterViewInit {
         },
         yAxis: {
           type: 'value',
+          boundaryGap: [0, '100%'],
+          min: 800,
         },
         dataZoom: [{
           type: 'inside',
@@ -74,25 +68,18 @@ export class WhTempChartComponent implements OnInit, AfterViewInit {
           end: 100
         }, {
           start: 0,
-          end: 10
+          end: 20
         }],
         series: [
           {
-            name: 'Temperature (°C)',
-            type: 'line',
-            smooth: true,
+            name: 'Pressure (hPa)',
+            type: 'bar',
             symbol: 'none',
-            data: temp
-          },
-          {
-            name: 'Feels Like (°C)',
-            type: 'line',
-            smooth: true,
-            symbol: 'none',
-            data: feelsLike
+            data: pressure
           }
         ]
       };
+
     }, 2500);
   }
 

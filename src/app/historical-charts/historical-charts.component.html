@@ -1,7 +1,7 @@
 <div id="historical-charts">
   <mat-tab-group mat-align-tabs="start" animationDuration="500ms">
     <mat-tab label="Temperature (&#176;C)"><app-wh-temp-chart [weatherHistorical]="weatherPoint"></app-wh-temp-chart></mat-tab>
-    <mat-tab label="Pressure (hPa)">7</mat-tab>
+    <mat-tab label="Pressure (hPa)"><app-wh-pressure-chart [weatherHistorical]="weatherPoint"></app-wh-pressure-chart></mat-tab>
     <mat-tab label="Humidity (%)">6</mat-tab>
     <mat-tab label="Dew Point (&#176;C)">5</mat-tab>
     <mat-tab label="UV index">4</mat-tab>

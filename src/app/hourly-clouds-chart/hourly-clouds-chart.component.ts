@@ -39,9 +39,6 @@ export class HourlyCloudsChartComponent implements OnInit, AfterViewInit {
       this.options = {
         tooltip: {
           trigger: 'axis',
-          position: function (pt: any) {
-            return [pt[0], '10%'];
-          }
         },
         toolbox: {
           feature: {
