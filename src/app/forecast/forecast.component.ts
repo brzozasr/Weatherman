@@ -4,13 +4,14 @@ import {WeatherForecast} from "./model/weather-forecast";
 import {CurrentCoords} from "../utilities/current-coords";
 import {CoordsForecastData} from "../utilities/coords-forecast-data";
 import {CurrentCoordsForecastService} from "./service/current-coords-forecast.service";
-import {DataType} from "../utilities/data-type";
+
 
 @Component({
   selector: 'app-forecast',
   templateUrl: './forecast.component.html',
   styleUrls: ['./forecast.component.css']
 })
+
 export class ForecastComponent implements OnInit {
 
   weatherPoint?: WeatherForecast;

@@ -1,44 +1,44 @@
 import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {WeatherHistorical} from "../historical/model/weather-historical";
 import {DatePipe} from "@angular/common";
-import LinearGradient from 'zrender/lib/graphic/LinearGradient';
-import {WeatherForecast} from "../forecast/model/weather-forecast";
+import LinearGradient from "zrender/lib/graphic/LinearGradient";
 
 @Component({
-  selector: 'app-hourly-clouds-chart',
-  templateUrl: './hourly-clouds-chart.component.html',
-  styleUrls: ['./hourly-clouds-chart.component.css']
+  selector: 'app-wh-humidity-chart',
+  templateUrl: './wh-humidity-chart.component.html',
+  styleUrls: ['./wh-humidity-chart.component.css']
 })
-export class HourlyCloudsChartComponent implements OnInit, AfterViewInit {
+export class WhHumidityChartComponent implements OnInit, AfterViewInit {
 
-  @Input() weatherForecast?: WeatherForecast;
-  isDataAvailable: any;
+  @Input() weatherHistorical?: WeatherHistorical;
+  isDataAvailable: boolean = false;
   options: any;
-  colorScheme: boolean = false;
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     setTimeout(() => {
-      const xAxis: any[] = [];
-      const yAxis: any[] = [];
+      const xAxisData: any[] = [];
+      const humidity: (number | undefined)[] = [];
       const datePipe: DatePipe = new DatePipe('en-US');
 
-      if (this.weatherForecast?.hourly) {
+      if (this.weatherHistorical?.hourly) {
         this.isDataAvailable = true;
-        this.weatherForecast?.hourly?.forEach((x) => {
-          let dateTime = datePipe.transform(x.dtLocal, 'MMM dd, HH:mm');
+        this.weatherHistorical?.hourly?.forEach((data) => {
+          let dateTime = datePipe.transform(data.dtLocal, 'MMM dd, HH:mm');
 
-          xAxis.push(dateTime);
-          yAxis.push(x.clouds);
+          xAxisData.push(dateTime);
+          humidity.push(data.humidity);
         });
       }
 
       this.options = {
         tooltip: {
           trigger: 'axis',
+
         },
         toolbox: {
           feature: {
@@ -52,7 +52,7 @@ export class HourlyCloudsChartComponent implements OnInit, AfterViewInit {
         xAxis: {
           type: 'category',
           boundaryGap: false,
-          data: xAxis
+          data: xAxisData
         },
         yAxis: {
           type: 'value',
@@ -65,32 +65,32 @@ export class HourlyCloudsChartComponent implements OnInit, AfterViewInit {
           end: 100
         }, {
           start: 0,
-          end: 10
+          end: 20
         }],
         series: [
           {
-            name: 'Clouds (%)',
+            name: 'Humidity (%)',
             type: 'line',
             symbol: 'none',
-            sampling: 'lttb',
+            smooth: true,
             itemStyle: {
-              color: 'rgb(16, 128, 188)'
+              color: '#009900'
             },
             areaStyle: {
               color: new LinearGradient(0, 0, 0, 1, [{
                 offset: 0,
-                color: 'rgb(15, 128, 189)'
+                color: '#00b300'
               }, {
                 offset: 1,
-                color: 'rgb(185, 226, 249)'
+                color: '#b3ffb3'
               }])
             },
-            data: yAxis
+            data: humidity
           }
         ]
       };
 
-    }, 1000);
+    }, 2500);
   }
 
 }
