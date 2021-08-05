@@ -42,6 +42,11 @@ import { HistoricalChartsComponent } from './historical-charts/historical-charts
 import { WhTempChartComponent } from './wh-temperature/wh-temp-chart.component';
 import { WhPressureChartComponent } from './wh-pressure-chart/wh-pressure-chart.component';
 import { WhHumidityChartComponent } from './wh-humidity-chart/wh-humidity-chart.component';
+import { WhDewPointChartComponent } from './wh-dew-point-chart/wh-dew-point-chart.component';
+import { WhUviChartComponent } from './wh-uvi-chart/wh-uvi-chart.component';
+import { WhCloudsChartComponent } from './wh-clouds-chart/wh-clouds-chart.component';
+import { WhWindSpeedChartComponent } from './wh-wind-speed-chart/wh-wind-speed-chart.component';
+import { WhPrecipitationChartComponent } from './wh-precipitation-chart/wh-precipitation-chart.component';
 
 registerLocaleData(localePL);
 
@@ -77,6 +82,11 @@ registerLocaleData(localePL);
     WhTempChartComponent,
     WhPressureChartComponent,
     WhHumidityChartComponent,
+    WhDewPointChartComponent,
+    WhUviChartComponent,
+    WhCloudsChartComponent,
+    WhWindSpeedChartComponent,
+    WhPrecipitationChartComponent,
   ],
   imports: [
     BrowserModule,

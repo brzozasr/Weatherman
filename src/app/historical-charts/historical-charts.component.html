@@ -3,10 +3,10 @@
     <mat-tab label="Temperature (&#176;C)"><app-wh-temp-chart [weatherHistorical]="weatherPoint"></app-wh-temp-chart></mat-tab>
     <mat-tab label="Pressure (hPa)"><app-wh-pressure-chart [weatherHistorical]="weatherPoint"></app-wh-pressure-chart></mat-tab>
     <mat-tab label="Humidity (%)"><app-wh-humidity-chart [weatherHistorical]="weatherPoint"></app-wh-humidity-chart></mat-tab>
-    <mat-tab label="Dew Point (&#176;C)">5</mat-tab>
-    <mat-tab label="UV index">4</mat-tab>
-    <mat-tab label="Clouds (%)">3</mat-tab>
-    <mat-tab label="Wind Speed (km/h)">2</mat-tab>
-    <mat-tab label="Precipitation (mm)">1</mat-tab>
+    <mat-tab label="Dew Point (&#176;C)"><app-wh-dew-point-chart [weatherHistorical]="weatherPoint"></app-wh-dew-point-chart></mat-tab>
+    <mat-tab label="UV index"><app-wh-uvi-chart [weatherHistorical]="weatherPoint"></app-wh-uvi-chart></mat-tab>
+    <mat-tab label="Clouds (%)"><app-wh-clouds-chart [weatherHistorical]="weatherPoint"></app-wh-clouds-chart></mat-tab>
+    <mat-tab label="Wind Speed (km/h)"><app-wh-wind-speed-chart [weatherHistorical]="weatherPoint"></app-wh-wind-speed-chart></mat-tab>
+    <mat-tab label="Precipitation (mm)"><app-wh-precipitation-chart [weatherHistorical]="weatherPoint"></app-wh-precipitation-chart></mat-tab>
   </mat-tab-group>
 </div>

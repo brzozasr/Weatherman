@@ -4,11 +4,11 @@ import {DatePipe} from "@angular/common";
 import LinearGradient from "zrender/lib/graphic/LinearGradient";
 
 @Component({
-  selector: 'app-wh-humidity-chart',
-  templateUrl: './wh-humidity-chart.component.html',
-  styleUrls: ['./wh-humidity-chart.component.css']
+  selector: 'app-wh-clouds-chart',
+  templateUrl: './wh-clouds-chart.component.html',
+  styleUrls: ['./wh-clouds-chart.component.css']
 })
-export class WhHumidityChartComponent implements OnInit, AfterViewInit {
+export class WhCloudsChartComponent implements OnInit, AfterViewInit {
 
   @Input() weatherHistorical?: WeatherHistorical;
   isDataAvailable: boolean = false;
@@ -22,7 +22,7 @@ export class WhHumidityChartComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     setTimeout(() => {
       const xAxisData: any[] = [];
-      const humidity: (number | undefined)[] = [];
+      const clouds: (number | undefined)[] = [];
       const datePipe: DatePipe = new DatePipe('en-US');
 
       if (this.weatherHistorical?.hourly) {
@@ -31,7 +31,7 @@ export class WhHumidityChartComponent implements OnInit, AfterViewInit {
           let dateTime = datePipe.transform(data.dtLocal, 'MMM dd, HH:mm');
 
           xAxisData.push(dateTime);
-          humidity.push(data.humidity);
+          clouds.push(data.clouds);
         });
       }
 
@@ -68,23 +68,23 @@ export class WhHumidityChartComponent implements OnInit, AfterViewInit {
         }],
         series: [
           {
-            name: 'Humidity (%)',
+            name: 'Clouds (%)',
             type: 'line',
             symbol: 'none',
             smooth: true,
             itemStyle: {
-              color: '#009900'
+              color: 'rgb(0, 102, 204)'
             },
             areaStyle: {
               color: new LinearGradient(0, 0, 0, 1, [{
                 offset: 0,
-                color: '#00b300'
+                color: 'rgb(102, 102, 102)'
               }, {
                 offset: 1,
-                color: '#b3ffb3'
+                color: 'rgb(153, 255, 255)'
               }])
             },
-            data: humidity
+            data: clouds
           }
         ]
       };

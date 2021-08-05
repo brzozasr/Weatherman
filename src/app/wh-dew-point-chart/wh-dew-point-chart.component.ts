@@ -1,14 +1,14 @@
 import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {WeatherHistorical} from "../historical/model/weather-historical";
-import {DatePipe} from "@angular/common";
+import {DatePipe, DecimalPipe} from "@angular/common";
 import LinearGradient from "zrender/lib/graphic/LinearGradient";
 
 @Component({
-  selector: 'app-wh-humidity-chart',
-  templateUrl: './wh-humidity-chart.component.html',
-  styleUrls: ['./wh-humidity-chart.component.css']
+  selector: 'app-wh-dew-point-chart',
+  templateUrl: './wh-dew-point-chart.component.html',
+  styleUrls: ['./wh-dew-point-chart.component.css']
 })
-export class WhHumidityChartComponent implements OnInit, AfterViewInit {
+export class WhDewPointChartComponent implements OnInit, AfterViewInit {
 
   @Input() weatherHistorical?: WeatherHistorical;
   isDataAvailable: boolean = false;
@@ -22,8 +22,12 @@ export class WhHumidityChartComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     setTimeout(() => {
       const xAxisData: any[] = [];
-      const humidity: (number | undefined)[] = [];
+      const dewPoint: (number | undefined)[] = [];
       const datePipe: DatePipe = new DatePipe('en-US');
+      const decimalPipe: DecimalPipe = new DecimalPipe('pl-PL');
+      const y = this.weatherHistorical?.aggDewPoint?.dewPointMax !== undefined ? this.weatherHistorical?.aggDewPoint?.dewPointMax : 0;
+      const strMaxY = decimalPipe.transform(y, '1.0-0') ?? "0";
+      const maxY = Number(strMaxY) + 1;
 
       if (this.weatherHistorical?.hourly) {
         this.isDataAvailable = true;
@@ -31,7 +35,7 @@ export class WhHumidityChartComponent implements OnInit, AfterViewInit {
           let dateTime = datePipe.transform(data.dtLocal, 'MMM dd, HH:mm');
 
           xAxisData.push(dateTime);
-          humidity.push(data.humidity);
+          dewPoint.push(data.dewPoint);
         });
       }
 
@@ -56,7 +60,7 @@ export class WhHumidityChartComponent implements OnInit, AfterViewInit {
         yAxis: {
           type: 'value',
           boundaryGap: [0, '100%'],
-          max: 120
+          max: maxY
         },
         dataZoom: [{
           type: 'inside',
@@ -68,23 +72,23 @@ export class WhHumidityChartComponent implements OnInit, AfterViewInit {
         }],
         series: [
           {
-            name: 'Humidity (%)',
+            name: 'Dew Point (°C)',
             type: 'line',
             symbol: 'none',
             smooth: true,
             itemStyle: {
-              color: '#009900'
+              color: 'rgb(64, 0, 128)'
             },
             areaStyle: {
               color: new LinearGradient(0, 0, 0, 1, [{
                 offset: 0,
-                color: '#00b300'
+                color: 'rgb(102, 0, 204)'
               }, {
                 offset: 1,
-                color: '#b3ffb3'
+                color: 'rgb(217, 179, 255)'
               }])
             },
-            data: humidity
+            data: dewPoint
           }
         ]
       };
