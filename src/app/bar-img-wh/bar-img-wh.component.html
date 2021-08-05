@@ -1,0 +1,18 @@
+<div id="bar-img-wh" class="horizontal" *ngIf="weatherPoint?.hourly !== null">
+  <div *ngFor="let hourly of weatherPoint?.hourly">
+    <div class="bar-img-inside txt-lighter">{{hourly?.dtLocal |  date: 'dd MMM' : undefined: 'en-En'}}</div>
+    <div class="bar-img-inside">{{hourly.dtLocal | slice: 11: 16}}</div>
+    <ng-container *ngFor="let img of hourly?.weathers; let i = index">
+      <div *ngIf="i === 0" class="hourly-wf-inside">
+        <img src="https://openweathermap.org/img/wn/{{img?.icon}}@2x.png" class="img-size" alt="{{img?.icon}}">
+      </div>
+    </ng-container>
+    <div class="bar-img-inside">{{hourly?.temp | number: '1.0-0'}}&#176;C</div>
+    <div class="bar-img-inside">{{hourly?.windDir?.dirTxt}} <img class="arrow-icon" src="assets/arrows/{{hourly?.windDir?.dirArrow}}.png" alt="{{hourly?.windDir?.dirArrow}}"></div>
+    <div class="bar-img-inside">
+      <span>
+        <img class="wind-icon" src="assets/icons/wind.png" alt="wind speed"> {{hourly?.windSpeed | number: '1.1-1'}}m/s
+      </span>
+    </div>
+  </div>
+</div>
