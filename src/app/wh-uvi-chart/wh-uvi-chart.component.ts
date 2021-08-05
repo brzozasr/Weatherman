@@ -1,14 +1,13 @@
 import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {WeatherHistorical} from "../historical/model/weather-historical";
-import {DatePipe} from "@angular/common";
-import LinearGradient from "zrender/lib/graphic/LinearGradient";
+import {DatePipe, DecimalPipe} from "@angular/common";
 
 @Component({
-  selector: 'app-wh-humidity-chart',
-  templateUrl: './wh-humidity-chart.component.html',
-  styleUrls: ['./wh-humidity-chart.component.css']
+  selector: 'app-wh-uvi-chart',
+  templateUrl: './wh-uvi-chart.component.html',
+  styleUrls: ['./wh-uvi-chart.component.css']
 })
-export class WhHumidityChartComponent implements OnInit, AfterViewInit {
+export class WhUviChartComponent implements OnInit, AfterViewInit {
 
   @Input() weatherHistorical?: WeatherHistorical;
   isDataAvailable: boolean = false;
@@ -22,8 +21,13 @@ export class WhHumidityChartComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     setTimeout(() => {
       const xAxisData: any[] = [];
-      const humidity: (number | undefined)[] = [];
+      const uvi: (number | undefined)[] = [];
       const datePipe: DatePipe = new DatePipe('en-US');
+      const decimalPipe: DecimalPipe = new DecimalPipe('pl-PL');
+      const y = this.weatherHistorical?.aggUvi?.uviMax !== undefined ? this.weatherHistorical?.aggUvi?.uviMax : 0;
+      const strMaxY = decimalPipe.transform(y, '1.0-0') ?? "0";
+      const maxY = Number(strMaxY) + 1;
+
 
       if (this.weatherHistorical?.hourly) {
         this.isDataAvailable = true;
@@ -31,7 +35,7 @@ export class WhHumidityChartComponent implements OnInit, AfterViewInit {
           let dateTime = datePipe.transform(data.dtLocal, 'MMM dd, HH:mm');
 
           xAxisData.push(dateTime);
-          humidity.push(data.humidity);
+          uvi.push(data.uvi);
         });
       }
 
@@ -56,7 +60,7 @@ export class WhHumidityChartComponent implements OnInit, AfterViewInit {
         yAxis: {
           type: 'value',
           boundaryGap: [0, '100%'],
-          max: 120
+          max: maxY
         },
         dataZoom: [{
           type: 'inside',
@@ -68,27 +72,17 @@ export class WhHumidityChartComponent implements OnInit, AfterViewInit {
         }],
         series: [
           {
-            name: 'Humidity (%)',
-            type: 'line',
+            name: 'UV Index',
+            type: 'bar',
             symbol: 'none',
             smooth: true,
             itemStyle: {
-              color: '#009900'
+              color: '#ff8000'
             },
-            areaStyle: {
-              color: new LinearGradient(0, 0, 0, 1, [{
-                offset: 0,
-                color: '#00b300'
-              }, {
-                offset: 1,
-                color: '#b3ffb3'
-              }])
-            },
-            data: humidity
+            data: uvi
           }
         ]
       };
-
     }, 2500);
   }
 

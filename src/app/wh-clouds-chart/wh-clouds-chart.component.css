@@ -1,0 +1,11 @@
+.wh-clouds-chart {
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.error-data {
+  padding: 80px 0 80px 0;
+  text-align: center;
+  color: #ff0000;
+  font-weight: lighter;
+}
