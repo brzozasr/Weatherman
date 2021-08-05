@@ -1,0 +1,9 @@
+<ng-container *ngIf="isDataAvailable; else altData">
+  <div echarts
+       [options]="options"
+       class="wh-dew-point-chart">
+  </div>
+</ng-container>
+<ng-template #altData >
+  <div class="error-data">The data for generating the chart is not available</div>
+</ng-template>

@@ -57,7 +57,7 @@ export class HistoricalComponent implements OnInit {
               localStorage.setItem('lsCoordsHistoricalData', JSON.stringify(this.coordsHistoricalData));
             }
             this.isSpinnerVisible = false;
-          }, 5500);
+          }, 6500);
         },
         error => {
           console.log(error.error.message);

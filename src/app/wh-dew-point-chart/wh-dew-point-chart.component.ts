@@ -4,11 +4,11 @@ import {DatePipe} from "@angular/common";
 import LinearGradient from "zrender/lib/graphic/LinearGradient";
 
 @Component({
-  selector: 'app-wh-humidity-chart',
-  templateUrl: './wh-humidity-chart.component.html',
-  styleUrls: ['./wh-humidity-chart.component.css']
+  selector: 'app-wh-dew-point-chart',
+  templateUrl: './wh-dew-point-chart.component.html',
+  styleUrls: ['./wh-dew-point-chart.component.css']
 })
-export class WhHumidityChartComponent implements OnInit, AfterViewInit {
+export class WhDewPointChartComponent implements OnInit, AfterViewInit {
 
   @Input() weatherHistorical?: WeatherHistorical;
   isDataAvailable: boolean = false;
@@ -22,7 +22,7 @@ export class WhHumidityChartComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     setTimeout(() => {
       const xAxisData: any[] = [];
-      const humidity: (number | undefined)[] = [];
+      const dewPoint: (number | undefined)[] = [];
       const datePipe: DatePipe = new DatePipe('en-US');
 
       if (this.weatherHistorical?.hourly) {
@@ -31,7 +31,7 @@ export class WhHumidityChartComponent implements OnInit, AfterViewInit {
           let dateTime = datePipe.transform(data.dtLocal, 'MMM dd, HH:mm');
 
           xAxisData.push(dateTime);
-          humidity.push(data.humidity);
+          dewPoint.push(data.dewPoint);
         });
       }
 
@@ -56,7 +56,6 @@ export class WhHumidityChartComponent implements OnInit, AfterViewInit {
         yAxis: {
           type: 'value',
           boundaryGap: [0, '100%'],
-          max: 120
         },
         dataZoom: [{
           type: 'inside',
@@ -68,7 +67,7 @@ export class WhHumidityChartComponent implements OnInit, AfterViewInit {
         }],
         series: [
           {
-            name: 'Humidity (%)',
+            name: 'Dew Point (°C)',
             type: 'line',
             symbol: 'none',
             smooth: true,
@@ -84,7 +83,7 @@ export class WhHumidityChartComponent implements OnInit, AfterViewInit {
                 color: '#b3ffb3'
               }])
             },
-            data: humidity
+            data: dewPoint
           }
         ]
       };
