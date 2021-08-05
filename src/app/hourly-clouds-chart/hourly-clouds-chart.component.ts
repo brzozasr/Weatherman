@@ -59,7 +59,8 @@ export class HourlyCloudsChartComponent implements OnInit, AfterViewInit {
         },
         yAxis: {
           type: 'value',
-          boundaryGap: [0, '100%']
+          boundaryGap: [0, '100%'],
+          max: 120
         },
         dataZoom: [{
           type: 'inside',
